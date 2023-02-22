@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="919.0" style="-fx-background-color: BFDCE5;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="gui.CRUDLIGNEController">
+   <children>
+      <TableView fx:id="tablig" layoutX="390.0" layoutY="130.0" prefHeight="248.0" prefWidth="506.0" style="-fx-background-color: F0EEED;">
+        <columns>
+            <TableColumn fx:id="id_li" prefWidth="173.0" text="ID " />
+          <TableColumn fx:id="nom_li" prefWidth="173.0" text="Nom Ligne" />
+          <TableColumn fx:id="type_li" minWidth="0.0" prefWidth="158.0" text="Type Ligne" />
+        </columns>
+      </TableView>
+      <VBox layoutX="28.0" layoutY="130.0" prefHeight="95.0" prefWidth="100.0" spacing="50.0">
+         <children>
+            <Label text="Nom Ligne">
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Type Ligne">
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="128.0" layoutY="130.0" prefHeight="95.0" prefWidth="252.0" spacing="40.0">
+         <children>
+            <TextField fx:id="txtn" onKeyTyped="#limit3" />
+            <ComboBox fx:id="txttp" prefHeight="25.0" prefWidth="252.0" />
+         </children>
+      </VBox>
+      <Button layoutX="258.0" layoutY="276.0" mnemonicParsing="false" onAction="#add_lig" prefHeight="27.0" prefWidth="120.0" text="Ajouter">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
+         </graphic>
+      </Button>
+      <Button layoutX="128.0" layoutY="276.0" mnemonicParsing="false" onAction="#delete_lig" prefHeight="27.0" prefWidth="120.0" text="Supprimer">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
+         </graphic>
+      </Button>
+      <Button layoutX="8.0" layoutY="276.0" mnemonicParsing="false" onAction="#update_lig" prefHeight="27.0" prefWidth="114.0" text="Modifier">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" />
+         </graphic>
+      </Button>
+      <ImageView fitHeight="75.0" fitWidth="212.0" layoutX="36.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@kslvAsset%201char.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="669.0" layoutY="394.0" mnemonicParsing="false" onAction="#switchtmoy" prefHeight="25.0" prefWidth="227.0" text="Gestion des moyens de transport">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

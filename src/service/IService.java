@@ -9,13 +9,14 @@ import java.util.List;
 
 /**
  *
- * @author hanin
+ *
+ * @param <T>
  */
 public interface IService<T> {
     void insert(T t);
     void delete(int id);
     void update(List<Object> list,int id);
     List <T> readAll();
-    T readByID(int id);
+    T  readByID(int id);
     
 }
