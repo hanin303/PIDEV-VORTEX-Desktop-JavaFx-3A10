@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.TrajetController">
+    <children>
+        <TextField fx:id="text_pts_depart" layoutX="30.0" layoutY="185.0" onKeyTyped="#limit2eight" prefHeight="26.0" prefWidth="265.0" />
+        <TextField fx:id="text_pts_arrive" layoutX="30.0" layoutY="264.0" onKeyTyped="#limit2eight2" prefWidth="265.0" />
+        <Label layoutX="34.0" layoutY="137.0" prefHeight="43.0" prefWidth="138.0" text="Point de départ">
+            <font>
+                <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="34.0" layoutY="229.0" text="Point d'arrivé">
+            <font>
+                <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+        </Label>
+        <Button fx:id="button_ajouter" layoutX="597.0" layoutY="513.0" mnemonicParsing="false" onAction="#AjouterTrajet" prefHeight="57.0" prefWidth="112.0" text="Ajouter">
+            <graphic>
+                <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" size="20" />
+            </graphic>
+        </Button>
+        <TextField fx:id="text_temps_parcours" layoutX="30.0" layoutY="341.0" onKeyTyped="#CheckNumber" prefWidth="265.0" />
+        <Label layoutX="34.0" layoutY="306.0" text="Temps parcours">
+            <font>
+                <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+        </Label>
+        <Button fx:id="button_supprimer" layoutX="869.0" layoutY="514.0" mnemonicParsing="false" onAction="#SupprimerTrajet" prefHeight="57.0" prefWidth="112.0" text="Supprimer">
+            <graphic>
+                <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" size="20" />
+            </graphic>
+        </Button>
+        <Button fx:id="button_modifier" layoutX="733.0" layoutY="513.0" mnemonicParsing="false" onAction="#ModifierTrajet" prefHeight="57.0" prefWidth="112.0" text="Modifier">
+            <graphic>
+                <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" size="20" />
+            </graphic>
+        </Button>
+        <TableView fx:id="table_trajet" layoutX="347.0" layoutY="31.0" prefHeight="464.0" prefWidth="634.0" style="-fx-background-color: F0EEED;">
+            <columns>
+                <TableColumn fx:id="id_trajet" prefWidth="75.0" text="ID_Trajet" />
+                <TableColumn fx:id="temps_parcours" prefWidth="103.46664428710938" text="Temps_Parcous" />
+                <TableColumn fx:id="pts_depart" prefWidth="206.13336181640625" text="Points_Depart" />
+                <TableColumn fx:id="pts_arrive" prefWidth="249.60003662109375" text="Points_Arrive" />
+            </columns>
+        </TableView>
+        <ImageView fitHeight="116.0" fitWidth="211.0" layoutX="32.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@kslvAsset%203char.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="button_window_it" layoutX="464.0" layoutY="513.0" mnemonicParsing="false" onAction="#SwitchWindowIt" prefHeight="57.0" prefWidth="112.0" text="Gestion itineraire" />
+    </children>
+</AnchorPane>

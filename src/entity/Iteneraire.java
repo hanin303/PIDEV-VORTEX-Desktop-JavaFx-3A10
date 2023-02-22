@@ -5,12 +5,20 @@ public class Iteneraire {
     private String pts_depart;
     private String pts_arrivee;
     private Trajet trajet;
-
+    
+    
     public Iteneraire( int id ,String pts_depart, String pts_arrivee, Trajet trajet) {
         this.id = id;
         this.pts_depart = pts_depart;
         this.pts_arrivee = pts_arrivee;
         this.trajet = trajet;
+       
+    }
+    public Iteneraire( int id ,String pts_depart, String pts_arrivee, int id_trajet) {
+        this.id = id;
+        this.pts_depart = pts_depart;
+        this.pts_arrivee = pts_arrivee;
+        
        
     }
     public Iteneraire(String pts_depart, String pts_arrivee, Trajet trajet) {
