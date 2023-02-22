@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="611.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Afficher_reclamationController">
+   <children>
+      <TableView fx:id="Reclamation" layoutX="40.0" layoutY="87.0" prefHeight="469.0" prefWidth="936.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="61.59997481107712" text="ID" />
+          <TableColumn fx:id="message" prefWidth="208.8000030517578" text="Message" />
+            <TableColumn fx:id="type" prefWidth="118.39996337890625" text="Type" />
+            <TableColumn fx:id="statut" prefWidth="98.4000244140625" text="Statut" />
+            <TableColumn fx:id="delete" prefWidth="101.5999755859375" text="Delete" />
+            <TableColumn fx:id="update" prefWidth="112.800048828125" text="Update" />
+            <TableColumn fx:id="reponse" prefWidth="239.199951171875" text="Reponse" />
+        </columns>
+      </TableView>
+      <Label layoutX="441.0" layoutY="38.0" text="Afficher Reclamation" />
+      <Label fx:id="welcomeLb" layoutX="144.0" layoutY="38.0" />
+   </children>
+</AnchorPane>

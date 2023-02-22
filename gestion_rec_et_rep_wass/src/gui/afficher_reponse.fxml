@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="591.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Afficher_reponseController">
+   <children>
+      <TableView fx:id="reponse" layoutX="14.0" layoutY="72.0" prefHeight="482.0" prefWidth="948.0">
+        <columns>
+          <TableColumn fx:id="idreclamation" prefWidth="105.60000914335251" text="ID_Reclamation" />
+          <TableColumn fx:id="reclamationtext" minWidth="0.0" prefWidth="160.8000030517578" text="Reclamation" />
+            <TableColumn fx:id="repondre" minWidth="0.0" prefWidth="81.5999755859375" text="Repondre" />
+            <TableColumn fx:id="update" minWidth="0.0" prefWidth="98.39996337890625" text="Update" />
+            <TableColumn fx:id="delete" minWidth="0.0" prefWidth="90.4000244140625" text="Delete" />
+            <TableColumn fx:id="date" minWidth="0.0" prefWidth="89.5999755859375" text="Date" />
+            <TableColumn fx:id="idreponse" minWidth="0.0" prefWidth="110.39996337890625" text="Id_reponse" />
+            <TableColumn fx:id="messages" minWidth="0.0" prefWidth="215.20001220703125" text="Messages" />
+        </columns>
+      </TableView>
+      <Label layoutX="449.0" layoutY="22.0" prefHeight="18.0" prefWidth="169.0" text="Reponse" />
+   </children>
+</AnchorPane>
