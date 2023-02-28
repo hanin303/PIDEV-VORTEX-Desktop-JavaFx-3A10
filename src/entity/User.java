@@ -16,11 +16,12 @@ public class User {
     private String mdp;
     private int num_tel;
     private int cin;
+    private String image;
     private  Role role;    
     public User(){
     }
     
-    public User(String nom, String prenom, String username,String email, String mdp, int num_tel, int cin, Role role){
+    public User(String nom, String prenom, String username,String email, String mdp, int num_tel, int cin,String image, Role role){
         this.nom=nom;
         this.prenom=prenom;
         this.username=username;
@@ -28,10 +29,11 @@ public class User {
         this.mdp=mdp;
         this.num_tel=num_tel;
         this.cin=cin; 
+        this.image=image;
         this.role=role;
     }
     
-    public User( int id_user,String nom, String prenom, String username,String email, String mdp, int num_tel, int cin){
+    public User( int id_user,String nom, String prenom, String username,String email, String mdp, int num_tel, int cin, String image){
         this.id_user=id_user;
         this.nom=nom;
         this.prenom=prenom;
@@ -40,9 +42,10 @@ public class User {
         this.mdp=mdp;
         this.num_tel=num_tel;
         this.cin=cin; 
+        this.image=image;
     }
   
-    public User( int id_user,String nom, String prenom, String username,String email, String mdp, int num_tel, int cin, Role role){
+    public User( int id_user,String nom, String prenom, String username,String email, String mdp, int num_tel, int cin, String image,Role role){
         this.id_user=id_user;
         this.nom=nom;
         this.prenom=prenom;
@@ -51,6 +54,7 @@ public class User {
         this.mdp=mdp;
         this.num_tel=num_tel;
         this.cin=cin; 
+        this.image=image;
         this.role=role;
     }
     
@@ -109,6 +113,12 @@ public class User {
     public void setCin(int cin){
         this.cin=cin;
     }
+    public String getImage(){
+        return image;
+    }
+    public void setImage(){
+        this.image=image;
+    }
     
     public Role getRole(){
         return role;
@@ -143,9 +153,9 @@ public class User {
     @Override
     public String toString() {
         if(role!=null){
-        return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + ", role=" + role.getNom() + '}';
+        return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + ", image=" + image + ", role=" + role.getNom() + '}';
     }else {
-        return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + '}';
+        return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + ", image=" + image +'}';
         }
     }
     

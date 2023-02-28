@@ -21,12 +21,16 @@ public class Role {
     public Role(){
         users= new HashSet<>();
     }
+
     public Role(int id_role, String nom){
         this.id_role=id_role;
         this.nom=nom;
         users= new HashSet<>();
     }
     
+    public Role(String nom){
+        this.nom=nom;
+    }
     public Role(int id_role, String nom, HashSet<User> users){
         this.id_role=id_role;
         this.nom=nom;
