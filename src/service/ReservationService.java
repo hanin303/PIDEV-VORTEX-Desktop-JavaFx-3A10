@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,7 +54,7 @@ public class ReservationService implements IService<Reservation>{
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
      @Override
@@ -62,8 +63,10 @@ public class ReservationService implements IService<Reservation>{
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
               
-            pst.setDate(1, java.sql.Date.valueOf((String) list.get(0)));
-            //pst.setDate(1, (Date) list.get(0));  
+            pst.setDate(1, java.sql.Date.valueOf((LocalDate)list.get(0)));
+            //pst.setDate(1, (Date) list.get(0)); 
+            //LocalDate date_reservation = LocalDate.parse((String) list.get(0));
+            //pst.setDate(1, java.sql.Date.valueOf(date_reservation));
             pst.setString(2, (String) list.get(1));
             pst.setString(3, (String) list.get(2));
             pst.setString(4, (String) list.get(3));
@@ -89,7 +92,7 @@ public class ReservationService implements IService<Reservation>{
             ItineraireService ts = new ItineraireService();
             while(rs.next()){
 
-           Reservation r = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),ts.readByID(rs.getInt(8)),rs.getString(9));
+           Reservation r = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
            list.add(r);
             }
         } catch (SQLException ex) {
@@ -118,7 +121,29 @@ public class ReservationService implements IService<Reservation>{
         }
         return reservation;
     }
-
+    public void update2(Reservation r ,int id) {
+         String requete="update reservation set date_reservation=?,heure_depart=?,heure_arrive=?,status=?,id_client=?,id_moy=?,id_it=?,type_ticket=? where id_reservation="+id;
+        try {
+            PreparedStatement pst=conn.prepareStatement(requete);
+              
+            pst.setDate(1, (java.sql.Date.valueOf(r.getDate_reservation())));
+            //pst.setDate(1, (Date) list.get(0)); 
+            //LocalDate date_reservation = LocalDate.parse((String) list.get(0));
+            //pst.setDate(1, java.sql.Date.valueOf(date_reservation));
+            pst.setString(2,r.getHeure_depart());
+            pst.setString(3, r.getHeure_depart());
+            pst.setString(4, r.getStatus());
+            pst.setInt(5, r.getId_user());
+            pst.setInt(6, r.getId_moy());
+            pst.setInt(7, r.getId_it());
+            pst.setString(8, r.getType_ticket());
+            pst.executeUpdate();
+            System.out.println(" Reservation modifié !");
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
 
 }
 

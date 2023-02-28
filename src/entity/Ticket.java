@@ -16,7 +16,7 @@ public class Ticket {
     private int id_t ;
     private String status;
     private String prix;
-    //private int id_reservation ;
+    private int id_reservation ;
     private Reservation reservation ;
    
     
@@ -46,6 +46,13 @@ public class Ticket {
         return status;
     }
 
+    public Ticket(int id_t, String status, String prix, int id_reservation) {
+        this.id_t = id_t;
+        this.status = status;
+        this.prix = prix;
+        this.id_reservation = id_reservation;
+    }
+
     public String getPrix() {
         return prix;
     }
@@ -72,7 +79,15 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" + "id_t=" + id_t + ", status=" + status + ", prix=" + prix + ", reservation=" + reservation + '}';
+        return "Ticket{" + "id_t=" + id_t + ", status=" + status + ", prix=" + prix + ", reservation=" + getId_reservation()+ '}';
+    }
+
+    public int getId_reservation() {
+        return id_reservation;
+    }
+
+    public void setId_reservation(int id_reservation) {
+        this.id_reservation = id_reservation;
     }
 
     

@@ -65,7 +65,7 @@ public class TicketService implements IService<Ticket>{
             ResultSet rs = st.executeQuery(requete);
             ReservationService rss = new ReservationService();
             while(rs.next()){
-            Ticket t = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rss.readByID(rs.getInt(4)));
+            Ticket t = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),(rs.getInt(4)));
             list.add(t);
             }
         } catch (SQLException ex) {
@@ -84,7 +84,7 @@ public class TicketService implements IService<Ticket>{
         ResultSet rs = pst.executeQuery();
         ReservationService rss = new ReservationService();
         if (rs.next()) {
-           ticket = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rss.readByID(rs.getInt(4)));
+           ticket = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
         }
     } catch (SQLException ex) {
         Logger.getLogger(TicketService.class.getName()).log(Level.SEVERE, null, ex);

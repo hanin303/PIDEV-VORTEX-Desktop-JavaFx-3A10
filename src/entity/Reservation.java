@@ -21,13 +21,38 @@ public class Reservation {
     private LocalDate date_reservation ;
     private String heure_depart ;
     private String heure_arrive ;
+
+    public Reservation(String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
+        this.status = status;
+        this.date_reservation = date_reservation;
+        this.heure_depart = heure_depart;
+        this.heure_arrive = heure_arrive;
+        this.id_moy = id_moy;
+        this.id_user = id_user;
+        this.id_it = id_it;
+        this.type_ticket = type_ticket;
+        
+    }
     private int id_moy;
     private int id_user;
+    private int id_it;
     private Iteneraire iteneraire ;
     private String type_ticket;
     
     public Reservation() { 
         
+    }
+
+    public Reservation(int id_reservation, String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
+        this.id_reservation = id_reservation;
+        this.status = status;
+        this.date_reservation = date_reservation;
+        this.heure_depart = heure_depart;
+        this.heure_arrive = heure_arrive;
+        this.id_moy = id_moy;
+        this.id_user = id_user;
+        this.id_it = id_it;
+        this.type_ticket = type_ticket;
     }
 
     public Reservation(int id_reservation, String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_user , int id_moy , Iteneraire iteneraire, String type_ticket) {
@@ -135,7 +160,15 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" + "id_reservation=" + id_reservation + ", status=" + status + ", date_reservation=" + date_reservation + ", heure_depart=" + heure_depart + ", heure_arrive=" + heure_arrive + ", id_moy=" + id_moy + ", id_user=" + id_user + ", iteneraire=" + iteneraire.getId() + ", type_ticket=" + type_ticket + '}';
+        return "Reservation{" + "id_reservation=" + id_reservation + ", status=" + status + ", date_reservation=" + date_reservation + ", heure_depart=" + heure_depart + ", heure_arrive=" + heure_arrive + ", id_moy=" + id_moy + ", id_user=" + id_user + ", iteneraire=" + getId_it() + ", type_ticket=" + type_ticket + '}';
+    }
+
+    public int getId_it() {
+        return id_it;
+    }
+
+    public void setId_it(int id_it) {
+        this.id_it = id_it;
     }
 
     
