@@ -61,14 +61,29 @@ public class CRUDLIGNEController implements Initializable {
     private TableColumn<Ligne, String> type_li;
     @FXML
     private TableColumn<Ligne, Integer> id_li;
+    @FXML
+    private TextField txtche;
 
     /**
      * Initializes the controller class.
      */
+    @FXML
     public void UpdateTable(){
-        List<Ligne> list=new ArrayList<>();
-        LigneService ls=new LigneService();
-        list=ls.readAll();
+          LigneService ls=new LigneService();
+          List<Ligne> list=new ArrayList<>();
+        if (txtche.getText().length() == 0)
+            list=ls.readAll();
+        else{
+        list.add(ls.readByID(Integer.parseInt(txtche.getText())));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Recherche avec succés");
+                alert.showAndWait();
+        }
+      
+       
+        //list=ls.readAll();
         ObservableList<Ligne> obs=FXCollections.observableArrayList(list);
         id_li.setCellValueFactory(new PropertyValueFactory<Ligne ,Integer>("id_ligne"));
         nom_li.setCellValueFactory(new PropertyValueFactory<Ligne ,String>("nom_ligne"));
@@ -126,8 +141,13 @@ public class CRUDLIGNEController implements Initializable {
 
     @FXML
     private void limit3(KeyEvent event) {
-         if (txtn.getText().length() >= 3) {
+         if (txtn.getText().length() >= 9) {
     event.consume();
+    }else if(!event.getCharacter().matches("[^\\e\t\r\\d+$]")){
+        event.consume();
+        txtn.setStyle("-fx-border-color: red");
+    }else{
+        txtn.setStyle("-fx-border-color: green");
     }
     }
 
@@ -138,6 +158,20 @@ public class CRUDLIGNEController implements Initializable {
         scene = new Scene(root1);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void stat(ActionEvent event) {
+        
+         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BarChart.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            // e.printStackTrace();
+        }
     }
     
 }

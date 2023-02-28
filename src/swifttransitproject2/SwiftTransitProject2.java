@@ -38,10 +38,10 @@ public class SwiftTransitProject2 {
         LigneService ls =new LigneService();
         //ls.insert(l3);
         //ls.insert(l4);
-        MoyTran t4=new MoyTran(1555,40,"bus","bmw","maintenance",17);
+        MoyTran t4=new MoyTran(1555,40,"bus","bmw","maintenance",1);
         MoyTranService ts=new MoyTranService();
        
-      //ts.insert(t4);
+      ts.insert(t4);
        //ts.readAll().forEach(System.out::println); 
        System.out.println("////////////////////////");
        // ts.readByID(11);

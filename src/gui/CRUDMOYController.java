@@ -4,11 +4,28 @@
  */
 package gui;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import entity.Ligne;
 import entity.MoyTran;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +53,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import service.LigneService;
 import service.MoyTranService;
+import connexionbd.utils.DataSource;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -81,15 +100,33 @@ public class CRUDMOYController implements Initializable {
     private Connection conn;
     @FXML
     private Button btnwitch;
+    @FXML
+    private TextField txtch;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Label test;
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
+    @FXML
     public void UpdateTable(){
         List<MoyTran> list=new ArrayList<>();
+        
         MoyTranService ts=new MoyTranService();
+        if (txtch.getText().length() == 0)
         list=ts.readAll();
+        else{
+        list.add(ts.readByID(Integer.parseInt(txtch.getText())));
+        Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Recherche avec succés");
+                alert.showAndWait();
+        }
+        
         ObservableList<MoyTran> obs=FXCollections.observableArrayList(list);
         idmoy.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_moy"));
         mat.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("matricule"));
@@ -101,6 +138,11 @@ public class CRUDMOYController implements Initializable {
         
         tabmoy.setItems(obs);
     }
+
+    public CRUDMOYController() {
+       conn = DataSource.getInstance().getCnx();
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,14 +157,23 @@ public class CRUDMOYController implements Initializable {
         txtl.setItems(observableIds); //cle etragere
         UpdateTable();
       
-       
-        
-     
+           
     }    
 
     @FXML
     private void add_moy(ActionEvent event) {
-        MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(txtm.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
+        String Dep=txtcap.getText();
+    String ver=typev.getValue();
+    String type=txtmar.getText();
+    String typee=txte.getValue();
+   // Integer typeee=txtl.getValue();
+    
+    if(Dep.isEmpty()||ver.isEmpty()||type.isEmpty()||typee.isEmpty()){
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setContentText("Vous devez remplir tous les champs"); 
+             alert.showAndWait();
+    }else{
+        MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(txtcap.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
         MoyTranService s =new MoyTranService();
         s.insert(t);
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -131,8 +182,8 @@ public class CRUDMOYController implements Initializable {
 		alert.setContentText("Insertion avec succés");
                 alert.showAndWait();
         UpdateTable();
+    }
         
-         
     }
 
     @FXML
@@ -215,9 +266,157 @@ public class CRUDMOYController implements Initializable {
 
     @FXML
     private void limit4(KeyEvent event) {
-//        if(event.getCharacter().matches("[^\\e\t\r\\d+$]")){
-//            event.consume();
-//        }
+       if(!event.getCharacter().matches("[^\\e\t\r\\d+$]")){
+        event.consume();
+        txtm.setStyle("-fx-border-color: red");
+    }else{
+        txtm.setStyle("-fx-border-color: green");
+    }
+    }
+
+    private MoyTran search(ActionEvent event) {
+         MoyTranService is=new MoyTranService();
+         int t = Integer.parseInt(txtch.getText());
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Insertion avec succés");
+                alert.showAndWait();
+                return is.readByID(t);
+        
+
+        
+    }
+
+    @FXML
+    private void genPdf(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException {
+        
+      
+        
+    String sql = "SELECT* from moyentransport";
+    
+      PreparedStatement ste=conn.prepareStatement(sql);
+   //  Statement ste=conn.createStatement();
+     ResultSet rs=ste.executeQuery();
+
+    Document doc = new Document();
+    PdfWriter.getInstance(doc, new FileOutputStream("./ListesdesmoyenTran1.pdf"));
+
+    doc.open();
+   
+    doc.add(new Paragraph("   "));
+    doc.add(new Paragraph(" *********************************** Liste Des moyens de transport *********************************** "));
+    doc.add(new Paragraph("   "));
+
+    PdfPTable table = new PdfPTable(7);
+    table.setWidthPercentage(100);
+    PdfPCell cell;
+    cell = new PdfPCell(new Phrase("id moy", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+    cell = new PdfPCell(new Phrase("Matricule", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+   
+    cell = new PdfPCell(new Phrase("Capacité", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+    
+   
+    
+    
+    cell = new PdfPCell(new Phrase("type Véhicule", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+    
+     cell = new PdfPCell(new Phrase("Marque", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+    
+    cell = new PdfPCell(new Phrase("Etat", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+    cell = new PdfPCell(new Phrase("ligne", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
+    
+
+    while (rs.next()) {
+
+       MoyTran m = new MoyTran();
+        m.setId_moy(rs.getInt("id_moy"));
+        m.setMatricule(rs.getInt("matricule"));
+        m.setCapacite(rs.getInt("capacite"));
+        m.setType_vehicule(rs.getString("type_vehicule"));
+        m.setMarque(rs.getString("marque"));
+        m.setEtat(rs.getString("etat"));
+        m.setId_ligne(rs.getInt("id_ligne"));
+       
+        
+        cell = new PdfPCell(new Phrase(String.valueOf(m.getId_moy()), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        cell = new PdfPCell(new Phrase(String.valueOf(m.getMatricule()), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        cell = new PdfPCell(new Phrase(String.valueOf(m.getCapacite()), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+          cell = new PdfPCell(new Phrase(m.getType_vehicule(), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+         cell = new PdfPCell(new Phrase(m.getMarque(), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+          cell = new PdfPCell(new Phrase(m.getEtat(), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        cell = new PdfPCell(new Phrase(String.valueOf(m.getId_ligne()), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        
+    }
+
+    doc.add(table);
+    doc.close();
+    Desktop.getDesktop().open(new File("./ListesdesmoyenTran1.pdf"));
+        
+        
+    }
+
+    @FXML
+    private void searchField(ActionEvent event) {
+        ObservableList<MoyTran> transportList = FXCollections.observableArrayList();
+         transportList.clear();
+       MoyTranService m = new MoyTranService();
+        transportList.setAll(m.readAll().stream().filter((art)
+                -> art.getMarque().toLowerCase().contains(searchField.getText().toLowerCase())
+                || art.getEtat().toLowerCase().contains(searchField.getText().toLowerCase())
+               
+               
+        //                || Integer.toString(art.getPrixAchat()).equals(searchTF.getText())
+        //                || Integer.toString(art.getPrixVente()).equals(searchTF.getText())
+
+        ).collect(Collectors.toList()));
+        Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Total des Moyens de transport de cette marque : "+ transportList.size());
+                alert.showAndWait();
+        //test.setText("Total des Moyens de transport de cette marque : " + transportList.size());
     }
 
    

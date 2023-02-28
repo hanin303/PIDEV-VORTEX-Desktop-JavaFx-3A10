@@ -34,6 +34,11 @@ public class MoyTran {
         this.ligne = ligne;
     }
 
+    public MoyTran(int id_moy) {
+        this.id_moy = id_moy;
+    }
+    
+    
     public MoyTran(int id_moy, int matricule, int capacite, String type_vehicule, String marque, String etat, int id_ligne, Ligne ligne) {
         this.id_moy = id_moy;
         this.matricule = matricule;
