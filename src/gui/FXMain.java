@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
 package gui;
-
+ 
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +23,7 @@ public class FXMain extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException{
 //        Parent root=FXMLLoader.load(getClass().getResource("AddUser.fxml"));
-        Parent root=FXMLLoader.load(getClass().getResource("AddUser.fxml"));
+        Parent root=FXMLLoader.load(getClass().getResource("login.fxml"));
  
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,8 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
    <children>
-      <TextField fx:id="username" layoutX="186.0" layoutY="180.0" prefHeight="26.0" prefWidth="218.0" />
-      <TextField fx:id="mdp" layoutX="186.0" layoutY="224.0" prefHeight="26.0" prefWidth="218.0" />
+      <TextField fx:id="username_column" layoutX="186.0" layoutY="180.0" prefHeight="26.0" prefWidth="218.0" />
       <Label layoutX="186.0" layoutY="162.0" text="Username :" underline="true">
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
@@ -22,7 +22,7 @@
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
          </font></Label>
-      <Button layoutX="251.0" layoutY="274.0" mnemonicParsing="false" text="S'authentifier">
+      <Button fx:id="auth" layoutX="251.0" layoutY="274.0" mnemonicParsing="false" onAction="#connect" text="S'authentifier">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="SIGN_IN" />
          </graphic></Button>
@@ -37,5 +37,6 @@
             <Image url="@kslvAsset%203char.png" />
          </image>
       </ImageView>
+      <PasswordField fx:id="mdp_column" layoutX="186.0" layoutY="224.0" prefHeight="26.0" prefWidth="218.0" />
    </children>
 </AnchorPane>

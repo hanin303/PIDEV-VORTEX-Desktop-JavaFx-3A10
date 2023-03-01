@@ -61,7 +61,8 @@
          </image>
       </ImageView>
       <PasswordField fx:id="mdp" layoutX="238.0" layoutY="221.0" onAction="#hidePassword" prefHeight="26.0" prefWidth="218.0" />
-      <ImageView fx:id="image" fitHeight="125.0" fitWidth="150.0" layoutX="49.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="upload" layoutX="86.0" layoutY="266.0" mnemonicParsing="false" text="télécharger" />
+      <ImageView fx:id="imageview" fitHeight="125.0" fitWidth="150.0" layoutX="49.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="upload" layoutX="86.0" layoutY="266.0" mnemonicParsing="false" onAction="#uploadImage" text="télécharger" />
+      <TextField fx:id="path_image" layoutX="50.0" layoutY="297.0" />
    </children>
 </AnchorPane>

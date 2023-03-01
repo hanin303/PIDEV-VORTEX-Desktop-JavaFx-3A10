@@ -14,17 +14,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="573.0" prefWidth="922.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DisplayUserController">
    <children>
-      <TableView fx:id="tableUsers" layoutX="19.0" layoutY="103.0" prefHeight="347.0" prefWidth="892.0">
+      <TableView fx:id="tableUsers" layoutX="10.0" layoutY="113.0" prefHeight="347.0" prefWidth="902.0">
         <columns>
           <TableColumn fx:id="id_user" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="nom" prefWidth="75.0" text="Nom" />
             <TableColumn fx:id="prenom" prefWidth="75.0" text="Prénom" />
             <TableColumn fx:id="username" prefWidth="75.0" text="Username" />
-            <TableColumn fx:id="email" prefWidth="164.800048828125" text="Adresse e-mail" />
-            <TableColumn fx:id="mdp" minWidth="7.99993896484375" prefWidth="101.5999755859375" text="Mot de passe" />
-            <TableColumn fx:id="num_tel" minWidth="1.5999755859375" prefWidth="105.5999755859375" text="Téléphone" />
-            <TableColumn fx:id="cin" minWidth="0.0" prefWidth="97.5999755859375" text="CIN" />
-            <TableColumn fx:id="role" prefWidth="111.9998779296875" text="Role" />
+            <TableColumn fx:id="email" prefWidth="183.20001220703125" text="Adresse e-mail" />
+            <TableColumn fx:id="mdp" minWidth="7.99993896484375" prefWidth="88.800048828125" text="Mot de passe" />
+            <TableColumn fx:id="num_tel" minWidth="1.5999755859375" prefWidth="72.79998779296875" text="Téléphone" />
+            <TableColumn fx:id="cin" minWidth="0.0" prefWidth="65.59991455078125" text="CIN" />
+            <TableColumn fx:id="image" minWidth="0.0" prefWidth="111.20001220703125" text="Image" />
+            <TableColumn fx:id="role" prefWidth="78.39996337890625" text="Role" />
         </columns>
       </TableView>
       <Button fx:id="modifier" layoutX="361.0" layoutY="522.0" mnemonicParsing="false" onAction="#modifierUser" text="Modifier">

@@ -48,13 +48,13 @@ public class SwiftTransitProject2 {
 
 //     
         
-     User u1= new User("Machraoui","Abir","abirmachraoui","abir.machraoui@hotmail.com","1234",58028902,123445678,r1);
-     User u2= new User("Hadj Mefteh","Wejdene","wejdenehadjmefteh","wejden.hadjmefteh@hotmail.com","12345",58067995,12674884,r1);
-     User u3= new User("Bouden","Khaled","khaledbouden","khaled.bouden@gmail.com","gH687",58570995,12580934,r2);
-     User u4= new User("Ben Jemaa","Hanin","haninbenjemaa","hanin.benjemaa@hotmail.com","GFHJJK",4567950,67989034,r2);
-     User u5= new User("Klila","Karim","karimklila","karim.klila@hotmail.com","8939",98493040,78734393,r3);
-     User u6= new User("Hassayoune","Wassim","wassimhassayoune","wassim.hassayoune@yahoo.com","12jnek5",78439523,76324043,r4);
-     User u7= new User("BER","abir","abir","abir","abir",638,739,r2);
+//     User u1= new User("Machraoui","Abir","abirmachraoui","abir.machraoui@hotmail.com","1234",58028902,123445678,r1);
+//     User u2= new User("Hadj Mefteh","Wejdene","wejdenehadjmefteh","wejden.hadjmefteh@hotmail.com","12345",58067995,12674884,r1);
+//     User u3= new User("Bouden","Khaled","khaledbouden","khaled.bouden@gmail.com","gH687",58570995,12580934,r2);
+//     User u4= new User("Ben Jemaa","Hanin","haninbenjemaa","hanin.benjemaa@hotmail.com","GFHJJK",4567950,67989034,r2);
+//     User u5= new User("Klila","Karim","karimklila","karim.klila@hotmail.com","8939",98493040,78734393,r3);
+//     User u6= new User("Hassayoune","Wassim","wassimhassayoune","wassim.hassayoune@yahoo.com","12jnek5",78439523,76324043,r4);
+//     User u7= new User("BER","abir","abir","abir","abir",638,739,r2);
         UserService us= new UserService();
 //        us.insert(u1);
 //        us.insert(u2);

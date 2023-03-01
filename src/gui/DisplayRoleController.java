@@ -103,6 +103,7 @@ public class DisplayRoleController implements Initializable {
 		alert.setHeaderText("");
 		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
+                nom_up.setText("");
         }
         
     }
@@ -123,6 +124,7 @@ public class DisplayRoleController implements Initializable {
 		alert.setHeaderText("");
 		alert.setContentText("role ajouté avec succés");
                 alert.showAndWait();
+                clearFields();
         }
         
         
@@ -148,6 +150,12 @@ public class DisplayRoleController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    private void clearFields(){
+    id_role1.setText("");
+    nom1.setText("");
+   
+    
+}   
     
 
     

@@ -65,6 +65,8 @@ public class DisplayUserController implements Initializable {
     private TableColumn<User,Integer> num_tel;
     @FXML
     private TableColumn<User,Integer> cin;
+    @FXML 
+    private TableColumn<User,String> image;
     @FXML
     private TableColumn<User,Role> role;
     @FXML
@@ -143,6 +145,7 @@ public class DisplayUserController implements Initializable {
         mdp.setCellValueFactory(new PropertyValueFactory<User,String>("mdp"));
         num_tel.setCellValueFactory(new PropertyValueFactory<User,Integer>("num_tel"));
         cin.setCellValueFactory(new PropertyValueFactory<User,Integer>("cin"));
+        image.setCellValueFactory(new PropertyValueFactory<User,String>("Image"));
         role.setCellValueFactory(new PropertyValueFactory<User,Role>("role"));
         tableUsers.setItems(list_user);
         tableUsers.refresh();
@@ -193,15 +196,16 @@ public class DisplayUserController implements Initializable {
          if(NumberValid(newNumber)){
              if(CinValid(newCin)){
                  if(newMdp.length()>=8){
-        List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText())));
+        List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),null));
         User u= tableUsers.getSelectionModel().getSelectedItem();
-        us.update(list, u.getId_user());
+        us.updateWithoutImage(list, u.getId_user());
         display();
         Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("mise à jour");
 		alert.setHeaderText("");
 		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
+                clearFields();
                  }else{
            Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
@@ -255,7 +259,7 @@ public class DisplayUserController implements Initializable {
              if(CinValid(newCin)){
                  if(newMdp.length()>=8){
         Role role=rs.readByID((int) combo_role.getValue());
-        User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()), role);
+        User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),"pas d'image", role);
         us.insert(u);
         display();
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -263,6 +267,7 @@ public class DisplayUserController implements Initializable {
 		alert.setHeaderText("");
 		alert.setContentText("utilisateur ajouté avec succés");
                 alert.showAndWait();
+                clearFields();
                  }else{
            Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
@@ -326,6 +331,7 @@ public class DisplayUserController implements Initializable {
             mdp.setText(u.getMdp());
             num_tel.setText(String.valueOf(u.getNum_tel()));
             cin.setText(String.valueOf(u.getCin()));
+            image.setText(String.valueOf(u.getImage()));
             role.setText(String.valueOf(u.getRole()));
         }else{
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -337,8 +343,19 @@ public class DisplayUserController implements Initializable {
         }
     
         }
+ 
        
     }
+    private void clearFields(){
+    nom_up.setText("");
+    prenom_up.setText("");
+    username_up.setText("");
+    email_up.setText("");
+    mdp_up.setText("");
+    num_tel_up.setText("");
+    cin_up.setText(""); 
+    combo_role.setValue(null);
+}   
 
 }
 

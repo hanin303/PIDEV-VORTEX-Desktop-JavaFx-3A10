@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -61,7 +60,8 @@ public class AddUserController implements Initializable {
     private TextField cin;
     @FXML
     private ImageView imageview;
-    
+    @FXML
+    private TextField path_image;
     @FXML 
     private PasswordField mdp;
     @FXML
@@ -71,11 +71,13 @@ public class AddUserController implements Initializable {
     
     private UserService us;
     private RoleService rs;
+    
     private Stage stage;
     private Scene scene;
     private Parent root;
         
     int max=8;
+   
     
     
  
@@ -105,6 +107,8 @@ public class AddUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         rs= new RoleService();
         us= new UserService();
+        path_image.setVisible(false);
+
 
 
     }
@@ -128,54 +132,16 @@ public class AddUserController implements Initializable {
          if(NumberValid(newNumber)){
              if(CinValid(newCin)){
                  if(newMdp.length()>=8){
-    FileChooser fc= new FileChooser();
-    fc.setTitle("choisir une image");
-    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.png","*.jpeg","*.gif"));
-    {
-           User u;
-           Random rand = new Random();
-           File selectedFile = fc.showOpenDialog(upload.getScene().getWindow());
-           if (selectedFile != null) {
-               
-               
-               try {
-                   // Copy the selected file to your project directory
-                   Path fromPath = selectedFile.toPath();
-                   String path = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images\\"+rand.nextInt(99999999)+selectedFile.getName();
-                   Path toPath = Paths.get(path);
-                   Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
-                   u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path,rs.readByID(4));
+{
+                   User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
                    us.insert(u);
-                   
-               } catch (IOException ex) {
-                   Logger.getLogger(AddUserController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-               
-               
-               
-           }     }
-    
- 
-//String fileImages = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\user\\";
-//        File dossier = new File(fileImages);
-//        File[] fichiers = dossier.listFiles();
-//        for (File fichier : fichiers) {
-//        String nomFichier = fichier.getName();
-//        if (nomFichier.startsWith(username) && nomFichier.endsWith(".jpg")||nomFichier.startsWith(username) && nomFichier.endsWith(".gif")||nomFichier.startsWith(username) && nomFichier.endsWith(".jpeg")){
-//            String cheminImage = fichier.toURI().toString();
-//            Image image = new Image(cheminImage);
-//            imageview.setImage(image);
-//            User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),setImage(toPath.toString()),rs.readByID(4));
-//            us.insert(u);
-//            break;
-// }
-        
         Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("création");
 		alert.setHeaderText("");
 		alert.setContentText("compte crée avec succés");
                 alert.showAndWait();
-        clearFields();
+                clearFields();
+}
                  }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
@@ -207,6 +173,7 @@ public class AddUserController implements Initializable {
             }
     }
     }
+    
 private void clearFields(){
     nom.setText("");
     prenom.setText("");
@@ -223,23 +190,76 @@ private void hidePassword(){
     mdp.setVisible(false);
 }
 
-    private String setImage(String toString) {
-        String fileImages = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images\\";
-        File dossier = new File(fileImages);
-        File[] fichiers = dossier.listFiles();
-        for (File fichier : fichiers) {
-        String nomFichier = fichier.getName();
-        if (nomFichier.endsWith(".jpg")||nomFichier.endsWith(".gif")||nomFichier.endsWith(".jpeg")){
-            String cheminImage = fichier.toURI().toString();
-            Image image = new Image(cheminImage);
-            imageview.setImage(image);
-            return cheminImage;
+@FXML
+private void uploadImage(ActionEvent event){
+     FileChooser fc= new FileChooser();
+    fc.setTitle("choisir une image");
+    //choisir les extensions accepté par le programme
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.png","*.jpeg","*.gif"),
+            new FileChooser.ExtensionFilter("*.png","*.PNG"),
+            new FileChooser.ExtensionFilter("*.jpeg","*.JPEG"),
+            new FileChooser.ExtensionFilter("*.gif","*.GIF")
+            );
+          
+           File selectedFile = fc.showOpenDialog(null);
+           Random rand = new Random();
+
+    if (selectedFile != null) {
+               
+                   // schema d'image
+                   Path fromPath = selectedFile.toPath();
+                   //schema de destination
+                   String path = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images"+rand.nextInt(99999999)+selectedFile.getName();
+                   Path toPath = Paths.get(path);
+               try {
+                   // Copy the selected file to your project directory
+                 
+                   Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
+
+               } catch (IOException ex) {
+                   Logger.getLogger(AddUserController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+                  Image image= new Image(selectedFile.toURI().toString());
+                   imageview.setImage(image);
+                   imageview.setFitWidth(imageview.getFitWidth());
+                   imageview.setFitHeight(imageview.getFitHeight());
+                   
+                   path_image.setText(path);
+
+    }else{
+           Alert alert= new Alert(AlertType.ERROR);
+           alert.setTitle("pas d'image ");
+           alert.setHeaderText(null);
+           alert.setContentText("vous devez selectionner une image valide ");
+           alert.showAndWait();
          }
- 
-        }
-        return null;
-        
-    }
+               
+               
+               
+       }     
 }
+
+    
+    
+
+
+//
+//    private void setImage() {
+//        
+//        String fileImages = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images\\";
+//        File dossier = new File(fileImages);
+//        File[] fichiers = dossier.listFiles();
+//        for (File fichier : fichiers) {
+//        String nomFichier = fichier.getName();
+//        if (nomFichier.endsWith(".jpg")||nomFichier.endsWith(".gif")||nomFichier.endsWith(".jpeg")){
+//            String cheminImage = fichier.toURI().toString();
+//            Image image = new Image(cheminImage);
+//            imageview.setImage(image);
+//         }
+// 
+//        }
+//        
+//    }
+//}
    
  
