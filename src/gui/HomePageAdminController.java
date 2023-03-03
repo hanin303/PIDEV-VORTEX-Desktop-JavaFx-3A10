@@ -12,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,7 +29,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,7 +36,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import service.RoleService;
 import service.UserService;
 
 /**
@@ -42,12 +43,20 @@ import service.UserService;
  *
  * @author MSI
  */
-public class AddUserController implements Initializable {
+public class HomePageAdminController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private Button modifer;
+    @FXML
+    private Button gestion_users;
+    @FXML
+    private Button gestion_roles;
     
+    private Stage stage;
+    private Scene scene;
+    private Parent root;   
+    @FXML
+    private TextField id;
     @FXML
     private TextField nom;
     @FXML
@@ -57,33 +66,32 @@ public class AddUserController implements Initializable {
     @FXML
     private TextField email;
     @FXML
+    private PasswordField mdp;
+    @FXML
     private TextField num_tel;
     @FXML
     private TextField cin;
     @FXML
-    private ImageView imageview;
-    @FXML
     private TextField path_image;
-    @FXML 
-    private PasswordField mdp;
     @FXML
-    private Button inscri;
+    private ImageView image;
+    UserService us= new UserService();   
+    private int max=8;
+    private User user;
+    private String image_path;
     @FXML
-    private Button upload;
-    
-    private UserService us;
-    private RoleService rs;
-    
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-        
-    int max=8;
-   
-    
-    
- 
+    private Button modfier;
+    @FXML
+    private Button changer;
 
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+       id.setVisible(false);
+       path_image.setVisible(false);
+ }   
+    
+    
     private boolean EmailValid(String email){
         if(email==null||email.isEmpty()){
             return false;
@@ -103,20 +111,28 @@ public class AddUserController implements Initializable {
     String regex = "^[0-9]{8}$";
     return cin.matches(regex);
 }
+
+
     
+    public void setFields(User u){
+    id.setText(String.valueOf(u.getId_user()));
+    nom.setText(u.getNom());
+    prenom.setText(u.getPrenom());
+    username.setText(u.getUsername());
+    email.setText(u.getEmail());
+    mdp.setText(u.getMdp());
+    num_tel.setText(String.valueOf(u.getNum_tel()));
+    cin.setText(String.valueOf(u.getCin()));
+    image_path=u.getImage();
+    path_image.setText(u.getImage());
+    Image i = new Image(new File(image_path).toURI().toString());
+    image.setImage(i);
+    image.setFitWidth(image.getFitWidth());
+    image.setFitHeight(image.getFitHeight());
     
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        rs= new RoleService();
-        us= new UserService();
-        path_image.setVisible(false);
-
-
-
     }
-    
     @FXML
-    public void ajouterUser(ActionEvent event) throws IOException{
+    private void modifierUser(ActionEvent event) throws NullPointerException{
        String newNom=nom.getText();
        String newPrenom=prenom.getText();
        String newUsername=username.getText();
@@ -124,82 +140,65 @@ public class AddUserController implements Initializable {
        String newMdp=mdp.getText();
        String newNumber = num_tel.getText();
        String newCin=cin.getText();
-        
+
+       
        if(newNom.isEmpty()||newPrenom.isEmpty()||newUsername.isEmpty()||newEmail.isEmpty()||newMdp.isEmpty()||newNumber.isEmpty()||newCin.isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
-       }else{
+       }else{    
        if(EmailValid(newEmail)){
          if(NumberValid(newNumber)){
              if(CinValid(newCin)){
                  if(newMdp.length()>=8){
-{
-                   User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
-                   us.insert(u);
-        Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("création");
+  
+        List<Object> list= new ArrayList<>(Arrays.asList(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText()));
+        User u2= us.readByID(Integer.parseInt(id.getText()));
+        us.update(list,u2.getId_user());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("mise à jour");
 		alert.setHeaderText("");
-		alert.setContentText("compte crée avec succés");
+		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
-                root = FXMLLoader.load(getClass().getResource("HomePageClient.fxml"));
-                     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                     scene = new Scene(root);
-                     stage.setScene(scene);
-                     stage.show();
-                
-}
                  }else{
-           Alert alert= new Alert(AlertType.ERROR);
+           Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
            alert.setHeaderText(null);
            alert.setContentText("Vous devez entrez une mot de passe valide");
            alert.showAndWait();
-                     
                  }
-             }else{
-           Alert alert= new Alert(AlertType.ERROR);
-           alert.setTitle("numéro de carte identité non valide");
-           alert.setHeaderText(null);
-           alert.setContentText("Vous devez entrez un numéro de carte identité valide");
-           alert.showAndWait();
-             }
-                  }else{
-           Alert alert= new Alert(AlertType.ERROR);
-           alert.setTitle("numéro de téléphone non valide");
-           alert.setHeaderText(null);
-           alert.setContentText("Vous devez entrez un numéro de téléphone valide");
-           alert.showAndWait();
-         }
-            }else{
-           Alert alert= new Alert(AlertType.ERROR);
-           alert.setTitle("e-mail non valide");
-           alert.setHeaderText(null);
-           alert.setContentText("Vous devez entrez une adresse e-mail valide");
-           alert.showAndWait();
-            }
-    }
-    }
-    
-private void clearFields(){
-    nom.setText("");
-    prenom.setText("");
-    username.setText("");
-    email.setText("");
-    mdp.setText("");
-    num_tel.setText("");
-    cin.setText("");
-    
-}   
 
-@FXML
+             }else{
+                 Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("numéro de carte identité non valide");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Vous devez entrez un numéro de carte identité valide");
+                 alert.showAndWait();
+             }
+             }else{
+                     Alert alert= new Alert(Alert.AlertType.ERROR);
+                     alert.setTitle("numéro de téléphone non valide");
+                     alert.setHeaderText(null);
+                     alert.setContentText("Vous devez entrez un numéro de téléphone valide");
+                     alert.showAndWait();
+             
+                     }
+             }else{
+               Alert alert= new Alert(Alert.AlertType.ERROR);
+               alert.setTitle("e-mail non valide");
+               alert.setHeaderText(null);
+               alert.setContentText("Vous devez entrez une adresse e-mail valide");
+               alert.showAndWait();   
+             }
+       }
+   
+}
 private void hidePassword(){
     mdp.setVisible(false);
 }
-
 @FXML
 private void uploadImage(ActionEvent event){
-     FileChooser fc= new FileChooser();
+    FileChooser fc= new FileChooser();
     fc.setTitle("choisir une image");
     //choisir les extensions accepté par le programme
     fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.png","*.jpeg","*.gif"),
@@ -226,47 +225,37 @@ private void uploadImage(ActionEvent event){
                } catch (IOException ex) {
                    Logger.getLogger(AddUserController.class.getName()).log(Level.SEVERE, null, ex);
                }
-                  Image image= new Image(selectedFile.toURI().toString());
-                   imageview.setImage(image);
-                   imageview.setFitWidth(imageview.getFitWidth());
-                   imageview.setFitHeight(imageview.getFitHeight());
-                   
+                  Image i= new Image(selectedFile.toURI().toString());
+                   image.setImage(i);
+                   image.setFitWidth(image.getFitWidth());
+                   image.setFitHeight(image.getFitHeight());
                    path_image.setText(path);
 
     }else{
-           Alert alert= new Alert(AlertType.ERROR);
+           Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("pas d'image ");
            alert.setHeaderText(null);
            alert.setContentText("vous devez selectionner une image valide ");
            alert.showAndWait();
-         }
-               
-               
-               
-       }     
+                   
+    }
 }
-
+    @FXML
+    private void SwitchDisplayUser(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("DisplayUser.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    private void SwitchDisplayRole(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("DisplayRole.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
     
-
-
-//
-//    private void setImage() {
-//        
-//        String fileImages = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images\\";
-//        File dossier = new File(fileImages);
-//        File[] fichiers = dossier.listFiles();
-//        for (File fichier : fichiers) {
-//        String nomFichier = fichier.getName();
-//        if (nomFichier.endsWith(".jpg")||nomFichier.endsWith(".gif")||nomFichier.endsWith(".jpeg")){
-//            String cheminImage = fichier.toURI().toString();
-//            Image image = new Image(cheminImage);
-//            imageview.setImage(image);
-//         }
-// 
-//        }
-//        
-//    }
-//}
-   
- 
+}

@@ -16,14 +16,9 @@ import javafx.stage.Stage;
  * @author MSI
  */
 public class FXMain extends Application {
-    
-    
-    
-
     @Override
     public void start(Stage primaryStage) throws IOException{
-//        Parent root=FXMLLoader.load(getClass().getResource("AddUser.fxml"));
-        Parent root=FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root=FXMLLoader.load(getClass().getResource("DisplayRole.fxml"));
  
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);

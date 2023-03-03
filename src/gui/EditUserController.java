@@ -65,7 +65,9 @@ public class EditUserController implements Initializable {
     @FXML
     private Button upload;
     UserService us= new UserService();
-    
+    private int max=8;
+    private User user;
+  
     
    
 
@@ -74,10 +76,7 @@ public class EditUserController implements Initializable {
      * @param url
      * @param rb
      */
-    int max=8;
-    
-
-    private boolean EmailValid(String email){
+        private boolean EmailValid(String email){
         if(email==null||email.isEmpty()){
             return false;
         }
@@ -103,7 +102,7 @@ public class EditUserController implements Initializable {
 
        
     }    
-
+    
     @FXML
     private void modifierUser(ActionEvent event) throws NullPointerException{
        String newNom=nom.getText();
@@ -172,7 +171,7 @@ private void hidePassword(){
 }
 @FXML
 private void uploadImage(ActionEvent event){
-     FileChooser fc= new FileChooser();
+    FileChooser fc= new FileChooser();
     fc.setTitle("choisir une image");
     //choisir les extensions accepté par le programme
     fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.png","*.jpeg","*.gif"),

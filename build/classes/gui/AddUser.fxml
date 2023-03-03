@@ -61,8 +61,14 @@
          </image>
       </ImageView>
       <PasswordField fx:id="mdp" layoutX="238.0" layoutY="221.0" onAction="#hidePassword" prefHeight="26.0" prefWidth="218.0" />
-      <ImageView fx:id="imageview" fitHeight="125.0" fitWidth="150.0" layoutX="49.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="upload" layoutX="86.0" layoutY="266.0" mnemonicParsing="false" onAction="#uploadImage" text="télécharger" />
+      <ImageView fx:id="imageview" fitHeight="125.0" fitWidth="150.0" layoutX="49.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@unknown.png" />
+         </image></ImageView>
+      <Button fx:id="upload" layoutX="72.0" layoutY="265.0" mnemonicParsing="false" onAction="#uploadImage" text="importer">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="UPLOAD" />
+         </graphic></Button>
       <TextField fx:id="path_image" layoutX="50.0" layoutY="297.0" />
    </children>
 </AnchorPane>

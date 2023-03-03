@@ -8,6 +8,7 @@ import entity.Role;
 import entity.User;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -268,7 +269,7 @@ public class DisplayUserController implements Initializable {
 		alert.setContentText("utilisateur ajouté avec succés");
                 alert.showAndWait();
                 clearFields();
-                 }else{
+        }else{
            Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
            alert.setHeaderText(null);
@@ -356,6 +357,15 @@ public class DisplayUserController implements Initializable {
     cin_up.setText(""); 
     combo_role.setValue(null);
 }   
+
+    @FXML
+    private void BackHome(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HomePageAdmin.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
 }
 

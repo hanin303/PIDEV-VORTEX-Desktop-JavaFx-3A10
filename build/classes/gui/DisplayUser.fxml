@@ -94,5 +94,10 @@
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="SEARCH" />
          </graphic></Button>
+      <Button layoutX="15.0" layoutY="83.0" mnemonicParsing="false" onAction="#BackHome" text="Retour">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CHEVRON_CIRCLE_LEFT" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

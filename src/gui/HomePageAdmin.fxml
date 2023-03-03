@@ -10,13 +10,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomePageConducteurController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomePageAdminController">
    <children>
-      <ImageView fitHeight="34.0" fitWidth="135.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="46.0" fitWidth="102.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@kslvAsset%203char.png" />
          </image>
       </ImageView>
+      <Button fx:id="gestion_users" layoutX="501.0" layoutY="50.0" mnemonicParsing="false" onAction="#SwitchDisplayUser" text="Gestion users">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="USER" />
+         </graphic>
+      </Button>
+      <Button fx:id="gestion_roles" layoutX="502.0" layoutY="82.0" mnemonicParsing="false" onAction="#SwitchDisplayRole" text="Gestion roles">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="USERS" />
+         </graphic>
+      </Button>
       <ImageView fx:id="image" fitHeight="61.0" fitWidth="70.0" layoutX="24.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="nom" layoutX="214.0" layoutY="75.0" prefHeight="26.0" prefWidth="218.0" />
       <TextField fx:id="prenom" layoutX="214.0" layoutY="119.0" prefHeight="26.0" prefWidth="218.0" />

@@ -10,8 +10,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import connexionbd.utils.DataSource;
+import static java.time.Clock.system;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  *
@@ -29,6 +32,7 @@ public class UserService implements IService<User> {
     public void insert(User u){
         String requete="INSERT INTO user(nom,prenom,username,email,mdp,num_tel,cin,image,id_role) values (?,?,?,?,?,?,?,?,?)";
         try {
+            
             PreparedStatement ste=conn.prepareStatement(requete);
             ste.setString(1,u.getNom());
             ste.setString(2,u.getPrenom());
@@ -40,7 +44,22 @@ public class UserService implements IService<User> {
             ste.setString(8,u.getImage());
             ste.setInt(9, u.getRole().getId_role());
             ste.executeUpdate();
-        } catch (SQLException ex) {
+            
+        } catch (SQLIntegrityConstraintViolationException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("username")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("username existe déjà");
+                alert.showAndWait();
+            } else if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("email")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("L'adresse e-mail existe déjà");
+                alert.showAndWait();             
+        }
+        }catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -73,7 +92,21 @@ public class UserService implements IService<User> {
             ste.setInt(7, (int)list.get(6));
             ste.setString(8, (String) list.get(7));
 //            ste.setInt(8, (int)list.get(7));
-            ste.executeUpdate();        
+            ste.executeUpdate();   
+        }catch (SQLIntegrityConstraintViolationException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("username")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("username existe déjà");
+                alert.showAndWait();
+            } else if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("email")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("L'adresse e-mail existe déjà");
+                alert.showAndWait();             
+        }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,6 +125,20 @@ public class UserService implements IService<User> {
             ste.setInt(6, (int)list.get(5));
             ste.setInt(7, (int)list.get(6));
             ste.executeUpdate();        
+        }catch (SQLIntegrityConstraintViolationException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("username")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("username existe déjà");
+                alert.showAndWait();
+            } else if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("email")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("L'adresse e-mail existe déjà");
+                alert.showAndWait();             
+        }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }

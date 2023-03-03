@@ -38,6 +38,7 @@ public class LoginController implements Initializable {
     UserService us= new UserService();
     @FXML
     private Button auth;
+    private User user;
     
 
 
@@ -56,40 +57,56 @@ public class LoginController implements Initializable {
         return false;
     }
 }
-//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("succés");
-//		alert.setHeaderText("");
-//		alert.setContentText("connecté avec succéss");
-//                alert.showAndWait();
+   
    @FXML 
    public void connect(ActionEvent event)throws IOException{
       if (authentification(username_column.getText(), mdp_column.getText())) {
             
       User u= us.readByUsername(username_column.getText());
+      User user= us.readByID(u.getId_user());
           System.out.println(u);
-         if(u.getRole().getId_role()==2){
-          root = FXMLLoader.load(getClass().getResource("HomePageAdminStation.fxml"));
+          if(u.getRole().getId_role()==1){
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageAdmin.fxml"));
+          Parent root = loader.load();                     
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show(); 
+          HomePageAdminController controller = loader.getController();
+          controller.setFields(user);
+          }else if(u.getRole().getId_role()==2){
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageAdminStation.fxml"));
+          Parent root = loader.load();          
           stage = (Stage)((Node)event.getSource()).getScene().getWindow();
           scene = new Scene(root);
           stage.setScene(scene);
           stage.show();
-                }else if(u.getRole().getId_role()==3){
-                    root = FXMLLoader.load(getClass().getResource("HomePageConducteur.fxml"));
-                    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();       
-                }else if(u.getRole().getId_role()==4){
-                     root = FXMLLoader.load(getClass().getResource("HomePageClient.fxml"));
-                     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                     scene = new Scene(root);
-                     stage.setScene(scene);
-                     stage.show();    
-                }else{
+          HomePageAdminStationController controller = loader.getController();
+          controller.setFields(user);
+          
+          }else if(u.getRole().getId_role()==3){
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageConducteur.fxml"));
+          Parent root = loader.load();
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+          HomePageConducteurController controller = loader.getController();
+          controller.setFields(user);   
+          }else if(u.getRole().getId_role()==4){
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageClient.fxml"));
+          Parent root = loader.load();
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show(); 
+          HomePageClientController controller = loader.getController();
+          controller.setFields(user);
+            }else{
                    Alert alert_erreur1= new Alert(Alert.AlertType.ERROR);
                    alert_erreur1.setTitle("Accés non autorisé");
                    alert_erreur1.setHeaderText(null);
-                   alert_erreur1.setContentText("pas d'utilisateur");
+                   alert_erreur1.setContentText("L'utilisateur n'existe pas");
                    alert_erreur1.showAndWait();
                 }
 } else {
@@ -101,6 +118,7 @@ public class LoginController implements Initializable {
 }
 
    }
+   
 
     @FXML
     private void switchForgetPassword1(ActionEvent event)throws IOException {

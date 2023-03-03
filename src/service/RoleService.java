@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import connexionbd.utils.DataSource;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -32,7 +33,13 @@ public class RoleService implements IService<Role>{
             ste.setInt(1,r.getId_role());
             ste.setString(2,r.getNom());
             ste.executeUpdate();
-        } catch (SQLException ex) {
+        }catch (SQLIntegrityConstraintViolationException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("rôle existe déjà");
+                alert.showAndWait();
+            } catch (SQLException ex) {
             Logger.getLogger(RoleService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -56,7 +63,13 @@ public class RoleService implements IService<Role>{
             PreparedStatement ste = conn.prepareStatement(requete);
             ste.setString(1,(String)list.get(0));
             ste.executeUpdate();
-        } catch (SQLException ex) {
+        }catch (SQLIntegrityConstraintViolationException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de base de données");
+                alert.setContentText("rôle existe déjà");
+                alert.showAndWait();
+            } catch (SQLException ex) {
             Logger.getLogger(RoleService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

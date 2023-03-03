@@ -5,7 +5,6 @@
  */
 package swifttransitproject2;
 
-import connexionbd.utils.DataSource;
 import entity.Role;
 import entity.User;
 import service.RoleService;
