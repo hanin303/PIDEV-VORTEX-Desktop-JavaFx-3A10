@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -129,30 +130,22 @@ public class HomePageAdminController implements Initializable {
     image.setImage(i);
     image.setFitWidth(image.getFitWidth());
     image.setFitHeight(image.getFitHeight());
-    
     }
     @FXML
     private void modifierUser(ActionEvent event) throws NullPointerException{
-       String newNom=nom.getText();
-       String newPrenom=prenom.getText();
-       String newUsername=username.getText();
-       String newEmail=email.getText();
-       String newMdp=mdp.getText();
-       String newNumber = num_tel.getText();
-       String newCin=cin.getText();
-
+       Base64.Encoder encoder = Base64.getEncoder();
        
-       if(newNom.isEmpty()||newPrenom.isEmpty()||newUsername.isEmpty()||newEmail.isEmpty()||newMdp.isEmpty()||newNumber.isEmpty()||newCin.isEmpty()){
+       if(nom.getText().isEmpty()||prenom.getText().isEmpty()||username.getText().isEmpty()||email.getText().isEmpty()||mdp.getText().isEmpty()||num_tel.getText().isEmpty()||cin.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
        }else{    
-       if(EmailValid(newEmail)){
-         if(NumberValid(newNumber)){
-             if(CinValid(newCin)){
-                 if(newMdp.length()>=8){
+       if(EmailValid(email.getText())){
+         if(NumberValid(num_tel.getText())){
+             if(CinValid(cin.getText())){
+                 if(mdp.getText().length()>=8){
   
-        List<Object> list= new ArrayList<>(Arrays.asList(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText()));
+        List<Object> list= new ArrayList<>(Arrays.asList(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText()));
         User u2= us.readByID(Integer.parseInt(id.getText()));
         us.update(list,u2.getId_user());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

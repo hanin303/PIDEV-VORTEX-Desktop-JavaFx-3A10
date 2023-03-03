@@ -37,7 +37,7 @@ public class UserService implements IService<User> {
             ste.setString(1,u.getNom());
             ste.setString(2,u.getPrenom());
             ste.setString(3,u.getUsername());
-            ste.setString(4,u.getEmail());
+            ste.setString(4,u.getEmail());            
             ste.setString(5, u.getMdp());
             ste.setInt(6, u.getNum_tel());
             ste.setInt(7, u.getCin());

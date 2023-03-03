@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -117,25 +118,18 @@ public class AddUserController implements Initializable {
     
     @FXML
     public void ajouterUser(ActionEvent event) throws IOException{
-       String newNom=nom.getText();
-       String newPrenom=prenom.getText();
-       String newUsername=username.getText();
-       String newEmail=email.getText();
-       String newMdp=mdp.getText();
-       String newNumber = num_tel.getText();
-       String newCin=cin.getText();
-        
-       if(newNom.isEmpty()||newPrenom.isEmpty()||newUsername.isEmpty()||newEmail.isEmpty()||newMdp.isEmpty()||newNumber.isEmpty()||newCin.isEmpty()){
+       Base64.Encoder encoder = Base64.getEncoder();
+       if(nom.getText().isEmpty()||prenom.getText().isEmpty()||username.getText().isEmpty()||email.getText().isEmpty()||mdp.getText().isEmpty()||num_tel.getText().isEmpty()||cin.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
        }else{
-       if(EmailValid(newEmail)){
-         if(NumberValid(newNumber)){
-             if(CinValid(newCin)){
-                 if(newMdp.length()>=8){
+       if(EmailValid(email.getText())){
+         if(NumberValid(num_tel.getText())){
+             if(CinValid(cin.getText())){
+                 if(mdp.getText().length()>=8){
 {
-                   User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
+                   User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
                    us.insert(u);
         Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("création");
@@ -246,27 +240,4 @@ private void uploadImage(ActionEvent event){
        }     
 }
 
-    
-    
-
-
-//
-//    private void setImage() {
-//        
-//        String fileImages = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images\\";
-//        File dossier = new File(fileImages);
-//        File[] fichiers = dossier.listFiles();
-//        for (File fichier : fichiers) {
-//        String nomFichier = fichier.getName();
-//        if (nomFichier.endsWith(".jpg")||nomFichier.endsWith(".gif")||nomFichier.endsWith(".jpeg")){
-//            String cheminImage = fichier.toURI().toString();
-//            Image image = new Image(cheminImage);
-//            imageview.setImage(image);
-//         }
-// 
-//        }
-//        
-//    }
-//}
-   
  

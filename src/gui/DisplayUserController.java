@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -179,25 +180,18 @@ public class DisplayUserController implements Initializable {
     }
     @FXML
     public void modifierUser(ActionEvent event){
-       String newNom=nom_up.getText();
-       String newPrenom=prenom_up.getText();
-       String newUsername=username_up.getText();
-       String newEmail=email_up.getText();
-       String newMdp=mdp_up.getText();
-       String newNumber = num_tel_up.getText();
-       String newCin=cin_up.getText();
+       Base64.Encoder encoder = Base64.getEncoder();
 
-       
-       if(newNom.isEmpty()||newPrenom.isEmpty()||newUsername.isEmpty()||newEmail.isEmpty()||newMdp.isEmpty()||newNumber.isEmpty()||newCin.isEmpty()){
+       if(nom_up.getText().isEmpty()||prenom_up.getText().isEmpty()||username_up.getText().isEmpty()||email_up.getText().isEmpty()||mdp_up.getText().isEmpty()||num_tel_up.getText().isEmpty()||cin_up.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
        }else{    
-       if(EmailValid(newEmail)){
-         if(NumberValid(newNumber)){
-             if(CinValid(newCin)){
-                 if(newMdp.length()>=8){
-        List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),null));
+       if(EmailValid(email_up.getText())){
+         if(NumberValid(num_tel.getText())){
+             if(CinValid(cin_up.getText())){
+                 if(mdp_up.getText().length()>=8){
+        List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),encoder.encodeToString(mdp_up.getText().getBytes()),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),null));
         User u= tableUsers.getSelectionModel().getSelectedItem();
         us.updateWithoutImage(list, u.getId_user());
         display();
@@ -243,24 +237,18 @@ public class DisplayUserController implements Initializable {
     
     @FXML
     public void ajouterUser(ActionEvent event){
-       String newNom=nom_up.getText();
-       String newPrenom=prenom_up.getText();
-       String newUsername=username_up.getText();
-       String newEmail=email_up.getText();
-       String newMdp=mdp_up.getText();
-       String newNumber = num_tel_up.getText();
-       String newCin=cin_up.getText();
-       if(newNom.isEmpty()||newPrenom.isEmpty()||newUsername.isEmpty()||newEmail.isEmpty()||newMdp.isEmpty()||newNumber.isEmpty()||newCin.isEmpty()){
+       Base64.Encoder encoder = Base64.getEncoder();
+       if(nom_up.getText().isEmpty()||prenom_up.getText().isEmpty()||username_up.getText().isEmpty()||email_up.getText().isEmpty()||mdp_up.getText().isEmpty()||num_tel_up.getText().isEmpty()||cin_up.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
        }else{       
-       if(EmailValid(newEmail)){
-         if(NumberValid(newNumber)){
-             if(CinValid(newCin)){
-                 if(newMdp.length()>=8){
+       if(EmailValid(email_up.getText())){
+         if(NumberValid(num_tel_up.getText())){
+             if(CinValid(cin_up.getText())){
+                 if(mdp_up.getText().length()>=8){
         Role role=rs.readByID((int) combo_role.getValue());
-        User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),"pas d'image", role);
+        User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),encoder.encodeToString(mdp_up.getText().getBytes()),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),"pas d'image", role);
         us.insert(u);
         display();
         Alert alert = new Alert(AlertType.INFORMATION);
