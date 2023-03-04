@@ -208,7 +208,7 @@ private void uploadImage(ActionEvent event){
                    // schema d'image
                    Path fromPath = selectedFile.toPath();
                    //schema de destination
-                   String path = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images"+rand.nextInt(99999999)+selectedFile.getName();
+                   String path = "C:\\xampp\\htdocs\\images\\"+rand.nextInt(99999999)+selectedFile.getName();
                    Path toPath = Paths.get(path);
                try {
                    // Copy the selected file to your project directory

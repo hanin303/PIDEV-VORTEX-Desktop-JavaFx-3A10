@@ -87,8 +87,7 @@ public class LoginController implements Initializable {
           stage.setScene(scene);
           stage.show();
           HomePageAdminStationController controller = loader.getController();
-          controller.setFields(u);
-          
+          controller.setFields(u);        
           }
           else if(u.getRole().getId_role()==3){
           FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageConducteur.fxml"));
@@ -98,7 +97,7 @@ public class LoginController implements Initializable {
           stage.setScene(scene);
           stage.show();
           HomePageConducteurController controller = loader.getController();
-          controller.setFields(u);   
+          controller.setFields(u);
           }
           else if(u.getRole().getId_role()==4){
           FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageClient.fxml"));
@@ -109,7 +108,7 @@ public class LoginController implements Initializable {
           stage.show(); 
           HomePageClientController controller = loader.getController();
           controller.setFields(u);
-            }
+           }
             else{
                    Alert alert_erreur1= new Alert(Alert.AlertType.ERROR);
                    alert_erreur1.setTitle("Accés non autorisé");

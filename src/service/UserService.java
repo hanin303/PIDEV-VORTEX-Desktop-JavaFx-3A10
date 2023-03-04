@@ -111,6 +111,18 @@ public class UserService implements IService<User> {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void updatePassword(String email,String password){
+        String requete="UPDATE user SET mdp=? where email=\""+email+"\"";
+        System.out.println(email);
+        try {
+            PreparedStatement ste= conn.prepareStatement(requete);
+            ste.setString(1,password);
+            ste.executeUpdate();   
+        }catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
     public void updateWithoutImage(List<Object> list, int id){
         String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=? where id_user="+id;
@@ -187,6 +199,22 @@ public class UserService implements IService<User> {
         try {
             PreparedStatement ste=conn.prepareStatement(requete);
             ste.setInt(1, id);
+            ResultSet rs= ste.executeQuery();
+            RoleService role_service= new RoleService();
+            if(rs.next()){
+            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+    public User readByEmail(String email) {
+        String requete="SELECT * FROM user WHERE email=?";
+        User user= null;
+        try {
+            PreparedStatement ste=conn.prepareStatement(requete);
+            ste.setString(1, email);
             ResultSet rs= ste.executeQuery();
             RoleService role_service= new RoleService();
             if(rs.next()){

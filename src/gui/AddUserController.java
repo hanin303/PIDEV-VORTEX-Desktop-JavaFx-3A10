@@ -136,11 +136,14 @@ public class AddUserController implements Initializable {
 		alert.setHeaderText("");
 		alert.setContentText("compte crée avec succés");
                 alert.showAndWait();
-                root = FXMLLoader.load(getClass().getResource("HomePageClient.fxml"));
-                     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                     scene = new Scene(root);
-                     stage.setScene(scene);
-                     stage.show();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageClient.fxml"));
+                Parent root = loader.load();                      
+                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                HomePageClientController controller = loader.getController();
+                controller.setFields(u);
                 
 }
                  }else{
@@ -210,7 +213,7 @@ private void uploadImage(ActionEvent event){
                    // schema d'image
                    Path fromPath = selectedFile.toPath();
                    //schema de destination
-                   String path = "C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\entity\\images"+rand.nextInt(99999999)+selectedFile.getName();
+                   String path = "C:\\xampp\\htdocs\\images\\"+rand.nextInt(99999999)+selectedFile.getName();
                    Path toPath = Paths.get(path);
                try {
                    // Copy the selected file to your project directory
