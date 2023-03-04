@@ -57,8 +57,12 @@ import javafx.stage.Stage;
 import service.ItineraireService;
 import service.ReservationService;
 import connexionbd.utils.DataSource;
+import java.util.Properties;
 import javafx.scene.control.Cell;
 import javafx.scene.layout.Border;
+import javax.mail.*;
+import javax.mail.internet.*;
+
 /**
  * FXML Controller class
  *
@@ -121,15 +125,22 @@ public class ReservationFXMLController implements Initializable {
     private Button idPrint;
     
     private Connection conn;
-
+    ObservableList<Reservation> reslist;
+    private Reservation reserv;
     /**
      * Initializes the controller class.
      */
-    
-    
+      @FXML
+    private ComboBox<String> sortBox = new ComboBox<>() ;  
+      
+      public ObservableList<Reservation> returnlist(ObservableList<Reservation> obs){
+        return obs;
+      
+      }
     @FXML
     public void UpdateTable(){
         List<Reservation> list=new ArrayList<>();
+        //search
         List<Reservation> list2=new ArrayList<>();
         ReservationService rs = new ReservationService();
         if(idsearch.getText().length() == 0)
@@ -151,13 +162,24 @@ public class ReservationFXMLController implements Initializable {
         colit.setCellValueFactory(new PropertyValueFactory<Reservation,Integer>("id_it"));
         colType.setCellValueFactory(new PropertyValueFactory<Reservation,String>("type_ticket"));
         tvReservation.setItems(obs);
-     
+        reslist = returnlist(obs);
     }
    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        ObservableList<String> items = FXCollections.observableArrayList(
+                "Date Reservation",
+                "Type ticket",
+                "Status"
+                
+                
+        );
+        
+        sortBox.setItems(items);
+       // sortBox.setOnAction(event -> sort());
+       
         
         
         ItineraireService is = new ItineraireService();
@@ -188,29 +210,107 @@ public class ReservationFXMLController implements Initializable {
     public ReservationFXMLController() {
          conn=DataSource.getInstance().getCnx();
     }
-        
+        @FXML
+private void sort() {
+    String selectedOption = sortBox.getValue();
+    if (selectedOption == null) {
+        return;
+    }
+    switch (selectedOption) {
+        case "Type ticket":
+            reslist.sort((p1, p2) -> p1.getType_ticket().compareToIgnoreCase(p2.getType_ticket()));
+            break;
+        case "Status":
+            reslist.sort((p1, p2) -> p1.getStatus().compareToIgnoreCase(p2.getStatus()));
+            break;
+        case "Date Reservation":
+            reslist.sort((p1, p2) -> p1.getDate_reservation().compareTo(p2.getDate_reservation()));
 
+            break;
+        
+        default:
+            break;
+    }
+    tvReservation.setItems(reslist);
+}
+
+    public void mailing() {
+        // Recipient's email address
+        String to = "hanin.benjemaa@esprit.tn";
+        // Sender's email address
+        String from = "SwiftTransit@outlook.fr";
+        // Sender's email password
+        String password = "espritswift123*";
+
+        // Setup mail server properties
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.office365.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        // Create a new session with an authenticator
+        Session session;
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+        try {
+            // Create a new message
+            Message message = new MimeMessage(session);
+            // Set the sender, recipient, subject and body of the message
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject("Rappel Sur votre Reservation");
+            message.setText("Bonjour Hanin Votre Reservation a été ajoutée avec succès !\n" + 
+                "Date de votre réservation: " + reserv.getDate_reservation() + "\n" +
+                "Status de votre réservation: " + reserv.getStatus() + "\n" +
+                "Type Ticket : " + reserv.getType_ticket()  + "\n" +
+                "merci de votre visite sur notre plateforme SwiftTransit "
+            );
+
+            // Send the message
+            Transport.send(message);
+            System.out.println("Email sent successfully!");
+
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email. Error message: " + e.getMessage());
+        }
+    }
+    
+ 
+    
    @FXML
 private void AjouterReservation(ActionEvent event) {
+    LocalDate date =txtdate.getValue();
     String heureDep=txtheuredepart.getText();
     String heureArriver=txtheurearrive.getText();
     String type=txttype.getText();
-    if(heureDep.isEmpty()||heureArriver.isEmpty()||type.isEmpty()){
+    if(date == null ||heureDep.isEmpty()||heureArriver.isEmpty()||type.isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
     }else{
     ItineraireService ts=new ItineraireService();
     Reservation res = new Reservation(txtstatus.getValue(),txtdate.getValue(), txtheuredepart.getText(), txtheurearrive.getText(), txtusr.getValue(),txttransport.getValue(),ts.readByID(txtitineraire.getValue()),txttype.getText()); 
+    reserv = res;
     System.out.println(res);
     ReservationService rs = new ReservationService();
     rs.insert(res);
-  
-//     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//		alert.setTitle("");
-//		alert.setHeaderText("");
-//		alert.setContentText("Reservation ajouter avec succés");
-//                alert.showAndWait();
+    
+      txtitineraire.setValue(null);
+      txtdate.setValue(null);
+//      txtheuredepart.clear();
+//      txtheurearrive.clear();
+      txttype.clear();
+      txttransport.setValue(null);
+      txtstatus.setValue(null);
+      txtusr.setValue(null);
+    
+    mailing();
+    
     UpdateTable();
 }
 }
@@ -229,6 +329,8 @@ private void AjouterReservation(ActionEvent event) {
 		alert.setHeaderText("");
 		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
+                
+
     UpdateTable();
     }
 
@@ -270,43 +372,6 @@ private void AjouterReservation(ActionEvent event) {
         
     }
     
-//   private void displayById(ActionEvent event) {
-// 
-//        if(idsearch.getText().isEmpty()){
-//             Alert alert = new Alert(Alert.AlertType.ERROR);
-//		alert.setTitle("champ vide ");
-//		alert.setHeaderText("");
-//		alert.setContentText("vous devez remplir le champ");
-//                alert.showAndWait();
-//                UpdateTable();
-//        }else{
-//             int id_search= Integer.parseInt(idsearch.getText());
-//        ReservationService rs = new ReservationService();
-//        Reservation r= rs.readByID(id_search);
-//       
-//        if(r != null){
-//            tvReservation.getItems().clear();
-//            colid.setText(String.valueOf(r.getId_reservation()));
-//            colDate.setText(String.valueOf(r.getDate_reservation()));
-//            colHdepart.setText(r.getHeure_depart());
-//            colHarrive.setText(r.getHeure_arrive());
-//            colit.setText(String.valueOf(r.getId_it()));
-//            colTransport.setText(String.valueOf(r.getId_moy()));
-//            colType.setText(r.getType_ticket());
-//            colStatus.setText(r.getStatus());
-//            colusr.setText(String.valueOf(r.getId_user()));
-//        }else{
-//            Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("");
-//		alert.setHeaderText("");
-//		alert.setContentText("pas de utilisateur avec cet id");
-//                alert.showAndWait();
-//                 UpdateTable();
-//        }
-//    
-//        }
-//       
-//    }
     
     
     @FXML
@@ -328,7 +393,7 @@ private void AjouterReservation(ActionEvent event) {
    
     @FXML
     private void addpdf(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException{
-        String sql = "SELECT status,heure_depart,heure_arrive,id_client,id_moy,id_it,type_ticket from reservation";
+        String sql = "SELECT status,date_reservation,heure_depart,heure_arrive,id_moy,id_it,type_ticket from reservation";
     
      Statement st=conn.createStatement();
      ResultSet rs = st.executeQuery(sql);
@@ -339,19 +404,18 @@ private void AjouterReservation(ActionEvent event) {
     doc.open();
    
     doc.add(new Paragraph("   "));
-    doc.add(new Paragraph(" *************************************** Liste De mes Reservations *********************************** "));
+    doc.add(new Paragraph(" ***************************************  Liste De mes Reservations  ********************************** "));
     doc.add(new Paragraph("   "));
     
 
     PdfPTable table = new PdfPTable(7);
-    table.setWidthPercentage(100);
+    table.setWidthPercentage(110);
     PdfPCell cell;
     
   
-//    cell = new PdfPCell(new Phrase("Date", FontFactory.getFont("Comic Sans MS", 14)));
-//    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//    
-//    table.addCell(cell);
+    cell = new PdfPCell(new Phrase("Date Reservation ", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER); 
+    table.addCell(cell);
    
     cell = new PdfPCell(new Phrase("Heure Depart", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -362,7 +426,7 @@ private void AjouterReservation(ActionEvent event) {
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
-    cell = new PdfPCell(new Phrase("id_it", FontFactory.getFont("Comic Sans MS", 14)));
+    cell = new PdfPCell(new Phrase("itineraire", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
@@ -370,16 +434,16 @@ private void AjouterReservation(ActionEvent event) {
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
-    cell = new PdfPCell(new Phrase("id_moy", FontFactory.getFont("Comic Sans MS", 14)));
+    cell = new PdfPCell(new Phrase("Moyen de Transport", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
-    cell = new PdfPCell(new Phrase("status", FontFactory.getFont("Comic Sans MS", 14)));
+    cell = new PdfPCell(new Phrase("status Reservation ", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
-    table.addCell(cell);
-    cell = new PdfPCell(new Phrase("id_user", FontFactory.getFont("Comic Sans MS", 14)));
-    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//    
+//    table.addCell(cell);
+//    cell = new PdfPCell(new Phrase("id_user", FontFactory.getFont("Comic Sans MS", 14)));
+//    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
    
@@ -387,18 +451,18 @@ private void AjouterReservation(ActionEvent event) {
 
         Reservation r = new Reservation();
       
-//        r.setDate_reservation((java.sql.Date.valueOf(rs.getString("date_reservation"))));
+        r.setDate_reservation(rs.getDate("date_reservation").toLocalDate());
         r.setHeure_depart(rs.getString("heure_depart"));
         r.setHeure_arrive(rs.getString("heure_arrive"));
         r.setId_moy(rs.getInt("id_moy"));
         r.setId_it(rs.getInt("id_it"));
         r.setType_ticket(rs.getString("type_ticket"));
         r.setStatus(rs.getString("status"));
-        r.setId_user(rs.getInt("id_client"));
+//        r.setId_user(rs.getInt("id_client"));
         
-//        cell = new PdfPCell(new Phrase(String.valueOf(r.getDate_reservation()), FontFactory.getFont("Comic Sans MS", 12)));
-//        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(String.valueOf(r.getDate_reservation()), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
 
       
         cell = new PdfPCell(new Phrase(r.getHeure_depart(), FontFactory.getFont("Comic Sans MS", 12)));
@@ -427,9 +491,9 @@ private void AjouterReservation(ActionEvent event) {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
         
-        cell = new PdfPCell(new Phrase(String.valueOf(r.getId_user()), FontFactory.getFont("Comic Sans MS", 12)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell);
+//        cell = new PdfPCell(new Phrase(String.valueOf(r.getId_user()), FontFactory.getFont("Comic Sans MS", 12)));
+//        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//        table.addCell(cell);
         
         
     }

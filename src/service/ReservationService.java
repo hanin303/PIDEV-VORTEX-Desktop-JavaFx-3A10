@@ -64,9 +64,6 @@ public class ReservationService implements IService<Reservation>{
             PreparedStatement pst=conn.prepareStatement(requete);
               
             pst.setDate(1, java.sql.Date.valueOf((LocalDate)list.get(0)));
-            //pst.setDate(1, (Date) list.get(0)); 
-            //LocalDate date_reservation = LocalDate.parse((String) list.get(0));
-            //pst.setDate(1, java.sql.Date.valueOf(date_reservation));
             pst.setString(2, (String) list.get(1));
             pst.setString(3, (String) list.get(2));
             pst.setString(4, (String) list.get(3));
@@ -81,7 +78,6 @@ public class ReservationService implements IService<Reservation>{
         }
     
     }
-
     @Override
     public List<Reservation> readAll() {
          String requete ="select * from reservation";
@@ -101,8 +97,6 @@ public class ReservationService implements IService<Reservation>{
          return list;
     
 }
-      
-    
     
     public Reservation readByID(int id) {
         String requete = "select * from reservation where id_reservation = ?";
@@ -114,7 +108,9 @@ public class ReservationService implements IService<Reservation>{
             ReservationService rss = new ReservationService();
             ItineraireService ts = new ItineraireService();
             if(rs.next()){
-              reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),ts.readByID(rs.getInt(8)),rs.getString(9));
+            //reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),ts.readByID(rs.getInt(8)),rs.getString(9));
+            reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
+
             }
         }catch (SQLException ex) {
             Logger.getLogger(TrajetService.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,11 +123,8 @@ public class ReservationService implements IService<Reservation>{
             PreparedStatement pst=conn.prepareStatement(requete);
               
             pst.setDate(1, (java.sql.Date.valueOf(r.getDate_reservation())));
-            //pst.setDate(1, (Date) list.get(0)); 
-            //LocalDate date_reservation = LocalDate.parse((String) list.get(0));
-            //pst.setDate(1, java.sql.Date.valueOf(date_reservation));
             pst.setString(2,r.getHeure_depart());
-            pst.setString(3, r.getHeure_depart());
+            pst.setString(3, r.getHeure_arrive());
             pst.setString(4, r.getStatus());
             pst.setInt(5, r.getId_user());
             pst.setInt(6, r.getId_moy());
@@ -146,4 +139,3 @@ public class ReservationService implements IService<Reservation>{
     }
 
 }
-

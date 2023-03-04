@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -48,6 +49,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import service.ReservationService;
 import service.TicketService;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 /**
  * FXML Controller class
@@ -86,6 +89,7 @@ public class TicketController implements Initializable {
     private Parent root;
     @FXML
     private Button buttonpay;
+    
 
     /**
      * Initializes the controller class.
@@ -96,8 +100,7 @@ public class TicketController implements Initializable {
         TicketService ts = new TicketService();
         list=ts.readAll();
             System.out.println(list);
-        list2 = list.stream().map(t->new Ticket(t.getId_t(),t.getStatus(),t.getPrix(),t.getId_reservation()))
-                .collect(Collectors.toList());
+        list2 = list.stream().map(t->new Ticket(t.getId_t(),t.getStatus(),t.getPrix(),t.getId_reservation())).collect(Collectors.toList());
             System.out.println(list2);
         ObservableList<Ticket> obs=FXCollections.observableArrayList(list2);
         colid.setCellValueFactory(new PropertyValueFactory<Ticket ,Integer>("id_t"));
@@ -148,13 +151,18 @@ public class TicketController implements Initializable {
 		alert.setHeaderText("");
 		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
+                
+                
+      txtstatus.setValue(null);
+      txtprix.clear();
+      txtinfo.setValue(null);
     UpdateTable();
    
         
     }
-
+    
     @FXML
-    private void AjouterTicket(ActionEvent event) {
+    private void AjouterTicket(ActionEvent event) throws StripeException {
     String st = txtstatus.getValue();
     String prix=txtprix.getText();
     if(st.isEmpty()||prix.isEmpty()){
@@ -169,14 +177,17 @@ public class TicketController implements Initializable {
     TicketService ts = new TicketService();
     ts.insert(res);
     
-//       Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("");
-//		alert.setHeaderText("");
-//		alert.setContentText("Ticket ajouter avec succés");
-//                alert.showAndWait();
+     
+      txtstatus.setValue(null);
+      txtprix.clear();
+      txtinfo.setValue(null);
+      
     UpdateTable();
+    PayerTicket ();
+ 
     }
     }
+    
 
     @FXML
     private void Switchscreenreservation(ActionEvent event)throws IOException {
@@ -200,14 +211,10 @@ public class TicketController implements Initializable {
            txtprix.setStyle("-fx-border-color:green");
        }
     
-   
-    
     @FXML
-    private void PayerTicket(ActionEvent event) throws StripeException {
+    private void PayerTicket()  {
             Stripe.apiKey = "sk_test_51Mg75HLu7B1VCpQ0mSqMJ2ucVpFhYufToAINJK1T6932bHEpdiBaD6tMbEDEwA5Aa4Fh1b9WBLhXcb02dhZNLM79008NYLc3Cf";
-                 //id=ps.insertretrieveid(p1);
-                 //System.out.println(id);
-                 
+           
                 try {
              //Create a customer object for the user who is paying
             Map<String, Object> customerParams = new HashMap<String, Object>();
@@ -218,8 +225,10 @@ public class TicketController implements Initializable {
 //            Customer a = Customer.retrieve("cus_NRSVBhMI96zG1n");
 //            Gson gson = new GsonBuilder().setPrettyPrinting().create();
 //            System.out.println(gson.toJson(a)); 
-             
-            Map<String, Object> retrieveParams = new HashMap<String, Object>();
+               
+                //recuperer donne
+                
+                Map<String, Object> retrieveParams = new HashMap<String, Object>();
 		List<String> expandList = new ArrayList<String>();
 		expandList.add("sources");
 		retrieveParams.put("expand", expandList);
@@ -251,10 +260,10 @@ public class TicketController implements Initializable {
                       
                //PaymentMethod paymentMethod = PaymentMethod.create(cardParam);
                
-               System.out.println(customer.getId());       
+               System.out.println(customer.getId());     
                //Use the payment method to make a charge
                Map<String, Object> chargeParams = new HashMap<String, Object>();
-               chargeParams.put("amount", "500");
+               chargeParams.put("amount", "900");
                chargeParams.put("currency", "usd");
                //chargeParams.put("description", "Example charge");
                //chargeParams.put("source", token.getId());
@@ -265,13 +274,10 @@ public class TicketController implements Initializable {
         } catch (StripeException e) {
             System.out.println("Error: " + e.getMessage());
         }
-    
    
     
     }
-    
-    
-    
+   
     
     }
 

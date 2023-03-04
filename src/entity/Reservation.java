@@ -21,6 +21,8 @@ public class Reservation {
     private LocalDate date_reservation ;
     private String heure_depart ;
     private String heure_arrive ;
+    private int id_it;
+    
 
     public Reservation(String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
         this.status = status;
@@ -35,7 +37,6 @@ public class Reservation {
     }
     private int id_moy;
     private int id_user;
-    private int id_it;
     private Iteneraire iteneraire ;
     private String type_ticket;
     

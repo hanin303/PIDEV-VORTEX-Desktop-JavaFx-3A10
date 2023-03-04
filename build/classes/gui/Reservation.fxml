@@ -106,16 +106,17 @@
             <Image url="@logoooooooo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="idsearch" layoutX="761.0" layoutY="106.0" prefHeight="26.0" prefWidth="170.0" />
-      <Button fx:id="btnSearch" layoutX="932.0" layoutY="106.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="26.0" prefWidth="130.0" text="Recherche">
+      <TextField fx:id="idsearch" layoutX="881.0" layoutY="105.0" prefHeight="26.0" prefWidth="170.0" />
+      <Button fx:id="btnSearch" layoutX="1052.0" layoutY="105.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="26.0" prefWidth="130.0" text="Recherche">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" />
          </graphic>
       </Button>
-      <Button fx:id="idPrint" layoutX="564.0" layoutY="106.0" mnemonicParsing="false" onAction="#addpdf" prefHeight="26.0" prefWidth="158.0" text="  Generate PDF">
+      <Button fx:id="idPrint" layoutX="498.0" layoutY="106.0" mnemonicParsing="false" onAction="#addpdf" prefHeight="26.0" prefWidth="158.0" text="  Generate PDF">
          <graphic>
             <FontAwesomeIconView glyphName="FILE" text="" />
          </graphic>
       </Button>
+      <ComboBox fx:id="sortBox" layoutX="673.0" layoutY="106.0" onAction="#sort" prefHeight="26.0" prefWidth="190.0" promptText="Trier" />
    </children>
 </AnchorPane>
