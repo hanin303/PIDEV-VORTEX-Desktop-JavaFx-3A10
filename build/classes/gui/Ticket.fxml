@@ -38,7 +38,7 @@
             <ComboBox fx:id="txtinfo" prefHeight="26.0" prefWidth="163.0" />
          </children>
       </VBox>
-      <TableView fx:id="tvTicket" layoutX="326.0" layoutY="102.0" prefHeight="379.0" prefWidth="554.0">
+      <TableView fx:id="tvTicket" layoutX="326.0" layoutY="102.0" prefHeight="379.0" prefWidth="567.0">
         <columns>
           <TableColumn fx:id="colid" prefWidth="71.199951171875" text="ID" />
           <TableColumn fx:id="colstatus" prefWidth="133.60000610351562" text="Status Ticket" />
@@ -46,19 +46,19 @@
             <TableColumn fx:id="colinfo" prefWidth="301.5999755859375" text="Numéro Reservation" />
         </columns>
       </TableView>
-      <Button fx:id="btnDelete" layoutX="731.0" layoutY="42.0" mnemonicParsing="false" onAction="#SupprimerTicket" prefHeight="26.0" prefWidth="114.0" text="Supprimer">
+      <Button fx:id="btnDelete" layoutX="731.0" layoutY="42.0" mnemonicParsing="false" onAction="#SupprimerTicket" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Supprimer">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
          </graphic></Button>
-      <Button fx:id="btnUpdate" layoutX="567.0" layoutY="42.0" mnemonicParsing="false" onAction="#ModifierTicket" prefHeight="26.0" prefWidth="114.0" text="Modifier">
+      <Button fx:id="btnUpdate" layoutX="579.0" layoutY="42.0" mnemonicParsing="false" onAction="#ModifierTicket" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Modifier">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" />
          </graphic></Button>
-      <Button fx:id="btnAdd" layoutX="403.0" layoutY="42.0" mnemonicParsing="false" onAction="#AjouterTicket" prefHeight="26.0" prefWidth="100.0" text="Ajouter">
+      <Button fx:id="btnAdd" layoutX="427.0" layoutY="42.0" mnemonicParsing="false" onAction="#AjouterTicket" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Ajouter">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
          </graphic></Button>
-      <Button fx:id="btnBack" layoutX="14.0" layoutY="524.0" mnemonicParsing="false" onAction="#Switchscreenreservation" prefHeight="26.0" prefWidth="184.0" text="Back To Reservation">
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="524.0" mnemonicParsing="false" onAction="#Switchscreenreservation" prefHeight="26.0" prefWidth="184.0" style="-fx-background-radius: 12;" text="Back To Reservation">
          <graphic>
             <FontAwesomeIconView glyphName="ARROW_CIRCLE_RIGHT" />
          </graphic></Button>
@@ -67,7 +67,7 @@
             <Image url="@logoooooooo.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonpay" layoutX="141.0" layoutY="391.0" mnemonicParsing="false" onAction="#PayerTicket" prefHeight="26.0" prefWidth="166.0" text="Submit Paiement">
+      <Button fx:id="buttonpay" layoutX="141.0" layoutY="391.0" mnemonicParsing="false" onAction="#PayerTicket" prefHeight="26.0" prefWidth="166.0" style="-fx-background-radius: 12;" text="Submit Paiement">
          <graphic>
             <FontAwesomeIconView glyphName="PAYPAL" />
          </graphic>

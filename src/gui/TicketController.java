@@ -89,11 +89,18 @@ public class TicketController implements Initializable {
     private Parent root;
     @FXML
     private Button buttonpay;
+    private Ticket ticket1;
     
 
     /**
      * Initializes the controller class.
      */
+    
+    
+     public ObservableList<Ticket> returnlist(ObservableList<Ticket> obs){
+        return obs;
+      
+      }
         public void UpdateTable(){
         List<Ticket> list=new ArrayList<>();
         List<Ticket> list2=new ArrayList<>();
@@ -161,6 +168,50 @@ public class TicketController implements Initializable {
         
     }
     
+    public void mailing() {
+        // Recipient's email address
+        String to = "hanin.benjemaa@esprit.tn";
+        // Sender's email address
+        String from = "SwiftTransit.platform@outlook.fr";
+        // Sender's email password
+        String password = "espritswift123**";
+
+        // Setup mail server properties
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.office365.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        // Create a new session with an authenticator
+        Session session;
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+        try {
+            // Create a new message
+            Message message = new MimeMessage(session);
+            // Set the sender, recipient, subject and body of the message
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject("Paiement Ticket");
+            message.setText("Bonjour Hanin Votre paiement a été effectuer avec succès !\n" + 
+                "merci de votre visite sur notre plateforme SwiftTransit "
+            );
+
+            // Send the message
+            Transport.send(message);
+            System.out.println("Email sent successfully!");
+
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email. Error message: " + e.getMessage());
+        }
+    }
+    
+
     @FXML
     private void AjouterTicket(ActionEvent event) throws StripeException {
     String st = txtstatus.getValue();
@@ -177,13 +228,13 @@ public class TicketController implements Initializable {
     TicketService ts = new TicketService();
     ts.insert(res);
     
-     
       txtstatus.setValue(null);
       txtprix.clear();
       txtinfo.setValue(null);
-      
+     
     UpdateTable();
     PayerTicket ();
+    mailing();  
  
     }
     }

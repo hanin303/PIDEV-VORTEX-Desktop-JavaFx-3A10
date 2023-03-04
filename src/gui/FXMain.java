@@ -26,6 +26,7 @@ public class FXMain extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Reservation.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("Ticket.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("Drawer.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

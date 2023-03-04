@@ -84,19 +84,19 @@
             <TableColumn fx:id="colusr" minWidth="0.0" text="ID Client" />
         </columns>
       </TableView>
-      <Button fx:id="btnInsert" layoutX="58.0" layoutY="568.0" mnemonicParsing="false" onAction="#AjouterReservation" prefHeight="26.0" prefWidth="102.0" text="Ajouter">
+      <Button fx:id="btnInsert" layoutX="31.0" layoutY="581.0" mnemonicParsing="false" onAction="#AjouterReservation" prefHeight="26.0" prefWidth="130.0" style="-fx-background-radius: 12;" text="Ajouter">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
          </graphic></Button>
-      <Button fx:id="btnUpdate" layoutX="168.0" layoutY="568.0" mnemonicParsing="false" onAction="#ModifierReservation" prefHeight="26.0" prefWidth="102.0" text="Modifier">
+      <Button fx:id="btnUpdate" layoutX="178.0" layoutY="581.0" mnemonicParsing="false" onAction="#ModifierReservation" prefHeight="26.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Modifier">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" text="" />
          </graphic></Button>
-      <Button fx:id="btnDelete" layoutX="287.0" layoutY="568.0" mnemonicParsing="false" onAction="#SupprimerReservation" prefHeight="26.0" prefWidth="115.0" text="Supprimer">
+      <Button fx:id="btnDelete" layoutX="320.0" layoutY="581.0" mnemonicParsing="false" onAction="#SupprimerReservation" prefHeight="26.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Supprimer">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
          </graphic></Button>
-      <Button fx:id="btnGo" layoutX="740.0" layoutY="568.0" mnemonicParsing="false" onAction="#switchscreenticket" prefHeight="26.0" prefWidth="178.0" text="Go To Gestion Ticket">
+      <Button fx:id="btnGo" layoutX="740.0" layoutY="581.0" mnemonicParsing="false" onAction="#switchscreenticket" prefHeight="26.0" prefWidth="178.0" style="-fx-background-radius: 12;" text="Go To Gestion Ticket">
          <graphic>
             <FontAwesomeIconView glyphName="ARROW_CIRCLE_LEFT" />
          </graphic>
@@ -112,11 +112,11 @@
             <FontAwesomeIconView glyphName="SEARCH" />
          </graphic>
       </Button>
-      <Button fx:id="idPrint" layoutX="498.0" layoutY="106.0" mnemonicParsing="false" onAction="#addpdf" prefHeight="26.0" prefWidth="158.0" text="  Generate PDF">
+      <Button fx:id="idPrint" layoutX="498.0" layoutY="106.0" mnemonicParsing="false" onAction="#addpdf" prefHeight="26.0" prefWidth="158.0" style="-fx-background-radius: 12;" styleClass="-fx-background-radius" text="  Generate PDF">
          <graphic>
             <FontAwesomeIconView glyphName="FILE" text="" />
          </graphic>
       </Button>
-      <ComboBox fx:id="sortBox" layoutX="673.0" layoutY="106.0" onAction="#sort" prefHeight="26.0" prefWidth="190.0" promptText="Trier" />
+      <ComboBox fx:id="sortBox" layoutX="673.0" layoutY="106.0" onAction="#sort" prefHeight="26.0" prefWidth="190.0" promptText="Trier" style="-fx-background-radius: 12;" />
    </children>
 </AnchorPane>

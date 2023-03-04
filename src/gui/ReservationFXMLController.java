@@ -58,6 +58,7 @@ import service.ItineraireService;
 import service.ReservationService;
 import connexionbd.utils.DataSource;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import javafx.scene.control.Cell;
 import javafx.scene.layout.Border;
 import javax.mail.*;
@@ -124,6 +125,8 @@ public class ReservationFXMLController implements Initializable {
     @FXML
     private Button idPrint;
     
+    private static final Pattern TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
+    
     private Connection conn;
     ObservableList<Reservation> reslist;
     private Reservation reserv;
@@ -173,15 +176,12 @@ public class ReservationFXMLController implements Initializable {
                 "Date Reservation",
                 "Type ticket",
                 "Status"
-                
-                
+                 
         );
         
         sortBox.setItems(items);
        // sortBox.setOnAction(event -> sort());
-       
-        
-        
+
         ItineraireService is = new ItineraireService();
         ObservableList<Iteneraire> itineraires = FXCollections.observableArrayList(is.readAll());
          List<Integer> id_it_list = itineraires.stream().map(Iteneraire::getId).collect(Collectors.toList());
@@ -238,9 +238,9 @@ private void sort() {
         // Recipient's email address
         String to = "hanin.benjemaa@esprit.tn";
         // Sender's email address
-        String from = "SwiftTransit@outlook.fr";
+        String from = "SwiftTransit.platform@outlook.fr";
         // Sender's email password
-        String password = "espritswift123*";
+        String password = "espritswift123**";
 
         // Setup mail server properties
         Properties props = new Properties();
@@ -372,8 +372,6 @@ private void AjouterReservation(ActionEvent event) {
         
     }
     
-    
-    
     @FXML
     private void ControleSaisieHeure(KeyEvent event) {
         txtheuredepart.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -388,6 +386,20 @@ private void AjouterReservation(ActionEvent event) {
         }
         });
                 }
+
+//   @FXML
+//    private void ControleSaisieHeure(KeyEvent event) {
+//        txtheuredepart.textProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!TIME_PATTERN.matcher(newValue).matches()) {
+//                txtheuredepart.setStyle("-fx-border-color: red ;");
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setContentText("Le format de l'heure depart est incorrect. Utilisez le format HH:mm.");
+//                alert.showAndWait();
+//            } else {
+//                txtheuredepart.setStyle("-fx-border-color: transparent ;");
+//            }
+//        });
+//    }
     
 
    
