@@ -31,12 +31,13 @@
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
       </Label>
-      <Hyperlink layoutX="309.0" layoutY="250.0" onAction="#switchForgetPassword1" text="Forget password? " />
+      <Hyperlink layoutX="309.0" layoutY="250.0" onAction="#switchForgetPassword1" text="Mot de passe oublié? " />
       <ImageView fitHeight="54.0" fitWidth="128.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@kslvAsset%203char.png" />
          </image>
       </ImageView>
       <PasswordField fx:id="mdp_column" layoutX="186.0" layoutY="224.0" prefHeight="26.0" prefWidth="218.0" />
+      <Hyperlink layoutX="230.0" layoutY="308.0" onAction="#SwitchInscription" text="Vous n'avez pas un compte?" />
    </children>
 </AnchorPane>

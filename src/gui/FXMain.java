@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class FXMain extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException{
-        Parent root=FXMLLoader.load(getClass().getResource("ForgetPassword1.fxml"));
+        Parent root=FXMLLoader.load(getClass().getResource("DisplayRole.fxml"));
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
         primaryStage.show();

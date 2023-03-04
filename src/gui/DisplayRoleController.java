@@ -5,6 +5,7 @@
 package gui;
 
 import entity.Role;
+import entity.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class DisplayRoleController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private User u;
     
 
     
@@ -74,6 +76,9 @@ public class DisplayRoleController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         displayRole();
     }  
+    public void getUser(User u){
+        this.u=u;
+    }
 
     public void displayRole(){
         List<Role> list= new ArrayList<>();
@@ -88,34 +93,40 @@ public class DisplayRoleController implements Initializable {
     
     @FXML
     public void modifierRole(){
-        String newNom= nom_up.getText();
-        if(newNom.isEmpty()){
+        if(nom_up.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
-             alert.setContentText("Vous devez entrer un role"); 
+             alert.setContentText("Vous devez saisir un role"); 
              alert.showAndWait();
         }else{
+        if(rs.readByNom(nom_up.getText())==null){
         List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText()));
         Role r= tableRole.getSelectionModel().getSelectedItem();
         rs.update(list, r.getId_role());
         displayRole();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("mise à jour");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Erreur");
 		alert.setHeaderText("");
-		alert.setContentText("Mise à jour avec succés");
+		alert.setContentText("role existe déjà");
                 alert.showAndWait();
-                nom_up.setText("");
+                clearFields();
+        }else{
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+                 alert.setTitle("ErreurMise à jour");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Mise à jour avec succés");
+                 alert.showAndWait();
+        }
         }
         
     }
     @FXML
     public void ajouterRole(){
-        String newId=id_role1.getText();
-        String newNom=nom1.getText();
-        if(newId.isEmpty()||newNom.isEmpty()){
+        if(id_role1.getText().isEmpty()||nom1.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
         }else{
+            if(rs.readByNom(nom1.getText())==null){
         Role r = new Role(Integer.parseInt(id_role1.getText()),nom1.getText());
         rs.insert(r);
         displayRole();
@@ -125,6 +136,13 @@ public class DisplayRoleController implements Initializable {
 		alert.setContentText("role ajouté avec succés");
                 alert.showAndWait();
                 clearFields();
+            }else{
+                Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Erreur");
+                 alert.setHeaderText(null);
+                 alert.setContentText("role existe déjà");
+                 alert.showAndWait();
+            }
         }
         
         
@@ -159,11 +177,16 @@ public class DisplayRoleController implements Initializable {
 
     @FXML
     private void BackHome(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HomePageAdmin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageAdmin.fxml"));
+        Parent root = loader.load();         
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        HomePageAdminController controller = loader.getController();
+        controller.setFields(u);
+
+        
     }
     
 

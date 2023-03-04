@@ -77,18 +77,24 @@ public class HomePageAdminStationController implements Initializable {
     private Button modfier;
     @FXML
     private Button changer;
-//    @FXML
-//    private TextField role;
-    
+    private User u;   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        id.setVisible(false);
        path_image.setVisible(false);
-//       role.setVisible(false);
+       setEmptyImage();
 
-
-
-    }   
+    }  
+  @FXML
+   public void setEmptyImage(){
+       if(image.getImage()==null){
+           File file= new File("C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\gui\\unknown.png");
+           Image i= new Image(file.toURI().toString());
+           image.setImage(i);
+           image.setFitWidth(image.getFitWidth());
+           image.setFitHeight(image.getFitHeight());
+       } 
+   }
     
     
     private boolean EmailValid(String email){
@@ -116,6 +122,7 @@ public class HomePageAdminStationController implements Initializable {
      */
     
     public void setFields(User u){
+    this.u=u;
     id.setText(String.valueOf(u.getId_user()));
     nom.setText(u.getNom());
     prenom.setText(u.getPrenom());
@@ -130,7 +137,6 @@ public class HomePageAdminStationController implements Initializable {
     image.setImage(i);
     image.setFitWidth(image.getFitWidth());
     image.setFitHeight(image.getFitHeight());
-    
     }
     @FXML
     private void modifierUser(ActionEvent event) throws NullPointerException{

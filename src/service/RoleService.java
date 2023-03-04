@@ -33,12 +33,12 @@ public class RoleService implements IService<Role>{
             ste.setInt(1,r.getId_role());
             ste.setString(2,r.getNom());
             ste.executeUpdate();
-        }catch (SQLIntegrityConstraintViolationException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setHeaderText("Erreur de base de données");
-                alert.setContentText("rôle existe déjà");
-                alert.showAndWait();
+//        }catch (SQLIntegrityConstraintViolationException e) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Erreur");
+//                alert.setHeaderText("Erreur de base de données");
+//                alert.setContentText("rôle existe déjà");
+//                alert.showAndWait();
             } catch (SQLException ex) {
             Logger.getLogger(RoleService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,13 +63,7 @@ public class RoleService implements IService<Role>{
             PreparedStatement ste = conn.prepareStatement(requete);
             ste.setString(1,(String)list.get(0));
             ste.executeUpdate();
-        }catch (SQLIntegrityConstraintViolationException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setHeaderText("Erreur de base de données");
-                alert.setContentText("rôle existe déjà");
-                alert.showAndWait();
-            } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(RoleService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -107,6 +101,23 @@ public class RoleService implements IService<Role>{
             UserService us= new UserService();
             if(rs.next()){
                 role= new Role(rs.getInt(1),rs.getString(2),us.readyById_role(id));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return role;
+    }
+    public Role readByNom(String nom) {
+        String requete="SELECT * FROM Role WHERE id_role=?";
+        Role role = null;
+        try {
+            PreparedStatement ste = conn.prepareStatement(requete);
+            ste.setString(1, nom);            
+            ResultSet rs= ste.executeQuery();
+            UserService us= new UserService();
+            if(rs.next()){
+                role= new Role(rs.getInt(1),rs.getString(2));
                 
             }
         } catch (SQLException ex) {

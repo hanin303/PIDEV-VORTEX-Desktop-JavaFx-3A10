@@ -84,13 +84,25 @@ public class HomePageAdminController implements Initializable {
     private Button modfier;
     @FXML
     private Button changer;
+    private User u;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        id.setVisible(false);
        path_image.setVisible(false);
+       setEmptyImage();
  }   
+ @FXML
+   public void setEmptyImage(){
+       if(image.getImage()==null){
+           File file= new File("C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\gui\\unknown.png");
+           Image i= new Image(file.toURI().toString());
+           image.setImage(i);
+           image.setFitWidth(image.getFitWidth());
+           image.setFitHeight(image.getFitHeight());
+       } 
+   }
     
     
     private boolean EmailValid(String email){
@@ -111,11 +123,9 @@ public class HomePageAdminController implements Initializable {
     // Expression régulière pour un numéro de téléphone de 8 chiffres (sans les indicateurs de pays)
     String regex = "^[0-9]{8}$";
     return cin.matches(regex);
-}
-
-
-    
+}   
     public void setFields(User u){
+    this.u=u;
     id.setText(String.valueOf(u.getId_user()));
     nom.setText(u.getNom());
     prenom.setText(u.getPrenom());
@@ -235,19 +245,28 @@ private void uploadImage(ActionEvent event){
 }
     @FXML
     private void SwitchDisplayUser(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("DisplayUser.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DisplayUser.fxml"));
+        Parent root = loader.load();                     
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        DisplayUserController controller = loader.getController();
+        controller.getUser(u);
+        
+
+        
     }
     @FXML
     private void SwitchDisplayRole(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("DisplayRole.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DisplayRole.fxml"));
+        Parent root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        DisplayRoleController controller = loader.getController();
+        controller.getUser(u);
     }
     
     

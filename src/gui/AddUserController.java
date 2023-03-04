@@ -80,6 +80,8 @@ public class AddUserController implements Initializable {
     private Parent root;
         
     int max=8;
+    @FXML
+    private PasswordField mdp1;
    
     
     
@@ -128,10 +130,12 @@ public class AddUserController implements Initializable {
          if(NumberValid(num_tel.getText())){
              if(CinValid(cin.getText())){
                  if(mdp.getText().length()>=8){
-{
+                     if(mdp1.getText().equals(mdp.getText())){
+                         if(us.readByEmail(email.getText())==null){
+                             if(us.readByUsername(username.getText())==null){
                    User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
                    us.insert(u);
-        Alert alert = new Alert(AlertType.INFORMATION);
+                 Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("création");
 		alert.setHeaderText("");
 		alert.setContentText("compte crée avec succés");
@@ -144,8 +148,28 @@ public class AddUserController implements Initializable {
                 stage.show();
                 HomePageClientController controller = loader.getController();
                 controller.setFields(u);
+                             }else{
+                 Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Erreur");
+                 alert.setHeaderText(null);
+                 alert.setContentText("email existe déjà");
+                 alert.showAndWait();
+                             }
+                         }else{
+                 Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Erreur");
+                 alert.setHeaderText(null);
+                 alert.setContentText("username existe déjà");
+                 alert.showAndWait();
+                         }
                 
-}
+}else{
+           Alert alert= new Alert(AlertType.ERROR);
+           alert.setTitle("mots de passe non identiques");
+           alert.setHeaderText(null);
+           alert.setContentText("Vous devez saisir des mots de passe identiques");
+           alert.showAndWait();        
+                     }
                  }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
@@ -192,6 +216,7 @@ private void clearFields(){
 @FXML
 private void hidePassword(){
     mdp.setVisible(false);
+    mdp1.setVisible(false);
 }
 
 @FXML
@@ -241,6 +266,15 @@ private void uploadImage(ActionEvent event){
                
                
        }     
+
+    @FXML
+    private void SwitchLogin(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
 
  

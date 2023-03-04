@@ -153,7 +153,7 @@ public class User {
     @Override
     public String toString() {
         if(role!=null){
-        return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + ", image=" + image + ", role=" + role.getNom() + '}';
+        return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + ", image=" + image + ", role=" + role.getId_role()+ '}';
     }else {
         return "User{" + "id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", username=" + username + ", email=" + email + ", mdp=" + mdp + ", num_tel=" + num_tel + ", cin=" + cin + ", image=" + image +'}';
         }

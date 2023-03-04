@@ -17,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import service.UserService;
 import javafx.scene.control.PasswordField;
@@ -38,7 +37,7 @@ public class ForgetPassword2Controller implements Initializable {
     @FXML
     private Button changer;
     UserService us= new UserService();
-    String email_add;
+    String email;
     public User u;
     private Stage stage;
     private Scene scene;
@@ -53,22 +52,15 @@ public class ForgetPassword2Controller implements Initializable {
         // TODO
     }   
     public void getEmail(String email){
-        u=us.readByEmail(email);
-        email_add=email;
-        System.out.println("forget2:"+email);
-        System.out.println("forget2this:"+email_add);
-
+        this.email=email;
     }
    
     @FXML
     public void ChangePassword(ActionEvent event) throws IOException{
-        System.out.println(u);
-        String email_add2= email_add;
-        System.out.println("forget4:"+email_add2);
         Base64.Encoder encoder = Base64.getEncoder();
+        if(mdp1.getText().length()>=8){
         if(mdp1.getText().equals(mdp2.getText())){
-            System.out.println("forget5:"+email_add2);
-            us.updatePassword(email_add2,encoder.encodeToString(mdp1.getText().getBytes()));
+            us.updatePassword(email,encoder.encodeToString(mdp1.getText().getBytes()));
              Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("succés");
 		alert.setHeaderText("");
@@ -79,8 +71,21 @@ public class ForgetPassword2Controller implements Initializable {
                 scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+        }else{
+           Alert alert= new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("mot de passe non valide");
+           alert.setHeaderText(null);
+           alert.setContentText("vous devez saisir un mot de passe valide");
+           alert.showAndWait();
         }
-        
+        }else{
+           Alert alert= new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Mots de passe non identiques");
+           alert.setHeaderText(null);
+           alert.setContentText("vous devez saisir des mots de passe identiques");
+           alert.showAndWait();
+                
+                }
     }
     @FXML
 private void hidePassword(){
