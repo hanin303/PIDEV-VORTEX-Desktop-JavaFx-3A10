@@ -106,6 +106,10 @@ public class CRUDMOYController implements Initializable {
     private TextField searchField;
     @FXML
     private Label test;
+    @FXML
+    private TextField num;
+    @FXML
+    private TableColumn<MoyTran, Integer> mat1;
     /**
      * Initializes the controller class.
      * @param url
@@ -130,6 +134,7 @@ public class CRUDMOYController implements Initializable {
         ObservableList<MoyTran> obs=FXCollections.observableArrayList(list);
         idmoy.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_moy"));
         mat.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("matricule"));
+        mat1.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("num"));
         cap.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("capacite"));
         tv.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("type_vehicule"));
         marque.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("marque"));
@@ -173,7 +178,7 @@ public class CRUDMOYController implements Initializable {
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
     }else{
-        MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(txtcap.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
+        MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
         MoyTranService s =new MoyTranService();
         s.insert(t);
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -201,7 +206,7 @@ public class CRUDMOYController implements Initializable {
 
     @FXML
     private void update(ActionEvent event) {
-        List<Object> list = new ArrayList<>(Arrays.asList(Integer.parseInt(txtm.getText()),Integer.parseInt(txtcap.getText()), 
+        List<Object> list = new ArrayList<>(Arrays.asList(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), 
                 typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue()));
         MoyTranService ts=new MoyTranService();
         MoyTran selected_trajet =  tabmoy.getSelectionModel().getSelectedItem();
@@ -224,14 +229,7 @@ public class CRUDMOYController implements Initializable {
 //        
 //    }
 
-    @FXML
-    private void switchtmp(ActionEvent event) throws IOException {
-        root1 = FXMLLoader.load(getClass().getResource("CRUDLIGNE.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root1);
-        stage.setScene(scene);
-        stage.show();
-    }
+  
 
     @FXML
     private void limit1(KeyEvent event) {
@@ -259,10 +257,7 @@ public class CRUDMOYController implements Initializable {
     }
     }
 
-    @FXML
-    private void switchtmp(MouseEvent event) {
-        
-    }
+    
 
     @FXML
     private void limit4(KeyEvent event) {
@@ -306,7 +301,8 @@ public class CRUDMOYController implements Initializable {
     doc.open();
    
     doc.add(new Paragraph("   "));
-    doc.add(new Paragraph(" *********************************** Liste Des moyens de transport *********************************** "));
+    doc.add(new Paragraph("                                  Liste Des moyens de transport                                  "));
+    
     doc.add(new Paragraph("   "));
 
     PdfPTable table = new PdfPTable(7);
@@ -320,15 +316,17 @@ public class CRUDMOYController implements Initializable {
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
+     cell = new PdfPCell(new Phrase("Numéro", FontFactory.getFont("Comic Sans MS", 14)));
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+    table.addCell(cell);
    
     cell = new PdfPCell(new Phrase("Capacité", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
     table.addCell(cell);
     
-   
-    
-    
+  
     cell = new PdfPCell(new Phrase("type Véhicule", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     
@@ -354,6 +352,7 @@ public class CRUDMOYController implements Initializable {
        MoyTran m = new MoyTran();
         m.setId_moy(rs.getInt("id_moy"));
         m.setMatricule(rs.getInt("matricule"));
+        m.setMatricule(rs.getInt("num"));
         m.setCapacite(rs.getInt("capacite"));
         m.setType_vehicule(rs.getString("type_vehicule"));
         m.setMarque(rs.getString("marque"));
@@ -368,6 +367,11 @@ public class CRUDMOYController implements Initializable {
         cell = new PdfPCell(new Phrase(String.valueOf(m.getMatricule()), FontFactory.getFont("Comic Sans MS", 12)));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
+        
+        cell = new PdfPCell(new Phrase(String.valueOf(m.getNum()), FontFactory.getFont("Comic Sans MS", 12)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
         
         cell = new PdfPCell(new Phrase(String.valueOf(m.getCapacite()), FontFactory.getFont("Comic Sans MS", 12)));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -418,6 +422,43 @@ public class CRUDMOYController implements Initializable {
                 alert.showAndWait();
         //test.setText("Total des Moyens de transport de cette marque : " + transportList.size());
     }
+
+    @FXML
+    private void stat(ActionEvent event) {
+        
+         
+         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BarChartm.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            // e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void switchmmp(ActionEvent event) throws IOException {
+           root1 = FXMLLoader.load(getClass().getResource("CRUDLIGNE.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root1);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void switchtmp(MouseEvent event) throws IOException {
+           root1 = FXMLLoader.load(getClass().getResource("CRUDLIGNE.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root1);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    
+
+   
 
    
     

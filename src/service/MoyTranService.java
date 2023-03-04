@@ -28,8 +28,8 @@ public class MoyTranService implements IService<MoyTran> {
     @Override
     public void insert(MoyTran t) {
         
-       String requete="insert into moyentransport (matricule,capacite,type_vehicule,marque,etat,id_ligne) values"
-                + "('"+t.getMatricule()+"','"+t.getCapacite()+"','"+t.getType_vehicule()+"','"+ t.getMarque()+"','"+t.getEtat()+"','"+t.getId_ligne()+"')";
+       String requete="insert into moyentransport (matricule,num,capacite,type_vehicule,marque,etat,id_ligne) values"
+                + "('"+t.getMatricule()+"','"+t.getNum()+"','"+t.getCapacite()+"','"+t.getType_vehicule()+"','"+ t.getMarque()+"','"+t.getEtat()+"','"+t.getId_ligne()+"')";
         try {
             Statement ste=conn.createStatement();
             ste.executeUpdate(requete);
@@ -98,7 +98,7 @@ public class MoyTranService implements IService<MoyTran> {
             
            
             
-            MoyTran m = new MoyTran(rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"),l.readByID(rs.getInt("id_ligne")));
+            MoyTran m = new MoyTran(rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"));
                 
                list.add(m);
                        
@@ -115,15 +115,16 @@ public class MoyTranService implements IService<MoyTran> {
     @Override
     public void update(List<Object> list, int id) {
         
-        String requete="update moyentransport set matricule = ?, capacite = ? , type_vehicule = ?,marque = ?,etat = ?, id_ligne= ? where id_moy=" + id;
+        String requete="update moyentransport set matricule = ?, num = ? , capacite = ? , type_vehicule = ?,marque = ?,etat = ?, id_ligne= ? where id_moy=" + id;
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
             pst.setInt(1, (int) list.get(0));
             pst.setInt(2, (int) list.get(1));
-            pst.setString(3, (String) list.get(2));
+            pst.setInt(3, (int) list.get(2));
             pst.setString(4, (String) list.get(3));
             pst.setString(5, (String) list.get(4));
-            pst.setInt(6, (int) list.get(5));
+            pst.setString(6, (String) list.get(5));
+            pst.setInt(7, (int) list.get(6));
             
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -153,12 +154,12 @@ public class MoyTranService implements IService<MoyTran> {
              
            //MoyTran m = new MoyTran();
                LigneService l = new LigneService();
-//                     
+//                     ,
 //            l.setId_ligne(rs.getInt("id_ligne"));
 //            l.setNom_ligne(rs.getNString("nom_ligne"));
 //            l.setType_ligne(rs.getString("type_ligne"));
            
-           m=new MoyTran( rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"),l.readByID(rs.getInt("id_ligne")));
+           m=new MoyTran( rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"));
            
                              
            }

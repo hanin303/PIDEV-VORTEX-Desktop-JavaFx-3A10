@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="919.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CRUDLIGNEController">
+<AnchorPane id="AnchorPane" prefHeight="523.0" prefWidth="1003.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CRUDLIGNEController">
    <children>
-      <TableView fx:id="tablig" layoutX="390.0" layoutY="130.0" prefHeight="248.0" prefWidth="506.0" style="-fx-background-color: F0EEED;">
+      <TableView fx:id="tablig" layoutX="483.0" layoutY="130.0" prefHeight="259.0" prefWidth="506.0" style="-fx-background-color: F0EEED;">
         <columns>
             <TableColumn fx:id="id_li" prefWidth="173.0" text="ID " />
           <TableColumn fx:id="nom_li" prefWidth="173.0" text="Nom Ligne" />
@@ -63,7 +63,7 @@
             <Font name="Berlin Sans FB" size="15.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" />
+            <FontAwesomeIconView fill="#6096b4" glyphName="EDIT" />
          </graphic>
       </Button>
       <ImageView fitHeight="75.0" fitWidth="212.0" layoutX="36.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
@@ -71,7 +71,7 @@
             <Image url="@kslvAsset%201char.png" />
          </image>
       </ImageView>
-      <Button layoutX="647.0" layoutY="394.0" mnemonicParsing="false" onAction="#switchtmoy" prefHeight="27.0" prefWidth="252.0" text="Gestion des moyens de transport">
+      <Button layoutX="737.0" layoutY="394.0" mnemonicParsing="false" onAction="#switchtmoy" prefHeight="27.0" prefWidth="252.0" text="Gestion des moyens de transport">
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
          </font>
@@ -79,9 +79,9 @@
             <FontAwesomeIconView fill="#6096b4" glyphName="BUS" />
          </graphic>
       </Button>
-      <FontAwesomeIconView fill="#609ea2" glyphName="BUS" layoutX="898.0" layoutY="37.0" size="25" text="" wrappingWidth="34.0" />
-      <FontAwesomeIconView fill="#609ea2" glyphName="TRAIN" layoutX="898.0" layoutY="73.0" size="25" />
-      <FontAwesomeIconView fill="#609ea2" glyphName="SUBWAY" layoutX="898.0" layoutY="112.0" size="25" text="" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="BUS" layoutX="942.0" layoutY="35.0" size="25" text="" wrappingWidth="34.0" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="TRAIN" layoutX="942.0" layoutY="73.0" size="25" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="SUBWAY" layoutX="942.0" layoutY="110.0" size="25" text="" />
       <TextField fx:id="txtche" layoutX="8.0" layoutY="342.0" prefHeight="25.0" prefWidth="209.0" />
       <Button layoutX="258.0" layoutY="342.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="25.0" prefWidth="120.0" text="Chercher">
          <font>
@@ -91,6 +91,10 @@
             <FontAwesomeIconView fill="#6096b4" glyphName="SEARCH" />
          </graphic>
       </Button>
-      <Button layoutX="472.0" layoutY="395.0" mnemonicParsing="false" onAction="#stat" prefHeight="25.0" prefWidth="164.0" text="Stat" />
+      <Button layoutX="484.0" layoutY="395.0" mnemonicParsing="false" onAction="#stat" prefHeight="25.0" prefWidth="223.0" text="Statistique">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CIRCLE" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

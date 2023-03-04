@@ -31,8 +31,8 @@ public class SwiftTransitProject2 {
         
         MoyTran t=new MoyTran(12,15,"train","mercedes","en_service");
         MoyTran t1=new MoyTran(13,30,"bus","bmw","maintenance");
-        MoyTran t2=new MoyTran(20,40,"bus","bmw","maintenance");
-        MoyTran t3=new MoyTran(20,40,"bus","bmw","maintenance");
+        MoyTran t2=new MoyTran(20,20,40,"bus","bmw","maintenance",1);
+      // MoyTran t3=new MoyTran(20,4000,40,"bus","bmw","maintenance",1);
         Ligne l=new Ligne("mahdia","ligne_scolaire");
         Ligne l4=new Ligne("Nabeul","ligne_travail");
         LigneService ls =new LigneService();
@@ -41,16 +41,16 @@ public class SwiftTransitProject2 {
         MoyTran t4=new MoyTran(1555,40,"bus","bmw","maintenance",1);
         MoyTranService ts=new MoyTranService();
        
-      ts.insert(t4);
+          ts.insert(t2);
        //ts.readAll().forEach(System.out::println); 
        System.out.println("////////////////////////");
        // ts.readByID(11);
        
-        System.out.println(ts.readByID(11));
- List<Object> Ilist = new ArrayList<>(Arrays.asList(200000,300000,"métro","wejwej","maintenance",8));
-       ts.update(Ilist, 11);
+       // System.out.println(ts.readByID(11));
+ //List<Object> Ilist = new ArrayList<>(Arrays.asList(200000,300000,"métro","wejwej","maintenance",8));
+     //  ts.update(Ilist, 11);
        System.out.println("////////////////////////");
-       System.out.println(ts.readByID(11));
+      // System.out.println(ts.readByID(11));
         //ts.delete(18);
         //ts.readAll().forEach(System.out::println); 
         //ts.update(6, 1003, 20, "metro", "bmw", "en_service");

@@ -13,10 +13,12 @@ public class MoyTran {
     
     private int id_moy;
     private int matricule;
+    private int num;
     private int capacite;
     private String type_vehicule;
     private String marque;
     private String etat;
+    
     private int id_ligne;
     private Ligne ligne;
     
@@ -37,8 +39,19 @@ public class MoyTran {
     public MoyTran(int id_moy) {
         this.id_moy = id_moy;
     }
-    
-    
+
+    public MoyTran(int id_moy, int matricule, int num,int capacite, String type_vehicule, String marque, String etat,  int id_ligne, Ligne ligne) {
+        this.id_moy = id_moy;
+        this.matricule = matricule;
+        this.num = num;
+        this.capacite = capacite;
+        this.type_vehicule = type_vehicule;
+        this.marque = marque;
+        this.etat = etat;
+        this.id_ligne = id_ligne;
+        this.ligne = ligne;
+    }
+
     public MoyTran(int id_moy, int matricule, int capacite, String type_vehicule, String marque, String etat, int id_ligne, Ligne ligne) {
         this.id_moy = id_moy;
         this.matricule = matricule;
@@ -48,6 +61,18 @@ public class MoyTran {
         this.etat = etat;
         this.id_ligne = id_ligne;
         this.ligne = ligne;
+    }
+    
+///////plz
+    public MoyTran( int matricule,int num, int capacite, String type_vehicule, String marque, String etat,  int id_ligne) {
+        this.matricule = matricule;
+         this.num = num;
+        this.capacite = capacite;
+        this.type_vehicule = type_vehicule;
+        this.marque = marque;
+        this.etat = etat;
+       
+        this.id_ligne = id_ligne;
     }
     
     
@@ -61,6 +86,20 @@ public class MoyTran {
         this.etat = etat;
     }
 
+    public MoyTran(int id_moy, int matricule, int num, int capacite, String type_vehicule, String marque, String etat, int id_ligne) {
+        this.id_moy = id_moy;
+        this.matricule = matricule;
+        this.num = num;
+        this.capacite = capacite;
+        this.type_vehicule = type_vehicule;
+        this.marque = marque;
+        this.etat = etat;
+        this.id_ligne = id_ligne;
+    }
+
+    
+    
+    
     public MoyTran(int matricule, int capacite, String type_vehicule, String marque, String etat) {
         this.matricule = matricule;
         this.capacite = capacite;
@@ -68,25 +107,16 @@ public class MoyTran {
         this.marque = marque;
         this.etat = etat;
     }
-
-    public MoyTran(int matricule, int capacite, String type_vehicule, String marque, String etat, Ligne ligne) {
-        this.matricule = matricule;
-        this.capacite = capacite;
-        this.type_vehicule = type_vehicule;
-        this.marque = marque;
-        this.etat = etat;
-        this.ligne = ligne;
-    }
-
-    public MoyTran(int id_moy, int matricule, int capacite, String type_vehicule, String marque, String etat, int id_ligne) {
-        this.id_moy = id_moy;
-        this.matricule = matricule;
-        this.capacite = capacite;
-        this.type_vehicule = type_vehicule;
-        this.marque = marque;
-        this.etat = etat;
-        this.id_ligne = id_ligne;
-    }
+    
+    
+    
+//     public MoyTran(int matricule, int capacite, String type_vehicule, String marque, String etat) {
+//        this.matricule = matricule;
+//        this.capacite = capacite;
+//        this.type_vehicule = type_vehicule;
+//        this.marque = marque;
+//        this.etat = etat;
+//    }
 
     public MoyTran(int matricule, int capacite, String type_vehicule, String marque, String etat, int id_ligne) {
         this.matricule = matricule;
@@ -106,6 +136,10 @@ public class MoyTran {
         this.id_moy = id_moy;
         this.id_ligne = id_ligne;
     }
+
+    
+
+  
 
    
 
@@ -167,10 +201,21 @@ public class MoyTran {
         this.id_ligne = id_ligne;
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
     @Override
     public String toString() {
-        return "MoyTran{" + "id_moy=" + id_moy + ", matricule=" + matricule + ", capacite=" + capacite + ", type_vehicule=" + type_vehicule + ", marque=" + marque + ", etat=" + etat + ", ligne=" + id_ligne + '}';
+        return "MoyTran{" + "id_moy=" + id_moy + ", matricule=" + matricule + ", num=" + num + ", capacite=" + capacite + ", type_vehicule=" + type_vehicule + ", marque=" + marque + ", etat=" + etat + ", id_ligne=" + id_ligne + '}';
     }
+
+    
+    
 
    
     

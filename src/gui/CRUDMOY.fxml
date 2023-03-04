@@ -14,15 +14,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" onDragDetected="#switchtmp" prefHeight="480.0" prefWidth="919.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CRUDMOYController">
+<AnchorPane id="AnchorPane" onDragDetected="#switchtmp" prefHeight="523.0" prefWidth="1150.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CRUDMOYController">
    <children>
       <VBox layoutX="114.0" layoutY="67.0" />
-      <VBox layoutX="14.0" layoutY="142.0" prefHeight="260.0" prefWidth="100.0" spacing="30.0">
+      <VBox layoutX="18.0" layoutY="100.0" prefHeight="300.0" prefWidth="100.0" spacing="30.0">
          <children>
             <Label prefHeight="17.0" prefWidth="70.0" text="Matricule">
                <effect>
                   <InnerShadow />
                </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Numéro">
                <font>
                   <Font name="Berlin Sans FB" size="15.0" />
                </font>
@@ -69,25 +74,27 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="106.0" layoutY="142.0" prefHeight="260.0" prefWidth="244.0" spacing="20.0">
+      <VBox layoutX="125.0" layoutY="95.0" prefHeight="310.0" prefWidth="244.0" spacing="22.0">
          <children>
             <TextField fx:id="txtm" onKeyTyped="#limit1" />
+            <TextField fx:id="num" />
             <TextField fx:id="txtcap" onKeyTyped="#limit2" />
             <ComboBox fx:id="typev" prefHeight="25.0" prefWidth="246.0" />
             <TextField fx:id="txtmar" onKeyTyped="#limit4" />
             <ComboBox fx:id="txte" prefHeight="25.0" prefWidth="250.0" />
-            <ComboBox fx:id="txtl" prefHeight="25.0" prefWidth="246.0" />
+            <ComboBox fx:id="txtl" prefHeight="0.0" prefWidth="244.0" />
          </children>
       </VBox>
-      <TableView fx:id="tabmoy" layoutX="354.0" layoutY="142.0" prefHeight="249.0" prefWidth="574.0" style="-fx-background-color: F0EEED;">
+      <TableView fx:id="tabmoy" layoutX="385.0" layoutY="97.0" prefHeight="300.0" prefWidth="680.0" style="-fx-background-color: F0EEED;">
         <columns>
           <TableColumn fx:id="idmoy" prefWidth="75.0" text="ID_MOY" />
           <TableColumn fx:id="mat" prefWidth="75.0" style="color: FEFBE9;" text="Matricule" />
+            <TableColumn fx:id="mat1" prefWidth="75.0" style="color: FEFBE9;" text="Numéro" />
             <TableColumn fx:id="cap" prefWidth="75.0" text="Capacité" />
             <TableColumn fx:id="tv" prefWidth="99.0" text="Type_Véhicule" />
-            <TableColumn fx:id="marque" prefWidth="87.0" text="Marque" />
-            <TableColumn fx:id="etat" prefWidth="72.0" text="Etat" />
-            <TableColumn fx:id="li" prefWidth="122.0" text="Ligne" />
+            <TableColumn fx:id="marque" prefWidth="96.0" text="Marque" />
+            <TableColumn fx:id="etat" prefWidth="90.0" text="Etat" />
+            <TableColumn fx:id="li" prefWidth="95.0" text="Ligne" />
         </columns>
       </TableView>
       <Button layoutX="254.0" layoutY="416.0" mnemonicParsing="false" onAction="#add_moy" prefHeight="27.0" prefWidth="100.0" text="Ajouter">
@@ -109,10 +116,10 @@
             <Font name="Berlin Sans FB" size="15.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" />
+            <FontAwesomeIconView fill="#6096b4" glyphName="EDIT" />
          </graphic>
       </Button>
-      <Button fx:id="btnwitch" layoutX="762.0" layoutY="416.0" mnemonicParsing="false" onAction="#switchtmp" prefHeight="25.0" prefWidth="160.0" text="Gestion des Lignes">
+      <Button fx:id="btnwitch" layoutX="905.0" layoutY="416.0" mnemonicParsing="false" onAction="#switchmmp" prefHeight="25.0" prefWidth="160.0" text="Gestion des Lignes">
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
          </font>
@@ -125,11 +132,11 @@
             <Image url="@kslvAsset%201char.png" />
          </image>
       </ImageView>
-      <FontAwesomeIconView fill="#609ea2" glyphName="BUS" layoutX="905.0" layoutY="38.0" size="25" text="" wrappingWidth="34.0" />
-      <FontAwesomeIconView fill="#609ea2" glyphName="TRAIN" layoutX="905.0" layoutY="77.0" size="25" />
-      <FontAwesomeIconView fill="#609ea2" glyphName="SUBWAY" layoutX="905.0" layoutY="119.0" size="25" text="" />
-      <TextField fx:id="txtch" layoutX="388.0" layoutY="417.0" prefHeight="25.0" prefWidth="179.0" />
-      <Button layoutX="586.0" layoutY="416.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="27.0" prefWidth="126.0" text="Chercher">
+      <FontAwesomeIconView fill="#609ea2" glyphName="BUS" layoutX="1102.0" layoutY="35.0" size="25" text="" wrappingWidth="34.0" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="TRAIN" layoutX="1102.0" layoutY="75.0" size="25" text="" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="SUBWAY" layoutX="1102.0" layoutY="124.0" size="25" text="" />
+      <TextField fx:id="txtch" layoutX="384.0" layoutY="417.0" prefHeight="25.0" prefWidth="266.0" />
+      <Button layoutX="694.0" layoutY="416.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="27.0" prefWidth="188.0" text="Chercher">
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
          </font>
@@ -137,13 +144,32 @@
             <FontAwesomeIconView fill="#6096b4" glyphName="SEARCH" />
          </graphic>
       </Button>
-      <Button layoutX="675.0" layoutY="98.0" mnemonicParsing="false" onAction="#genPdf" prefHeight="25.0" prefWidth="210.0" text="Générer PDF">
+      <Button layoutX="905.0" layoutY="475.0" mnemonicParsing="false" onAction="#genPdf" prefHeight="25.0" prefWidth="160.0" text="Générer PDF">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="FILE" />
          </graphic>
       </Button>
-      <TextField fx:id="searchField" layoutX="354.0" layoutY="98.0" />
-      <Button layoutX="519.0" layoutY="98.0" mnemonicParsing="false" onAction="#searchField" prefHeight="25.0" prefWidth="100.0" text="search" />
-      <Label fx:id="test" layoutX="294.0" layoutY="102.0" prefHeight="17.0" prefWidth="56.0" text="Search : " />
+      <TextField fx:id="searchField" layoutX="443.0" layoutY="475.0" prefHeight="25.0" prefWidth="208.0" />
+      <Button layoutX="694.0" layoutY="474.0" mnemonicParsing="false" onAction="#searchField" prefHeight="27.0" prefWidth="188.0" text="Rechercher avancée">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="SEARCH" />
+         </graphic>
+      </Button>
+      <Label fx:id="test" layoutX="392.0" layoutY="479.0" prefHeight="17.0" prefWidth="56.0" text="Search : ">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="236.0" layoutY="475.0" mnemonicParsing="false" onAction="#stat" prefHeight="27.0" prefWidth="114.0" text="Statistiques">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CIRCLE" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
