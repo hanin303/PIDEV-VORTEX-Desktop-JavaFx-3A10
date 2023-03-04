@@ -14,6 +14,7 @@
  import entity.*;
  import service.*;
  import java.util.*;
+import java.util.stream.Collectors;
  /**
   *
   * @author hanin
@@ -40,8 +41,11 @@
          ts.insert(t1);
          is.insert(i1);
          //is.update(Ilist, 13);
-        //is.readAll().forEach(System.out::println);
-         System.out.println(is.readByID(26));
+        
+         List<Iteneraire> list2 = new ArrayList<>(); 
+         List<Iteneraire> list = new ArrayList<>();
+        list = is.readAll();
+         
          
          ///ts.delete(13);
          //ts.update(Tlist, 20);

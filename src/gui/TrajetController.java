@@ -31,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import service.ExcelExporter;
 
 /**
  * FXML Controller class
@@ -66,13 +67,23 @@ public class TrajetController implements Initializable {
     private TableColumn<Trajet, String> pts_arrive;
     @FXML
     private Button button_window_it;
+    @FXML
+    private TextField textsearch;
+    @FXML
+    private Button btnsearch;
+    @FXML
+    private Button button_window_it1;
 
     /**
      * Initializes the controller class.
-     */ public void UpdateTable(){
+     */@FXML
+ public void UpdateTable(){
         List<Trajet> list=new ArrayList<>();
         TrajetService ts=new TrajetService();
+        if(textsearch.getText().length()==0)
         list=ts.readAll();
+        else
+        list.add(ts.readByID(Integer.parseInt(textsearch.getText())));
         ObservableList<Trajet> obs=FXCollections.observableArrayList(list);
         id_trajet.setCellValueFactory(new PropertyValueFactory<Trajet ,Integer>("id"));
         temps_parcours.setCellValueFactory(new PropertyValueFactory<Trajet ,String>("temps_parcours"));
@@ -147,6 +158,13 @@ public class TrajetController implements Initializable {
 
     @FXML
     private void limit2eight(KeyEvent event) {
+        if(!event.getCharacter().matches("[^\\e\t\r\\d+$]")){
+            event.consume();
+            text_pts_depart.setStyle("-fx-border-color: red");
+        }
+        else{
+             text_pts_depart.setStyle("-fx-border-color: blue");
+    }
         if(text_pts_depart.getText().length() >= 8){
             event.consume();
             text_pts_depart.setStyle("-fx-border-color: red");
@@ -158,6 +176,10 @@ public class TrajetController implements Initializable {
 
     @FXML
     private void limit2eight2(KeyEvent event) {
+        if(!event.getCharacter().matches("[^\\e\t\r\\d+$]")){
+            event.consume();
+            text_pts_arrive.setStyle("-fx-border-color: red");
+        }
         if(text_pts_arrive.getText().length() >= 8){
             event.consume();
             text_pts_arrive.setStyle("-fx-border-color: red");
@@ -182,5 +204,13 @@ public class TrajetController implements Initializable {
             text_temps_parcours.setStyle("-fx-border-color: blue");
         }
     }
-
+    // your list of objects
+    @FXML
+    public void exportExcel()throws IOException{
+        ExcelExporter ex = new ExcelExporter();
+        TrajetService ts = new TrajetService();
+        ex.export(ts.readAll(), "tableTrajet.xlsx");
+    }
+    
+    
 }

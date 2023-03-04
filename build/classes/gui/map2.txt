@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Map</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-5Y0/5f7VHc4x4W/K9/DmCx6+B4mPzAZmI/SWbb6UeY6jKp56BsqZsKjXZh+GVc+yBWyFQuwAooL/bThhKgQ2FQ==" crossorigin=""/>
+  <style>
+    #map {
+      height: 100vh;
+    }
+    .search-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <input type="text" class="search-bar" placeholder="Search...">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-rpfAfyZsI0X9OjOPIEqgxJbtkmTzg+1eFr//HGO2C15ccD0TTx2Q3qTFeslNtOUeHUb60ITySZ/8pbnLcGt0zQ==" crossorigin=""></script>
+  <script>
+    // Create the map
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add the transport layer
+    L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=
+    d47fe3e2931048b9a9aa985298fda589', {
+      attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add search bar
+    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+    var results = L.layerGroup().addTo(map);
+    searchControl.on('results', function(data){
+      results.clearLayers();
+      for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+      }
+    });
+  </script>
+</body>
+</html>

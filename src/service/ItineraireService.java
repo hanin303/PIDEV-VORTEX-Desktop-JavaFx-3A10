@@ -49,7 +49,6 @@ public class ItineraireService implements IService<Iteneraire>{
             Logger.getLogger(ItineraireService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    @Override
     public List<Iteneraire> readAll(){
         List<Iteneraire> list=new ArrayList<>();
         String requete="select * from iteneraire";
@@ -86,5 +85,6 @@ public class ItineraireService implements IService<Iteneraire>{
         }
         return iteneraire;
     }
+ 
 }
 

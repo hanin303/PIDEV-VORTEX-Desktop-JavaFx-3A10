@@ -22,7 +22,7 @@ public class FXMain extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try{
-        Parent root1 =FXMLLoader.load(getClass().getResource("Trajet.fxml"));
+        Parent root1 =FXMLLoader.load(getClass().getResource("UserInterface.fxml"));
         Scene scene1 = new Scene(root1);
         
 

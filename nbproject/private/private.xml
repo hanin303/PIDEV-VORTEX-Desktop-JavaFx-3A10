@@ -4,15 +4,27 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/FXMain.java</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/kslvAsset%203char.png</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/UserTableItController.java</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/swifttransitproject2/SwiftTransitProject2.java</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/Trajet.fxml</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/Map.fxml</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/service/ExcelExporter.java</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/entity/Trajet.java</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/map.html</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/index.html</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/UserInterface.fxml</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/UserTableIt.fxml</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/mapFX.java</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/ItineraireController.java</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/Itineraire.fxml</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/MapController.java</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/service/ItineraireService.java</file>
-            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/Trajet.fxml</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/TrajetController.java</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/entity/MoyTran.java</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/service/IService.java</file>
             <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/service/TrajetService.java</file>
-            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/entity/Trajet.java</file>
+            <file>file:/D:/PIDEV-VORTEX-Desktop-JavaFx-3A10/src/gui/UserInterfaceController.java</file>
         </group>
     </open-files>
 </project-private>

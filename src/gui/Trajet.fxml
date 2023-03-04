@@ -59,6 +59,10 @@
                 <Image url="@kslvAsset%203char.png" />
             </image>
         </ImageView>
-        <Button fx:id="button_window_it" layoutX="464.0" layoutY="513.0" mnemonicParsing="false" onAction="#SwitchWindowIt" prefHeight="57.0" prefWidth="112.0" text="Gestion itineraire" />
+        <Button fx:id="button_window_it" layoutX="476.0" layoutY="513.0" mnemonicParsing="false" onAction="#SwitchWindowIt" prefHeight="57.0" prefWidth="112.0" text="Gestion itineraire" />
+      <TextField fx:id="textsearch" layoutX="23.0" layoutY="528.0" prefHeight="26.0" prefWidth="211.0" />
+      <Button fx:id="btnsearch" alignment="CENTER" layoutX="242.0" layoutY="529.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="26.0" prefWidth="105.0" text="Recherhcher" />
+      <FontAwesomeIconView glyphName="SEARCH" layoutX="250.0" layoutY="545.0" />
+      <Button fx:id="button_window_it1" layoutX="354.0" layoutY="513.0" mnemonicParsing="false" onAction="#exportExcel" prefHeight="57.0" prefWidth="112.0" text="Export excel" />
     </children>
 </AnchorPane>
