@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import connexionbd.utils.DataSource;
 import entity.MoyTran;
 import entity.Ligne;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 
 
@@ -33,7 +35,7 @@ public class MoyTranService implements IService<MoyTran> {
         try {
             Statement ste=conn.createStatement();
             ste.executeUpdate(requete);
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             Logger.getLogger(MoyTranService.class.getName()).
                     log(Level.SEVERE, null, ex);
         }    
@@ -169,6 +171,41 @@ public class MoyTranService implements IService<MoyTran> {
         return m;
         
     }
+    
+    
+    public MoyTran readMatricule(int matricule) {
+         //String requete ="select * from moyentransport where id_moy="+id;
+        //List<MoyTran> list=new ArrayList<>();
+        //String requete ="select* from moyentransport where id_moy= '"+id+"' " ;
+      
+       String requete ="select * from moyentransport where matricule = "+ matricule;
+        MoyTran m = null;
+        try {
+            
+            Statement st=conn.createStatement();
+         //  PreparedStatement pst = conn.prepareStatement(requete);
+          //  pst.setInt(1,id);
+           ResultSet rs= st.executeQuery(requete);
+           if(rs.next()){
+             
+           //MoyTran m = new MoyTran();
+               LigneService l = new LigneService();
+//                     ,
+//            l.setId_ligne(rs.getInt("id_ligne"));
+//            l.setNom_ligne(rs.getNString("nom_ligne"));
+//            l.setType_ligne(rs.getString("type_ligne"));
+           
+           m=new MoyTran( rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"));
+           
+                             
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(MoyTranService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return m;
+        
+    }
+    
     
    
     

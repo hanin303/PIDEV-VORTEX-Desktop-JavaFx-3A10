@@ -110,6 +110,7 @@ public class CRUDMOYController implements Initializable {
     private TextField num;
     @FXML
     private TableColumn<MoyTran, Integer> mat1;
+    MoyTranService ms=new MoyTranService();
     /**
      * Initializes the controller class.
      * @param url
@@ -120,17 +121,9 @@ public class CRUDMOYController implements Initializable {
         List<MoyTran> list=new ArrayList<>();
         
         MoyTranService ts=new MoyTranService();
-        if (txtch.getText().length() == 0)
+        if (txtch.getText().length() == 0){
         list=ts.readAll();
-        else{
-        list.add(ts.readByID(Integer.parseInt(txtch.getText())));
-        Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("");
-		alert.setHeaderText("");
-		alert.setContentText("Recherche avec succés");
-                alert.showAndWait();
         }
-        
         ObservableList<MoyTran> obs=FXCollections.observableArrayList(list);
         idmoy.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_moy"));
         mat.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("matricule"));
@@ -140,9 +133,9 @@ public class CRUDMOYController implements Initializable {
         marque.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("marque"));
         etat.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("etat"));
         li.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_ligne"));
-        
         tabmoy.setItems(obs);
     }
+       
 
     public CRUDMOYController() {
        conn = DataSource.getInstance().getCnx();
@@ -178,6 +171,9 @@ public class CRUDMOYController implements Initializable {
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
     }else{
+        if(ms.readMatricule(Integer.parseInt(txtm.getText()))==null){
+            
+        
         MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
         MoyTranService s =new MoyTranService();
         s.insert(t);
@@ -187,6 +183,13 @@ public class CRUDMOYController implements Initializable {
 		alert.setContentText("Insertion avec succés");
                 alert.showAndWait();
         UpdateTable();
+        }else{
+             Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Matricule existe déjà");
+                alert.showAndWait();
+        }
     }
         
     }
@@ -204,7 +207,6 @@ public class CRUDMOYController implements Initializable {
         UpdateTable();
     }
 
-    @FXML
     private void update(ActionEvent event) {
         List<Object> list = new ArrayList<>(Arrays.asList(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), 
                 typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue()));
@@ -256,9 +258,7 @@ public class CRUDMOYController implements Initializable {
         txtm.setStyle("-fx-border-color: green");
     }
     }
-
     
-
     @FXML
     private void limit4(KeyEvent event) {
        if(!event.getCharacter().matches("[^\\e\t\r\\d+$]")){
@@ -456,8 +456,45 @@ public class CRUDMOYController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    private void modif(ActionEvent event) {
+         String Dep=txtcap.getText();
+    String ver=typev.getValue();
+    String type=txtmar.getText();
+    String typee=txte.getValue();
+   // Integer typeee=txtl.getValue();
     
+    if(Dep.isEmpty()||ver.isEmpty()||type.isEmpty()||typee.isEmpty()){
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setContentText("Vous devez remplir tous les champs"); 
+             alert.showAndWait();
+    }else {
+        if(ms.readMatricule(Integer.parseInt(txtm.getText()))==null){ 
+        List<Object> list = new ArrayList<>(Arrays.asList(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue()));
+//       MoyTran m = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
+        MoyTranService rs = new MoyTranService();
+    MoyTran selected_it = tabmoy.getSelectionModel().getSelectedItem();
+        System.out.println(selected_it);
+    rs.update(list,selected_it.getId_moy());
+    UpdateTable();
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Mise à jour avec succés");
+                alert.showAndWait();
+                UpdateTable();
+       }else{
+             Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("");
+		alert.setHeaderText("");
+		alert.setContentText("Matricule existe déjà");
+                alert.showAndWait();
+                }
+        
+    }
 
+    
+    }
    
 
    

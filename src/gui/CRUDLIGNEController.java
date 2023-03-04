@@ -9,6 +9,7 @@ import entity.MoyTran;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,6 +105,7 @@ public class CRUDLIGNEController implements Initializable {
         Ligne l = new Ligne(txtn.getText(),txttp.getValue());
         LigneService ls =new LigneService();
         ls.insert(l);
+     
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText("");
