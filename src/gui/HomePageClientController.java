@@ -24,7 +24,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -76,6 +78,8 @@ public class HomePageClientController implements Initializable {
     @FXML
     private Button changer;
     private User u;
+    @FXML
+    private Button disc;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,7 +87,6 @@ public class HomePageClientController implements Initializable {
        path_image.setVisible(false);
        setEmptyImage();
     }   
-    @FXML
    public void setEmptyImage(){
        if(image.getImage()==null){
            File file= new File("C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\gui\\unknown.png");
@@ -238,5 +241,14 @@ private void uploadImage(ActionEvent event){
                    
     }
 }
+
+    @FXML
+    private void Disconnect(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
 

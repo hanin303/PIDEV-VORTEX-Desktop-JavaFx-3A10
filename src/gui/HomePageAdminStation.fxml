@@ -75,5 +75,10 @@
       </Button>
       <TextField fx:id="id" layoutX="19.0" layoutY="376.0" prefHeight="26.0" prefWidth="57.0" />
       <TextField fx:id="path_image" layoutX="20.0" layoutY="353.0" prefHeight="26.0" prefWidth="57.0" />
+      <Button fx:id="disc" layoutX="490.0" layoutY="353.0" mnemonicParsing="false" onAction="#Disconnect" text="Déconnexion">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="SIGN_OUT" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

@@ -77,10 +77,15 @@
       <PasswordField fx:id="mdp" layoutX="212.0" layoutY="251.0" prefHeight="26.0" prefWidth="218.0" />
       <Button fx:id="changer" layoutX="21.0" layoutY="141.0" mnemonicParsing="false" onAction="#uploadImage" text="Changer">
          <graphic>
-            <FontAwesomeIconView fill="#6096b4" glyphName="UPLOAD" />
+            <FontAwesomeIconView fill="#6096b4" glyphName="DOWNLOAD" />
          </graphic>
       </Button>
       <TextField fx:id="id" layoutX="19.0" layoutY="376.0" prefHeight="26.0" prefWidth="57.0" />
       <TextField fx:id="path_image" layoutX="20.0" layoutY="353.0" prefHeight="26.0" prefWidth="57.0" />
+      <Button fx:id="disc" layoutX="494.0" layoutY="363.0" mnemonicParsing="false" onAction="#Disconnect" text="Déconnexion">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="SIGN_OUT" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

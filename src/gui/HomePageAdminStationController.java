@@ -78,6 +78,8 @@ public class HomePageAdminStationController implements Initializable {
     @FXML
     private Button changer;
     private User u;   
+    @FXML
+    private Button disc;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        id.setVisible(false);
@@ -85,7 +87,6 @@ public class HomePageAdminStationController implements Initializable {
        setEmptyImage();
 
     }  
-  @FXML
    public void setEmptyImage(){
        if(image.getImage()==null){
            File file= new File("C:\\PIDEV-VORTEX-Desktop-JavaFx-3A10\\src\\gui\\unknown.png");
@@ -239,5 +240,15 @@ private void uploadImage(ActionEvent event){
                    
     }
 }
+
+    @FXML
+    private void Disconnect(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    }
     
-}
+
