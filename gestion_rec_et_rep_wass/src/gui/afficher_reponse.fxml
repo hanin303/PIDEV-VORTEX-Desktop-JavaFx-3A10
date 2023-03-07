@@ -3,22 +3,41 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="591.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Afficher_reponseController">
+<AnchorPane id="AnchorPane" prefHeight="523.0" prefWidth="1150.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Afficher_reponseController">
    <children>
-      <TableView fx:id="reponse" layoutX="14.0" layoutY="72.0" prefHeight="482.0" prefWidth="948.0">
+      <TableView fx:id="Reponse" layoutX="439.0" layoutY="93.0" prefHeight="416.0" prefWidth="697.0" style="-fx-background-radius: 15;">
         <columns>
-          <TableColumn fx:id="idreclamation" prefWidth="105.60000914335251" text="ID_Reclamation" />
-          <TableColumn fx:id="reclamationtext" minWidth="0.0" prefWidth="160.8000030517578" text="Reclamation" />
-            <TableColumn fx:id="repondre" minWidth="0.0" prefWidth="81.5999755859375" text="Repondre" />
-            <TableColumn fx:id="update" minWidth="0.0" prefWidth="98.39996337890625" text="Update" />
-            <TableColumn fx:id="delete" minWidth="0.0" prefWidth="90.4000244140625" text="Delete" />
-            <TableColumn fx:id="date" minWidth="0.0" prefWidth="89.5999755859375" text="Date" />
-            <TableColumn fx:id="idreponse" minWidth="0.0" prefWidth="110.39996337890625" text="Id_reponse" />
-            <TableColumn fx:id="messages" minWidth="0.0" prefWidth="215.20001220703125" text="Messages" />
+          <TableColumn fx:id="idReponse" prefWidth="75.0" text="ID Reponse" />
+            <TableColumn fx:id="idReclamation" prefWidth="96.0" text="ID Reclamation" />
+          <TableColumn fx:id="MessageReponse" prefWidth="170.0" text="Message Reponse" />
+            <TableColumn fx:id="delete" prefWidth="145.0" text="Delete" />
+            <TableColumn fx:id="update" prefWidth="210.0" text="Update" />
         </columns>
       </TableView>
-      <Label layoutX="449.0" layoutY="22.0" prefHeight="18.0" prefWidth="169.0" text="Reponse" />
+      <Label layoutX="466.0" layoutY="31.0" text="Liste des Reclamation Clients">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <Label fx:id="welcomeLb" layoutX="66.0" layoutY="42.0" />
+      <ImageView fitHeight="152.0" fitWidth="156.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@swiftTran.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="Reclamation" layoutX="8.0" layoutY="93.0" prefHeight="416.0" prefWidth="422.0" style="-fx-background-radius: 15;">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="95.0" text="ID Reclamation" />
+          <TableColumn fx:id="objet" prefWidth="55.0" text="Objet" />
+            <TableColumn fx:id="reclamation" prefWidth="75.0" text="Reclamation" />
+            <TableColumn fx:id="statut" prefWidth="55.0" text="Statut" />
+            <TableColumn fx:id="date" prefWidth="65.0" text="Date" />
+            <TableColumn fx:id="repondre" prefWidth="75.0" text="Repondre" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

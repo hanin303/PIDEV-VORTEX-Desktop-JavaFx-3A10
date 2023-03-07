@@ -3,22 +3,42 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="611.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Afficher_reclamationController">
+<AnchorPane id="AnchorPane" prefHeight="523.0" prefWidth="1150.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Afficher_reclamationController">
    <children>
-      <TableView fx:id="Reclamation" layoutX="40.0" layoutY="87.0" prefHeight="469.0" prefWidth="936.0">
+      <TableView fx:id="Reclamation" layoutX="295.0" layoutY="97.0" prefHeight="418.0" prefWidth="847.0" style="-fx-background-radius: 15;">
         <columns>
-          <TableColumn fx:id="id" prefWidth="61.59997481107712" text="ID" />
-          <TableColumn fx:id="message" prefWidth="208.8000030517578" text="Message" />
-            <TableColumn fx:id="type" prefWidth="118.39996337890625" text="Type" />
-            <TableColumn fx:id="statut" prefWidth="98.4000244140625" text="Statut" />
-            <TableColumn fx:id="delete" prefWidth="101.5999755859375" text="Delete" />
-            <TableColumn fx:id="update" prefWidth="112.800048828125" text="Update" />
-            <TableColumn fx:id="reponse" prefWidth="239.199951171875" text="Reponse" />
+          <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="objet" prefWidth="102.0" text="Objet" />
+            <TableColumn fx:id="message" prefWidth="172.0" text="Message" />
+            <TableColumn fx:id="date" prefWidth="89.0" text="Date" />
+            <TableColumn fx:id="statut" prefWidth="113.0" text="Statut" />
+            <TableColumn fx:id="delete" prefWidth="143.0" text="Delete" />
+            <TableColumn fx:id="update" prefWidth="152.0" text="Update" />
         </columns>
       </TableView>
-      <Label layoutX="441.0" layoutY="38.0" text="Afficher Reclamation" />
-      <Label fx:id="welcomeLb" layoutX="144.0" layoutY="38.0" />
+      <Label layoutX="390.0" layoutY="22.0" prefHeight="17.0" prefWidth="199.0" text="Liste des reclamations">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <Label fx:id="welcomeLb" layoutX="63.0" layoutY="30.0" />
+      <TextField fx:id="search" layoutX="653.0" layoutY="18.0" onKeyReleased="#btnSearch" prefHeight="25.0" prefWidth="251.0" style="-fx-background-radius: 12;" text="search" />
+      <ImageView fitHeight="76.0" fitWidth="150.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@swiftTran.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="Reponse" layoutX="7.0" layoutY="97.0" prefHeight="418.0" prefWidth="282.0" style="-fx-background-radius: 15;">
+        <columns>
+          <TableColumn fx:id="idReponse" prefWidth="75.0" text="ID Reponse" />
+          <TableColumn fx:id="idReclamation" prefWidth="96.0" text="ID Reclamation" />
+            <TableColumn fx:id="MessageReponse" prefWidth="109.0" text="Message Reponse" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

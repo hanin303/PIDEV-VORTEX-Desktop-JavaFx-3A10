@@ -7,69 +7,48 @@ package entities;
 
 /**
  *
- * @author DELL
+ * @author wassim
  */
 public class Reponse {
-
-    public static Object getItems() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public static void refresh() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    int id_reponse,id_reclamation ;
-    String message_rep,date_rep;
+    int id_rep,id_rec;
+    String text_rep;
 
     public Reponse() {
     }
 
-    public Reponse(int id_reponse, int id_reclamation, String message_rep, String date_rep) {
-        this.id_reponse = id_reponse;
-        this.id_reclamation = id_reclamation;
-        this.message_rep = message_rep;
-        this.date_rep = date_rep;
+    public Reponse(int id_rep, int id_rec, String text_rep) {
+        this.id_rep = id_rep;
+        this.id_rec = id_rec;
+        this.text_rep = text_rep;
     }
 
-    public int getId_reponse() {
-        return id_reponse;
+    public int getId_rep() {
+        return id_rep;
     }
 
-    public void setId_reponse(int id_reponse) {
-        this.id_reponse = id_reponse;
+    public void setId_rep(int id_rep) {
+        this.id_rep = id_rep;
     }
 
-    public int getId_reclamation() {
-        return id_reclamation;
+    public int getId_rec() {
+        return id_rec;
     }
 
-    public void setId_reclamation(int id_reclamation) {
-        this.id_reclamation = id_reclamation;
+    public void setId_rec(int id_rec) {
+        this.id_rec = id_rec;
     }
 
-    public String getMessage_rep() {
-        return message_rep;
+    public String getText_rep() {
+        return text_rep;
     }
 
-    public void setMessage_rep(String message_rep) {
-        this.message_rep = message_rep;
-    }
-
-    public String getDate_rep() {
-        return date_rep;
-    }
-
-    public void setDate_rep(String date_rep) {
-        this.date_rep = date_rep;
+    public void setText_rep(String text_rep) {
+        this.text_rep = text_rep;
     }
 
     @Override
     public String toString() {
-        return "Reponse{" + "id_reponse=" + id_reponse + ", id_reclamation=" + id_reclamation + ", message_rep=" + message_rep + ", date_rep=" + date_rep + '}';
+        return "Reponse{" + "id_rep=" + id_rep + ", id_rec=" + id_rec + ", text_rep=" + text_rep + '}';
     }
-
- 
     
-    
-
 }

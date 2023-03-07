@@ -7,95 +7,112 @@ package gui;
 
 import entities.Reclamation;
 import entities.Reponse;
+import java.io.IOException;
 import java.net.URL;
-import static java.nio.file.Files.delete;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import services.ReponseService;
+import javax.print.DocFlavor;
 import services.ReclamationService;
+import services.ReponseService;
+
 /**
  * FXML Controller class
  *
- * @author DELL
+ * @author wassim
  */
 public class Afficher_reponseController implements Initializable {
+    
+    ReponseService RS = new ReponseService();
+    ReclamationService Rs = new ReclamationService();
 
     @FXML
-    private TableView<Reponse> reponse;
+    private TableView<Reponse> Reponse;
     @FXML
-    private TableColumn<Reponse, Integer> idreclamation;
+    private TableColumn<Reponse, Integer> idReponse;
     @FXML
-    private TableColumn<Reclamation, String> reclamationtext;
+    private TableColumn<Reponse, Integer> idReclamation;
     @FXML
-    private TableColumn<Reponse, Button> repondre;
-    @FXML
-    private TableColumn<Reponse, Button> update;
+    private TableColumn<Reponse, String> MessageReponse;
     @FXML
     private TableColumn<Reponse, Button> delete;
     @FXML
-    private TableColumn<Reponse, String> date;
+    private TableColumn<Reponse, Button> update;
     @FXML
-    private TableColumn<Reponse,Integer > idreponse;
+    private TableColumn<Reponse, Button> repondre;
     @FXML
-    private TableColumn<Reponse, String> messages;
+    private Label welcomeLb;
+    @FXML
+    private TableView<Reclamation> Reclamation;
+    @FXML
+    private TableColumn<Reclamation, Integer> id;
+    @FXML
+    private TableColumn<Reclamation, String> objet;
+    @FXML
+    private TableColumn<Reclamation, String> reclamation;
+    @FXML
+    private TableColumn<Reclamation, String> statut;
+    @FXML
+    private TableColumn<Reclamation, Date> date;
+
     
-     ReponseService Rep = new ReponseService();
-     ReclamationService Rs = new ReclamationService();
+
+    public Afficher_reponseController() {
+    }
+    
+
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        
-        
-        
-         try {
-           
-            List<Reponse> reponset = Rep.recuperer();
-            ObservableList<Reponse> olc = FXCollections.observableArrayList(reponset);
+        try {
+            List<Reponse> reponsionet = RS.recuperer();
+            ObservableList<Reponse> olc = FXCollections.observableArrayList(reponsionet);
+            
             List<Reclamation> reclamationet = Rs.recuperer();
-            ObservableList<Reclamation> ol = FXCollections.observableArrayList(reclamationet);
-           
+            ObservableList<Reclamation> olc2 = FXCollections.observableArrayList(reclamationet);
             
-             idreclamation.setCellValueFactory(new PropertyValueFactory<Reponse, Integer>("id_reclamation"));
-             reclamationtext.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("message_rec"));
-           
+            idReponse.setCellValueFactory(new PropertyValueFactory<Reponse, Integer>("id_rep"));
+            idReclamation.setCellValueFactory(new PropertyValueFactory<Reponse, Integer>("id_rec"));
+            objet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("objet"));
+            MessageReponse.setCellValueFactory(new PropertyValueFactory<Reponse, String>("text_rep"));
+            date.setCellValueFactory(new PropertyValueFactory<Reclamation, Date>("date_rec"));
             
-            
-            date.setCellValueFactory(new PropertyValueFactory<Reponse, String>("date_rep"));
-           idreponse.setCellValueFactory(new PropertyValueFactory<Reponse, Integer>("id_reponse"));
-           messages.setCellValueFactory(new PropertyValueFactory<Reponse, String>("message_rep"));
-           this.repondre();
+            statut.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("statut"));
+            id.setCellValueFactory(new PropertyValueFactory<Reclamation, Integer>("id_reclamation"));
+            reclamation.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("messgae_rec"));
             this.delete();
             this.update();
-     
-       
-          reponse.setItems(olc);
-       
-          
-     
-    }
-            catch (SQLException ex) {
+            this.repondre();
+            Reponse.setItems(olc);
+            Reclamation.setItems(olc2);
+        }
+        catch (SQLException ex) {
             System.out.println("error" + ex.getMessage());
         }
-   
-    } 
+    }   
+
     
-    
-    
-     public void delete() {
+    public void delete() {
         delete.setCellFactory((param) -> {
             return new TableCell() {
                 @Override
@@ -105,12 +122,12 @@ public class Afficher_reponseController implements Initializable {
                         Button b = new Button("Delete");
                         b.setOnAction((event) -> {
                             try {
-                                if (Rep.supprimer(reponse.getItems().get(getIndex())))
+                                if (RS.supprimer(Reponse.getItems().get(getIndex())))
                                         {
                                            
                                    
-                                    reponse.getItems().remove(getIndex());
-                                    reponse.refresh();
+                                    Reponse.getItems().remove(getIndex());
+                                    Reponse.refresh();
 
                                          }
                             } catch (SQLException ex) {
@@ -128,33 +145,30 @@ public class Afficher_reponseController implements Initializable {
         });
 
     }
-     
-     
-     
-     
-       public void update() {
-        update.setCellFactory((param) -> {
+    public void update() {
+   
+       
+         update.setCellFactory((param) -> {
             return new TableCell() {
                 @Override
                 protected void updateItem(Object item, boolean empty) {
                     setGraphic(null);
                     if (!empty) {
-                        Button b = new Button("update");
+                        Button b = new Button("Modifier");
                         b.setOnAction((event) -> {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("modifier_reponse.fxml"));
+                           
                             try {
-                                if (Rep.supprimer(reponse.getItems().get(getIndex())))
-                                        {
-                                           
-                                   
-                                    reponse.getItems().remove(getIndex());
-                                    reponse.refresh();
+                                  Parent root = loader.load();
+                                  welcomeLb.getScene().setRoot(root);
+                                 System.out.println("hhhhhhh");
+                                  Reponse.refresh();
+                                 
 
-                                         }
-                            } catch (SQLException ex) {
-                                System.out.println("erreor:" + ex.getMessage());
-
+                                         } catch (IOException ex) {
+                                Logger.getLogger(Modifier_reclamationController.class.getName()).log(Level.SEVERE, null, ex);
                             }
-
+                           
                         });
                         setGraphic(b);
 
@@ -162,37 +176,39 @@ public class Afficher_reponseController implements Initializable {
                 }
             };
 
+           
         });
-
+       
+       
+       
+       
+       
     }
+    
+    public void repondre() {
+   
        
-       
-       
-       
-       
-         public void repondre() {
-        repondre.setCellFactory((param) -> {
+         repondre.setCellFactory((param) -> {
             return new TableCell() {
                 @Override
                 protected void updateItem(Object item, boolean empty) {
                     setGraphic(null);
                     if (!empty) {
-                        Button b = new Button("repondre");
+                        Button b = new Button("Repondre");
                         b.setOnAction((event) -> {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("ajouter_reponse.fxml"));
+                           
                             try {
-                                if (Rep.supprimer(reponse.getItems().get(getIndex())))
-                                        {
-                                           
-                                   
-                                    reponse.getItems().remove(getIndex());
-                                    reponse.refresh();
+                                  Parent root = loader.load();
+                                  welcomeLb.getScene().setRoot(root);
+                                 System.out.println("hhhhhhh");
+                                  Reponse.refresh();
+                                 
 
-                                         }
-                            } catch (SQLException ex) {
-                                System.out.println("erreor:" + ex.getMessage());
-
+                                         } catch (IOException ex) {
+                                Logger.getLogger(Modifier_reclamationController.class.getName()).log(Level.SEVERE, null, ex);
                             }
-
+                           
                         });
                         setGraphic(b);
 
@@ -200,13 +216,18 @@ public class Afficher_reponseController implements Initializable {
                 }
             };
 
+           
         });
-
+       
+       
+       
+       
+       
     }
+    
+     void setData(String Message) {
+        welcomeLb.setText("" + Message);
      
-     
-     
-     
-     
-     
+    }   
+
 }

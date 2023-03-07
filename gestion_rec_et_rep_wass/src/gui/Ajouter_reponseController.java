@@ -6,6 +6,7 @@
 package gui;
 
 import entities.Reclamation;
+import entities.Reponse;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -13,24 +14,38 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import entities.Reponse;
-import java.io.IOException;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.control.TextField;
+import static javax.swing.JOptionPane.showMessageDialog;
 import services.ReponseService;
+
 /**
  * FXML Controller class
  *
- * @author DELL
+ * @author wassim
  */
 public class Ajouter_reponseController implements Initializable {
 
     @FXML
-    private TextArea messagetf;
+    private TextArea reponse;
+    @FXML
+    private TextField idRec;
     
-ReponseService Rep =  new ReponseService();
+    private static int id;
+          
+          
+          public static int getIdRec (Reclamation Rec) {
+          id = Rec.getId_reclamation();
+          System.out.println(id);
+          return id;
+        
+          }
+          
+          ReponseService RS = new ReponseService();
+    
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,38 +54,24 @@ ReponseService Rep =  new ReponseService();
 
     @FXML
     private void repondre(ActionEvent event) {
-         try {
-           Reponse Rp = new Reponse();
-
-           Rp.setMessage_rep(messagetf.getText());
-            Rep.ajouter(Rp);
-            System.out.println("Reponse  Ajouté Avec Succès");
-        }
-       
+        
+              
+        Reponse R = new Reponse();
+        try {
+             
+            
+            
+            
+            R.setId_rec(Integer.parseInt(idRec.getText()));
+            R.setText_rep(reponse.getText());
+            
+            RS.ajouter(R);
+                     showMessageDialog(null, "Reponse Envoyé" );  
+                     }
+        
         catch (SQLException ex) {
             System.out.println("Error" + ex.getMessage());
     }
-
-    }
-
-    @FXML
-    private void afficher(ActionEvent event) {
-         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("afficher_reponse.fxml"));
-            Parent root = (Parent)loader.load();
-            Afficher_reponseController controller = (Afficher_reponseController)loader.getController();
-           
-            messagetf.getScene().setRoot(root);
-            
-           
-             }
-         
-         catch (IOException ex) {
-            System.out.println("error" + ex.getMessage());
-        }
-        
-        
-        
         
     }
     

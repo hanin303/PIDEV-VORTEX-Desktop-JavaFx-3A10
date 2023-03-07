@@ -5,84 +5,106 @@
  */
 package entities;
 
-import javafx.collections.ObservableList;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
- * @author DELL
+ * @author wassim
  */
 public class Reclamation {
+      
+private
+        int id_reclamation;
+        String message_rec,objet,statut;
+        LocalDate date_rec;
+        
+        public Reclamation() {
+        }
 
-    
-    
-    private 
-            int id_reclamation;
-            String message_rec,type,statut;
-
-    public Reclamation() {
-    }
-
-    public Reclamation(int id_reclamation, String message_rec, String type , String statut ) {
+    public Reclamation(int id_reclamation, String message_rec, String objet, String statut) {
         this.id_reclamation = id_reclamation;
         this.message_rec = message_rec;
-        this.type = type;
+        this.objet = objet;
         this.statut = statut;
+    }
+
+    public Reclamation(String message_rec, String objet, String statut, LocalDate date_rec) {
+        this.message_rec = message_rec;
+        this.objet = objet;
+        this.statut = statut;
+        this.date_rec = date_rec;
+    }
+
+    public Reclamation(String message_rec, String objet, String statut) {
+        this.message_rec = message_rec;
+        this.objet = objet;
+        this.statut = statut;
+    }
+    
         
+        public Reclamation(int id_reclamation, String objet, String message_rec, String statut, LocalDate date_rec) {
+            
+            this.id_reclamation = id_reclamation;
+            this.objet = objet;
+            this.message_rec = message_rec;
+            this.statut = statut;
+            this.date_rec = date_rec;
+        }
+
+    public Reclamation(int id_reclamation, String message_rec, String objet) {
+        this.id_reclamation = id_reclamation;
+        this.message_rec = message_rec;
+        this.objet = objet;
+    }
+        
+        
+
+    public void setId_reclamation(int id_reclamation) {
+        this.id_reclamation = id_reclamation;
     }
 
     public int getId_reclamation() {
         return id_reclamation;
     }
 
-    public void setId_reclamation(int id_reclamation) {
-        this.id_reclamation = id_reclamation;
+    public void setObjet(String objet) {
+        this.objet = objet;
     }
 
-    public String getMessage_rec() {
+    public String getObjet() {
+        return objet;
+    }
+
+    public void setMessgae_rec(String messgae_rec) {
+        this.message_rec = messgae_rec;
+    }
+
+    public String getMessgae_rec() {
         return message_rec;
-    }
-
-    public void setMessage_rec(String message_rec) {
-        this.message_rec = message_rec;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getStatut() {
-        return statut;
     }
 
     public void setStatut(String statut) {
         this.statut = statut;
     }
 
-    @Override
+    public String getStatut() {
+        return statut;
+    }
+
+    public LocalDate getDate_rec() {
+        return date_rec;
+    }
+
+    public void setDate_rec(LocalDate date_rec) {
+        this.date_rec = date_rec;
+    }
+
+   @Override
     public String toString() {
-        return "Reclamation{" + "id_reclamation=" + id_reclamation + ", message_rec=" + message_rec + ", type=" + type + ", statut=" + statut + '}';
+        return "Reclamation{" + "id_reclamation=" + id_reclamation + ", objet=" + objet + ", message_rec=" + message_rec + ", statut=" + statut + ", date_rec=" + date_rec +'}';
     }
-
     public void ajouter(Reclamation R) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

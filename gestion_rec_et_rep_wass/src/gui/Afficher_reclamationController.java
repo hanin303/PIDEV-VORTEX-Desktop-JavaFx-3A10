@@ -6,47 +6,53 @@
 package gui;
 
 import entities.Reclamation;
+import entities.Reponse;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import services.ReclamationService;
-import entities.Reponse;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import services.ReclamationService;
+import services.ReponseService;
 
 /**
  * FXML Controller class
  *
- * @author DELL
+ * @author wassim
  */
-
-
 public class Afficher_reclamationController implements Initializable {
+
+    ReclamationService Rs = new ReclamationService();
+    ReponseService RS = new ReponseService();
     
-    ReclamationService Rs = new ReclamationService() ;
     @FXML
-    private TableView<Reclamation > Reclamation;
+    private TableView<Reclamation> Reclamation;
     @FXML
     private TableColumn<Reclamation, Integer> id;
     @FXML
+    private TableColumn<Reclamation, String> objet;
+    @FXML
     private TableColumn<Reclamation, String> message;
     @FXML
-    private TableColumn<Reclamation, String> type;
+    private TableColumn<Reclamation, Date> date;
     @FXML
     private TableColumn<Reclamation, String> statut;
     @FXML
@@ -54,46 +60,60 @@ public class Afficher_reclamationController implements Initializable {
     @FXML
     private TableColumn<Reclamation, Button> update;
     @FXML
-    private TableColumn<Reponse, String> reponse;
-    @FXML
     private Label welcomeLb;
-   
+    @FXML
+    private TextField search;
+    @FXML
+    private TableView<Reponse> Reponse;
+    @FXML
+    private TableColumn<Reponse, Integer> idReponse;
+    @FXML
+    private TableColumn<Reponse, Integer> idReclamation;
+    @FXML
+    private TableColumn<Reponse, String> MessageReponse;
+    
+    
+    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
         // TODO
-        
-          try {
-           
+        //int jml = Integer.parseInt(rechercher.getText());
+        try {
+            List<Reponse> reponsionet = RS.recuperer();
+            ObservableList<Reponse> olc2 = FXCollections.observableArrayList(reponsionet);
+            
             List<Reclamation> reclamationet = Rs.recuperer();
             ObservableList<Reclamation> olc = FXCollections.observableArrayList(reclamationet);
-           
+            
             id.setCellValueFactory(new PropertyValueFactory<Reclamation, Integer>("id_reclamation"));
-            message.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("message_rec"));
-            type.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("type"));
+            objet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("objet"));
+            message.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("messgae_rec"));
+            date.setCellValueFactory(new PropertyValueFactory<Reclamation, Date>("date_rec"));
             statut.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("statut"));
+            
+            idReponse.setCellValueFactory(new PropertyValueFactory<Reponse, Integer>("id_rep"));
+            idReclamation.setCellValueFactory(new PropertyValueFactory<Reponse, Integer>("id_rec"));
+            MessageReponse.setCellValueFactory(new PropertyValueFactory<Reponse, String>("text_rep"));
+            
             this.delete();
             this.update();
-     
-       
-          Reclamation.setItems(olc);
-     
-    }
-            catch (SQLException ex) {
+            //Rs.recherche(43);//id_reclamation
+            
+            Reclamation.setItems(olc);
+            Reponse.setItems(olc2);
+        }
+        catch (SQLException ex) {
             System.out.println("error" + ex.getMessage());
         }
-
-        
-        
-        
-    }    
+    }  
     
     
     
-     public void delete() {
+    public void delete() {
         delete.setCellFactory((param) -> {
             return new TableCell() {
                 @Override
@@ -126,10 +146,8 @@ public class Afficher_reclamationController implements Initializable {
         });
 
     }
-   
-   
-   
-     public void update() {
+    
+    public void update() {
    
        
          update.setCellFactory((param) -> {
@@ -145,17 +163,14 @@ public class Afficher_reclamationController implements Initializable {
                             try {
                                   Parent root = loader.load();
                                   welcomeLb.getScene().setRoot(root);
-                                 
+                                 System.out.println("hhhhhhh");
                                   Reclamation.refresh();
                                  
 
                                          } catch (IOException ex) {
-                                Logger.getLogger(ModifierController.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Modifier_reclamationController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                            
-
-                           
-
                         });
                         setGraphic(b);
 
@@ -170,34 +185,39 @@ public class Afficher_reclamationController implements Initializable {
        
        
        
-       
-
     }
-
-   
-   
-   
-   
-   
-   
-
-   
-   
     void setData(String Message) {
         welcomeLb.setText("" + Message);
      
     }
 
+    @FXML
+    private void btnSearch(KeyEvent event) {
+        //ReclamationService sr=new ReclamationService();
+        //list=sr.search(search.getText());
+        try {
+        List<Reclamation> reclamationet = Rs.recuperer();
+            ObservableList<Reclamation> olc = FXCollections.observableArrayList(reclamationet);
+            olc = Rs.search(search.getText());
+        id.setCellValueFactory(new PropertyValueFactory<Reclamation, Integer>("id_reclamation"));
+            objet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("objet"));
+            message.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("messgae_rec"));
+            date.setCellValueFactory(new PropertyValueFactory<Reclamation, Date>("date_rec"));
+            statut.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("statut"));
+        Reclamation.setItems(olc);
+         System.out.println(olc);
+        if(olc.size()!=0){
+            try {
+                System.out.println(olc);
+            } catch (Exception e) {
+                Logger.getLogger(Afficher_reclamationController.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        }
+        catch (SQLException ex) {
+            System.out.println("error" + ex.getMessage());
+        }
+    }
+
     
 }
-
-
-
-
-
-
-
-
-
-
-
