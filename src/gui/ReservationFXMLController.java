@@ -64,6 +64,7 @@ import javafx.scene.layout.Border;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+
 /**
  * FXML Controller class
  *
@@ -125,7 +126,7 @@ public class ReservationFXMLController implements Initializable {
     @FXML
     private Button idPrint;
     
-    private static final Pattern TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
+//    private static final Pattern TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
     
     private Connection conn;
     ObservableList<Reservation> reslist;
@@ -330,7 +331,15 @@ private void AjouterReservation(ActionEvent event) {
 		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
                 
-
+//      txtitineraire.setValue(null);
+//      txtdate.setValue(null);
+//      txtheuredepart.clear();
+//      txtheurearrive.clear();
+//      txttype.clear();
+//      txttransport.setValue(null);
+//      txtstatus.setValue(null);
+//      txtusr.setValue(null);
+      
     UpdateTable();
     }
 
@@ -401,7 +410,37 @@ private void AjouterReservation(ActionEvent event) {
 //        });
 //    }
     
+    
+    
+    
+//    @FXML
+//private void controlesaisieDate(KeyEvent event) {
+//    if (event.getCode() == KeyCode.ENTER) {
+//        LocalDate date = datePicker.getValue();
+//        if (date == null) {
+//            // Show an error message to the user
+//            System.out.println("Please select a date");
+//            return;
+//        }
+//    
+//    }
+//}
 
+    
+        @FXML
+    private void controlesaisieTicket(KeyEvent event) {
+        TextField textField = (TextField) event.getSource();
+    if (textField.getText().length() >= 20) {
+        event.consume();
+          txttype.setStyle("-fx-border-color:red");
+          event.consume();
+    }else{
+         txttype.setStyle("-fx-border-color:green");
+          
+}
+       
+}
+    
    
     @FXML
     private void addpdf(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException{
@@ -506,18 +545,14 @@ private void AjouterReservation(ActionEvent event) {
 //        cell = new PdfPCell(new Phrase(String.valueOf(r.getId_user()), FontFactory.getFont("Comic Sans MS", 12)));
 //        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //        table.addCell(cell);
-        
-        
+             
     }
 
     doc.add(table);
     doc.close();
     Desktop.getDesktop().open(new File("./ListeDesReservations.pdf"));
     }
-    
-    
-    
-    
+   
    
 }
 

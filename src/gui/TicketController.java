@@ -51,6 +51,10 @@ import service.ReservationService;
 import service.TicketService;
 import javax.mail.*;
 import javax.mail.internet.*;
+import sms.SendSMS;
+//import com.twilio.Twilio;
+//import com.twilio.rest.api.v2010.account.Message;
+//import com.twilio.type.PhoneNumber;
 
 /**
  * FXML Controller class
@@ -89,8 +93,14 @@ public class TicketController implements Initializable {
     private Parent root;
     @FXML
     private Button buttonpay;
-    private Ticket ticket1;
     
+    private Ticket ticket1;
+   
+    @FXML
+    private Button btnSearch;
+    @FXML
+    private TextField idsearch;
+
 
     /**
      * Initializes the controller class.
@@ -103,9 +113,14 @@ public class TicketController implements Initializable {
       }
         public void UpdateTable(){
         List<Ticket> list=new ArrayList<>();
+        //search
         List<Ticket> list2=new ArrayList<>();
         TicketService ts = new TicketService();
+        if(idsearch.getText().length() == 0)
         list=ts.readAll();
+         else 
+        list.add(ts.readByID(Integer.parseInt(idsearch.getText())));
+        
             System.out.println(list);
         list2 = list.stream().map(t->new Ticket(t.getId_t(),t.getStatus(),t.getPrix(),t.getId_reservation())).collect(Collectors.toList());
             System.out.println(list2);
@@ -120,7 +135,7 @@ public class TicketController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-           
+        buttonpay.setVisible(false);   ;
         ReservationService rs = new ReservationService();
         ObservableList<Reservation> reservations = FXCollections.observableArrayList(rs.readAll());
         List<Integer> id_reservation = reservations.stream().map(Reservation::getId_reservation).collect(Collectors.toList());
@@ -164,10 +179,10 @@ public class TicketController implements Initializable {
       txtprix.clear();
       txtinfo.setValue(null);
     UpdateTable();
-   
         
     }
-    
+
+  
     public void mailing() {
         // Recipient's email address
         String to = "hanin.benjemaa@esprit.tn";
@@ -225,6 +240,7 @@ public class TicketController implements Initializable {
     ReservationService rs=new ReservationService();
     Ticket res = new Ticket(txtstatus.getValue(), txtprix.getText(),rs.readByID(txtinfo.getValue())); 
     System.out.println(res);
+    Ticket t = new Ticket();
     TicketService ts = new TicketService();
     ts.insert(res);
     
@@ -234,7 +250,9 @@ public class TicketController implements Initializable {
      
     UpdateTable();
     PayerTicket ();
-    mailing();  
+    mailing(); 
+    SendSMS sm = new SendSMS();
+    sm.sendSMS(t);
  
     }
     }
@@ -314,7 +332,7 @@ public class TicketController implements Initializable {
                System.out.println(customer.getId());     
                //Use the payment method to make a charge
                Map<String, Object> chargeParams = new HashMap<String, Object>();
-               chargeParams.put("amount", "900");
+               chargeParams.put("amount", "200");
                chargeParams.put("currency", "usd");
                //chargeParams.put("description", "Example charge");
                //chargeParams.put("source", token.getId());

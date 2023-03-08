@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.TicketController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.TicketController">
    <children>
-      <VBox layoutX="14.0" layoutY="149.0" prefHeight="122.0" prefWidth="132.0" spacing="50.0">
+      <VBox layoutX="21.0" layoutY="146.0" prefHeight="211.0" prefWidth="132.0" spacing="70.0">
          <children>
             <Label text="Status Ticket" underline="true">
                <font>
@@ -31,34 +31,34 @@
                </font></Label>
          </children>
       </VBox>
-      <VBox layoutX="164.0" layoutY="146.0" prefHeight="132.0" prefWidth="148.0" spacing="40.0">
+      <VBox layoutX="164.0" layoutY="146.0" prefHeight="173.0" prefWidth="148.0" spacing="60.0">
          <children>
             <ComboBox fx:id="txtstatus" prefWidth="150.0" />
             <TextField fx:id="txtprix" onKeyTyped="#controlesaisieprix" promptText="prix de votre ticket" />
-            <ComboBox fx:id="txtinfo" prefHeight="26.0" prefWidth="163.0" />
+            <ComboBox fx:id="txtinfo" prefHeight="51.0" prefWidth="148.0" />
          </children>
       </VBox>
-      <TableView fx:id="tvTicket" layoutX="326.0" layoutY="102.0" prefHeight="379.0" prefWidth="567.0">
+      <TableView fx:id="tvTicket" layoutX="355.0" layoutY="102.0" prefHeight="458.0" prefWidth="598.0">
         <columns>
           <TableColumn fx:id="colid" prefWidth="71.199951171875" text="ID" />
-          <TableColumn fx:id="colstatus" prefWidth="133.60000610351562" text="Status Ticket" />
-            <TableColumn fx:id="colprix" prefWidth="118.4000244140625" text="Prix" />
-            <TableColumn fx:id="colinfo" prefWidth="301.5999755859375" text="Numéro Reservation" />
+          <TableColumn fx:id="colstatus" prefWidth="140.800048828125" text="Status Ticket" />
+            <TableColumn fx:id="colprix" prefWidth="143.99993896484375" text="Prix" />
+            <TableColumn fx:id="colinfo" prefWidth="271.199951171875" text="Numéro Reservation" />
         </columns>
       </TableView>
-      <Button fx:id="btnDelete" layoutX="731.0" layoutY="42.0" mnemonicParsing="false" onAction="#SupprimerTicket" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Supprimer">
+      <Button fx:id="btnDelete" layoutX="522.0" layoutY="47.0" mnemonicParsing="false" onAction="#SupprimerTicket" prefHeight="34.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Supprimer">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
          </graphic></Button>
-      <Button fx:id="btnUpdate" layoutX="579.0" layoutY="42.0" mnemonicParsing="false" onAction="#ModifierTicket" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Modifier">
+      <Button fx:id="btnUpdate" layoutX="361.0" layoutY="47.0" mnemonicParsing="false" onAction="#ModifierTicket" prefHeight="34.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Modifier">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" />
          </graphic></Button>
-      <Button fx:id="btnAdd" layoutX="427.0" layoutY="42.0" mnemonicParsing="false" onAction="#AjouterTicket" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Ajouter">
+      <Button fx:id="btnAdd" layoutX="164.0" layoutY="408.0" mnemonicParsing="false" onAction="#AjouterTicket" prefHeight="34.0" prefWidth="148.0" style="-fx-background-radius: 12;" text="Acheter Ticket">
          <graphic>
-            <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
+            <FontAwesomeIconView fill="#6096b4" glyphName="PAYPAL" />
          </graphic></Button>
-      <Button fx:id="btnBack" layoutX="14.0" layoutY="524.0" mnemonicParsing="false" onAction="#Switchscreenreservation" prefHeight="26.0" prefWidth="184.0" style="-fx-background-radius: 12;" text="Back To Reservation">
+      <Button fx:id="btnBack" layoutX="685.0" layoutY="606.0" mnemonicParsing="false" onAction="#Switchscreenreservation" prefHeight="33.0" prefWidth="184.0" style="-fx-background-radius: 12;" text="Back To Reservation">
          <graphic>
             <FontAwesomeIconView glyphName="ARROW_CIRCLE_RIGHT" />
          </graphic></Button>
@@ -67,10 +67,16 @@
             <Image url="@logoooooooo.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonpay" layoutX="141.0" layoutY="391.0" mnemonicParsing="false" onAction="#PayerTicket" prefHeight="26.0" prefWidth="166.0" style="-fx-background-radius: 12;" text="Submit Paiement">
+      <Button fx:id="buttonpay" layoutX="21.0" layoutY="605.0" mnemonicParsing="false" onAction="#PayerTicket" prefHeight="34.0" prefWidth="166.0" style="-fx-background-radius: 12;" text="Submit Paiement">
          <graphic>
             <FontAwesomeIconView glyphName="PAYPAL" />
          </graphic>
       </Button>
+      <Button fx:id="btnSearch" layoutX="846.0" layoutY="47.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="34.0" prefWidth="106.0" text="Recherche">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" />
+         </graphic>
+      </Button>
+      <TextField fx:id="idsearch" layoutX="707.0" layoutY="47.0" prefHeight="34.0" prefWidth="138.0" />
    </children>
 </AnchorPane>

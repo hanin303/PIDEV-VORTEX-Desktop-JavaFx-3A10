@@ -65,7 +65,7 @@
             <DatePicker fx:id="txtdate" onKeyTyped="#ControleSaisieDate" prefHeight="26.0" prefWidth="210.0" promptText="Entrer une date" />
             <TextField fx:id="txtheuredepart" onKeyTyped="#ControleSaisieHeure" promptText="heure depart" />
             <TextField fx:id="txtheurearrive" promptText="heure arrivé" />
-            <TextField fx:id="txttype" promptText="Choisissez un type ticket" />
+            <TextField fx:id="txttype" onKeyTyped="#controlesaisieTicket" promptText="Choisissez un type ticket" />
             <ComboBox fx:id="txttransport" prefHeight="26.0" prefWidth="230.0" />
             <ComboBox fx:id="txtstatus" prefHeight="26.0" prefWidth="207.0" />
             <ComboBox fx:id="txtusr" prefHeight="26.0" prefWidth="215.0" />
@@ -80,8 +80,8 @@
             <TableColumn fx:id="colit" prefWidth="83.20001220703125" text="Itineraire" />
             <TableColumn fx:id="colTransport" prefWidth="122.4000244140625" text="Moyen Transport" />
             <TableColumn fx:id="colType" prefWidth="112.00006103515625" text="Type Ticket" />
-            <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="112.0" text="Status" />
-            <TableColumn fx:id="colusr" minWidth="0.0" text="ID Client" />
+            <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="190.4000244140625" text="Status" />
+            <TableColumn fx:id="colusr" minWidth="0.0" prefWidth="1.5999755859375" text="ID Client" />
         </columns>
       </TableView>
       <Button fx:id="btnInsert" layoutX="31.0" layoutY="581.0" mnemonicParsing="false" onAction="#AjouterReservation" prefHeight="26.0" prefWidth="130.0" style="-fx-background-radius: 12;" text="Ajouter">
@@ -96,7 +96,7 @@
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
          </graphic></Button>
-      <Button fx:id="btnGo" layoutX="740.0" layoutY="581.0" mnemonicParsing="false" onAction="#switchscreenticket" prefHeight="26.0" prefWidth="178.0" style="-fx-background-radius: 12;" text="Go To Gestion Ticket">
+      <Button fx:id="btnGo" layoutX="700.0" layoutY="573.0" mnemonicParsing="false" onAction="#switchscreenticket" prefHeight="34.0" prefWidth="218.0" style="-fx-background-radius: 12;" text="Go To Gestion Ticket">
          <graphic>
             <FontAwesomeIconView glyphName="ARROW_CIRCLE_LEFT" />
          </graphic>

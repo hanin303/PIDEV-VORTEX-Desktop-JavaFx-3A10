@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import service.ReservationService;
 import service.TicketService;
+//import sms.SendSMS;
+//import entity.Ticket;
 
 /**
  *
@@ -26,6 +28,7 @@ public class SwiftTransitProject2 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+       
         DataSource ds1 = DataSource.getInstance();
         System.out.println(ds1);
         DataSource ds2 = DataSource.getInstance();
@@ -57,10 +60,7 @@ System.out.println(rs.readByID(3));
 //ts.readAll().forEach(System.out::println);
 //System.out.println(ts.readByID(2));
         
-        
-        
-        
-        
+
         
     }
     
