@@ -53,7 +53,7 @@ public class UserTableItController implements Initializable {
     @FXML
     private TableColumn<Iteneraire, String> pts_arrive_it;
     @FXML
-    private TableColumn<Iteneraire,Integer> id_it_trajet;
+    private TableColumn<Iteneraire,String> id_it_trajet;
     @FXML
     private Button supprimer_button;
     @FXML
@@ -73,20 +73,26 @@ public class UserTableItController implements Initializable {
      public void UpdateTable(){
         List<Iteneraire> list=new ArrayList<>();
         List<Iteneraire> list2=new ArrayList<>();
+        List<Iteneraire> list3=new ArrayList<>();
         
         
          
         
         ItineraireService is = new ItineraireService();
         list=is.readAll();
+        list3 = list.stream().map(i->{String fromto = i.getTrajet().getPts_depart()+ "->"
+                +i.getTrajet().getPts_arrivee();
+                
+                return new Iteneraire(i.getId(),i.getPts_depart(),i.getPts_arrivee(),fromto);}).
+                collect(Collectors.toList());
         list2 = list.stream().map(it->new Iteneraire(it.getId(),it.getPts_depart(),
         it.getPts_arrivee(),it.getTrajet().getId())).collect(Collectors.toList());
-        System.out.println(list2);
+        System.out.println(list3);
         
         
         
                 
-        ObservableList<Iteneraire> obs=FXCollections.observableArrayList(list2);
+        ObservableList<Iteneraire> obs=FXCollections.observableArrayList(list3);
 //        List<Trajet> trajet_list = obs.stream().map(Iteneraire::getTrajet).collect(Collectors.toList());
 //        List<Integer> trajet_id_list = trajet_list.stream().map(Trajet::getId).collect(Collectors.toList());
 //        ObservableList<Integer> observables_ids_trajet =FXCollections.observableList(trajet_id_list);
@@ -94,7 +100,7 @@ public class UserTableItController implements Initializable {
        
         pts_depart_it.setCellValueFactory(new PropertyValueFactory<Iteneraire ,String>("pts_depart"));
         pts_arrive_it.setCellValueFactory(new PropertyValueFactory<Iteneraire ,String>("pts_arrivee"));
-        id_it_trajet.setCellValueFactory(new PropertyValueFactory<Iteneraire ,Integer>("trajet_id"));
+        id_it_trajet.setCellValueFactory(new PropertyValueFactory<Iteneraire ,String>("fromto"));
         table_Itineraire.setItems(obs);
     }
     @Override

@@ -6,6 +6,30 @@ public class Iteneraire {
     private String pts_arrivee;
     private Trajet trajet;
     private int trajet_id;
+    private String fromto;
+
+    public String getFromto() {
+        return fromto;
+    }
+
+    public Iteneraire(int id, String pts_depart, String pts_arrivee, String fromto) {
+        this.id = id;
+        this.pts_depart = pts_depart;
+        this.pts_arrivee = pts_arrivee;
+        this.fromto = fromto;
+        System.out.println("used");
+    }
+
+    public void setFromto(String fromto) {
+        this.fromto = fromto;
+    }
+
+    public Iteneraire(String pts_depart, String pts_arrivee, Trajet trajet, String fromto) {
+        this.pts_depart = pts_depart;
+        this.pts_arrivee = pts_arrivee;
+        this.trajet = trajet;
+        this.fromto = fromto;
+    }
     
     
     public Iteneraire( int id ,String pts_depart, String pts_arrivee, Trajet trajet) {
@@ -20,7 +44,7 @@ public class Iteneraire {
         this.pts_depart = pts_depart;
         this.pts_arrivee = pts_arrivee;
         this.trajet_id = id_trajet; 
-        System.out.println("used");
+        
         
        
     }
@@ -75,7 +99,7 @@ public class Iteneraire {
     @Override
     public String toString() {
         return "Iteneraire [id=" + id + ", pts_depart=" + pts_depart + ", pts_arrivee=" + pts_arrivee + ", trajet="
-                + trajet_id + "]";
+                + fromto + "]";
     }
 
     public Trajet getTrajet() {
