@@ -1,9 +1,10 @@
-/*
+   /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package gui;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -123,6 +124,8 @@ public class CRUDMOYController implements Initializable {
         MoyTranService ts=new MoyTranService();
         if (txtch.getText().length() == 0){
         list=ts.readAll();
+        }else{
+            list.add(ts.readByID(Integer.parseInt(txtch.getText())));
         }
         ObservableList<MoyTran> obs=FXCollections.observableArrayList(list);
         idmoy.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_moy"));
@@ -299,51 +302,57 @@ public class CRUDMOYController implements Initializable {
     PdfWriter.getInstance(doc, new FileOutputStream("./ListesdesmoyenTran1.pdf"));
 
     doc.open();
+    Paragraph title = new Paragraph("La liste des moyens de transport" , FontFactory.getFont("COURIER", 14)); 
+      title.setAlignment(Element.ALIGN_CENTER);
+      doc.add(title);
    
-    doc.add(new Paragraph("   "));
-    doc.add(new Paragraph("                                  Liste Des moyens de transport                                  "));
+    //doc.add(new Paragraph("   "));
+    //doc.add(new Paragraph("                                  Liste Des moyens de transport                                  "));
     
-    doc.add(new Paragraph("   "));
+   // doc.add(new Paragraph("   "));
 
-    PdfPTable table = new PdfPTable(7);
-    table.setWidthPercentage(100);
+    PdfPTable table = new PdfPTable(8);
+    table.setWidthPercentage(115);
+    table.setSpacingBefore(20);
+    table.setSpacingAfter(20);
     PdfPCell cell;
-    cell = new PdfPCell(new Phrase("id moy", FontFactory.getFont("Comic Sans MS", 14)));
+    cell = new PdfPCell(new Phrase("ID Moy", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     
     table.addCell(cell);
     cell = new PdfPCell(new Phrase("Matricule", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
      cell = new PdfPCell(new Phrase("Numéro", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
    
     cell = new PdfPCell(new Phrase("Capacité", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
     
   
     cell = new PdfPCell(new Phrase("type Véhicule", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
     
      cell = new PdfPCell(new Phrase("Marque", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
     
     cell = new PdfPCell(new Phrase("Etat", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
     cell = new PdfPCell(new Phrase("ligne", FontFactory.getFont("Comic Sans MS", 14)));
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(cell);
     
 
@@ -352,16 +361,18 @@ public class CRUDMOYController implements Initializable {
        MoyTran m = new MoyTran();
         m.setId_moy(rs.getInt("id_moy"));
         m.setMatricule(rs.getInt("matricule"));
-        m.setMatricule(rs.getInt("num"));
+        m.setNum(rs.getInt("num"));
         m.setCapacite(rs.getInt("capacite"));
         m.setType_vehicule(rs.getString("type_vehicule"));
         m.setMarque(rs.getString("marque"));
         m.setEtat(rs.getString("etat"));
         m.setId_ligne(rs.getInt("id_ligne"));
+        System.out.println(m);
        
         
         cell = new PdfPCell(new Phrase(String.valueOf(m.getId_moy()), FontFactory.getFont("Comic Sans MS", 12)));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+       cell.setBackgroundColor(BaseColor.PINK);
         table.addCell(cell);
         
         cell = new PdfPCell(new Phrase(String.valueOf(m.getMatricule()), FontFactory.getFont("Comic Sans MS", 12)));

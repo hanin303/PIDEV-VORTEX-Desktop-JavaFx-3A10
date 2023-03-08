@@ -37,6 +37,7 @@ public class BarChartmController implements Initializable {
         loadData();
        
         piechart.setData(piechartdata);
+        piechart.setTitle("Statistique des moyens  de transport en Tunisie");
     }   
     
     

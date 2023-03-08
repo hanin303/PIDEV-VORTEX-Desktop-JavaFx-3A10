@@ -5,6 +5,7 @@
 package gui;
 
 import connexionbd.utils.DataSource;
+import entity.Ligne;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.StackedBarChart;
+
 
 /**
  * FXML Controller class
@@ -38,6 +41,7 @@ public class BarChartController implements Initializable {
         loadData();
        
         piechart.setData(piechartdata);
+        piechart.setTitle("Statistique de Ligne de transport en Tunisie");
     }    
     
      public void loadData() {
@@ -52,7 +56,7 @@ public class BarChartController implements Initializable {
 
             ResultSet rs = cnx.createStatement().executeQuery(query);
             while (rs.next()) {
-
+                
                 piechartdata.add(new PieChart.Data(rs.getString("nom_ligne"), rs.getInt("count")));
                 p.add(rs.getString("nom_ligne"));
                 c.add(rs.getInt("count"));
