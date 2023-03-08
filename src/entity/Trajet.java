@@ -6,6 +6,19 @@ public class Trajet {
     private String temps_parcours;
     private String pts_depart;
     private String pts_arrivee;
+    private String fromto;
+
+    public String getFromto() {
+        return fromto;
+    }
+
+    public void setFromto(String fromto) {
+        this.fromto = fromto;
+    }
+
+    public Trajet(String fromto) {
+        this.fromto = fromto;
+    }
     
 
     public Trajet() {

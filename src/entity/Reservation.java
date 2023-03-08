@@ -22,6 +22,7 @@ public class Reservation {
     private String heure_depart ;
     private String heure_arrive ;
     private int id_it;
+    private String destination;
     
 
     public Reservation(String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
@@ -39,6 +40,27 @@ public class Reservation {
     private int id_user;
     private Iteneraire iteneraire ;
     private String type_ticket;
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public Reservation(int id_reservation, String status, LocalDate date_reservation, String heure_depart, String heure_arrive, String destination, int id_moy, int id_user, String type_ticket) {
+        this.id_reservation = id_reservation;
+        this.status = status;
+        this.date_reservation = date_reservation;
+        this.heure_depart = heure_depart;
+        this.heure_arrive = heure_arrive;
+        this.destination = destination;
+        this.id_moy = id_moy;
+        this.id_user = id_user;
+        this.type_ticket = type_ticket;
+    }
+   
     
     public Reservation() { 
         

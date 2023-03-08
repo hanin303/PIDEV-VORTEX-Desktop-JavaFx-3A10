@@ -10,12 +10,13 @@ package entity;
  */
 public class Ligne {
     
-     int id_ligne;
-    String nom_ligne;
-    String type_ligne;
+    private int id_ligne;
+   private String nom_ligne;
+   private  String type_ligne;
 
     public Ligne() {
     }
+    
 
     public Ligne(int id_ligne, String nom_ligne, String type_ligne) {
         this.id_ligne = id_ligne;

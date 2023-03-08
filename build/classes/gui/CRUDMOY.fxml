@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" onDragDetected="#switchtmp" prefHeight="547.0" prefWidth="1200.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CRUDMOYController">
+   <children>
+      <VBox layoutX="114.0" layoutY="67.0" />
+      <VBox layoutX="22.0" layoutY="67.0" prefHeight="338.0" prefWidth="100.0" spacing="47.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="70.0" text="Matricule">
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Numéro">
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Capacité">
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Type Véhicule">
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Marque">
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Etat">
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Ligne">
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="129.0" layoutY="67.0" prefHeight="346.0" prefWidth="244.0" spacing="25.0">
+         <children>
+            <TextField fx:id="txtm" onKeyTyped="#limit1" promptText="saisir matricule" />
+            <TextField fx:id="num" onKeyTyped="#limit5" promptText="saisir numéro" />
+            <TextField fx:id="txtcap" onKeyTyped="#limit2" promptText="saisir texte" />
+            <ComboBox fx:id="typev" prefHeight="25.0" prefWidth="246.0" />
+            <TextField fx:id="txtmar" onKeyTyped="#limit4" promptText="saisir marque" />
+            <ComboBox fx:id="txte" prefHeight="25.0" prefWidth="250.0" />
+            <ComboBox fx:id="txtl" prefHeight="0.0" prefWidth="244.0" />
+         </children>
+      </VBox>
+      <TableView fx:id="tabmoy" layoutX="406.0" layoutY="67.0" prefHeight="346.0" prefWidth="680.0" style="-fx-background-radius: 12;">
+        <columns>
+          <TableColumn fx:id="idmoy" prefWidth="75.0" text="ID_MOY" />
+          <TableColumn fx:id="mat" prefWidth="75.0" style="color: FEFBE9;" text="Matricule" />
+            <TableColumn fx:id="mat1" prefWidth="75.0" style="color: FEFBE9;" text="Numéro" />
+            <TableColumn fx:id="cap" prefWidth="75.0" text="Capacité" />
+            <TableColumn fx:id="tv" prefWidth="99.0" text="Type_Véhicule" />
+            <TableColumn fx:id="marque" prefWidth="96.0" text="Marque" />
+            <TableColumn fx:id="etat" prefWidth="90.0" text="Etat" />
+            <TableColumn fx:id="li" prefWidth="94.0" text="Ligne" />
+        </columns>
+      </TableView>
+      <Button layoutX="258.0" layoutY="443.0" mnemonicParsing="false" onAction="#add_moy" prefHeight="27.0" prefWidth="100.0" style="-fx-background-radius: 12;" text="Ajouter">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
+         </graphic></Button>
+      <Button layoutX="137.0" layoutY="443.0" mnemonicParsing="false" onAction="#delete" prefHeight="27.0" prefWidth="114.0" style="-fx-background-radius: 12;" text="Supprimer">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
+         </graphic></Button>
+      <Button layoutX="18.0" layoutY="443.0" mnemonicParsing="false" onAction="#modif" prefHeight="27.0" prefWidth="107.0" style="-fx-background-radius: 12;" text="Modifier">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="EDIT" />
+         </graphic>
+      </Button>
+      <Button fx:id="btnwitch" layoutX="905.0" layoutY="416.0" mnemonicParsing="false" onAction="#switchmmp" prefHeight="25.0" prefWidth="160.0" style="-fx-background-radius: 12;" text="Gestion des Lignes">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="SUBWAY" />
+         </graphic>
+      </Button>
+      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@kslvAsset%201char.png" />
+         </image>
+      </ImageView>
+      <FontAwesomeIconView fill="#609ea2" glyphName="BUS" layoutX="1102.0" layoutY="35.0" size="25" text="" wrappingWidth="34.0" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="TRAIN" layoutX="1102.0" layoutY="75.0" size="25" text="" />
+      <FontAwesomeIconView fill="#609ea2" glyphName="SUBWAY" layoutX="1102.0" layoutY="124.0" size="25" text="" />
+      <TextField fx:id="txtch" layoutX="392.0" layoutY="417.0" prefHeight="25.0" prefWidth="266.0" promptText="saisir ID" />
+      <Button layoutX="694.0" layoutY="416.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="27.0" prefWidth="188.0" style="-fx-background-radius: 12;" text="Chercher">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="SEARCH" />
+         </graphic>
+      </Button>
+      <Button layoutX="905.0" layoutY="475.0" mnemonicParsing="false" onAction="#genPdf" prefHeight="25.0" prefWidth="160.0" style="-fx-background-radius: 12;" text="Générer PDF">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="FILE" />
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="searchField" layoutX="443.0" layoutY="475.0" prefHeight="25.0" prefWidth="208.0" promptText="saisir marque" />
+      <Button layoutX="694.0" layoutY="474.0" mnemonicParsing="false" onAction="#searchField" prefHeight="27.0" prefWidth="188.0" style="-fx-background-radius: 12;" text="Rechercher avancée">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="SEARCH" />
+         </graphic>
+      </Button>
+      <Label fx:id="test" layoutX="392.0" layoutY="479.0" prefHeight="17.0" prefWidth="56.0" text="Search : ">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="960.0" layoutY="25.0" mnemonicParsing="false" onAction="#stat" prefHeight="27.0" prefWidth="114.0" style="-fx-background-color: 86A3B8; -fx-background-radius: 12;" text="Statistiques">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CIRCLE" />
+         </graphic>
+      </Button>
+      <Button layoutX="18.0" layoutY="484.0" mnemonicParsing="false" onAction="#BackHome" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 12;" text="Retour">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CHEVRON_CIRCLE_LEFT" />
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

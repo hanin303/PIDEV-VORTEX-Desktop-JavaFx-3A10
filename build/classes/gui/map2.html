@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenStreetMap Example</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body onload="initMap()">
+    <div id="map"></div>
+    <script>
+        var map;
+
+        function initMap() {
+            map = L.map('map').setView([36.8065, 10.1815], 16);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+                tileSize: 512,
+                zoomOffset: -1,
+            }).addTo(map);
+
+            const mysql = require('mysql');
+
+const db = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'swifttransit'
+});
+
+db.connect();
+
+db.query("SELECT * FROM station", function(err, results) {
+  if (err) throw err;
+
+  // Loop through the result set
+  for (var i = 0; i < results.length; i++) {
+    // Extract the coordinates from the "lang_alt" column
+   var latLng = results[i].lang_alt.split(',');
+   var lat = parseFloat(latLng[0]);
+   var lng = parseFloat(latLng[1]);
+
+   // Create a new Leaflet marker object for each set of coordinates
+   var marker = L.marker([lat,lng]).addTo(map);
+
+  }
+});
+
+   
+           
+            function search(query) {
+                if (query) {
+                    var url = "https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(query) + "&format=jsonv2";
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                          
+                        })
+                        .catch(error => console.error(error));
+                }
+            }
+        }
+    </script>
+</body>
+</html>

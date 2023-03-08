@@ -87,7 +87,7 @@ public class ReservationService implements IService<Reservation>{
             ResultSet rs = st.executeQuery(requete);
             ItineraireService ts = new ItineraireService();
             while(rs.next()){
-
+           UserService us= new UserService();
            Reservation r = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
            list.add(r);
             }
@@ -111,6 +111,28 @@ public class ReservationService implements IService<Reservation>{
             //reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),ts.readByID(rs.getInt(8)),rs.getString(9));
             reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
 
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(TrajetService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return reservation;
+    }
+    public Reservation readByID_user(int id) {
+        List<Reservation> list = new ArrayList<>();
+        String requete = "select * from reservation where id_client = ?";
+        Reservation reservation =  null;
+        try{
+            PreparedStatement pst = conn.prepareStatement(requete);
+            pst.setInt(7,id);
+            ResultSet rs = pst.executeQuery();
+            ReservationService rss = new ReservationService();
+            ItineraireService ts = new ItineraireService();
+            UserService us = new UserService();
+            if(rs.next()){
+            reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
+            list.add(reservation);
+            //reservation = new Reservation(rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(7),ts.readByID(rs.getInt(8)),rs.getString(9));
+//            reservation = new Reservation(rs.getInt(1),rs.getInt(1), rs.getString(5), rs.getDate(2).toLocalDate(), rs.getString(3), rs.getString(4),rs.getInt(6),rs.getInt(8),rs.getString(9));
             }
         }catch (SQLException ex) {
             Logger.getLogger(TrajetService.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,63 +1,110 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entity;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
+/**
+ *
+ * @author wassim
+ */
 public class Reclamation {
-    private int id;
-    private String contenu;
-    private String date;
-    private int user_id;
-    private String status;
+      
+private
+        int id_reclamation;
+        String message_rec,objet,statut;
+        LocalDate date_rec;
+        
+        public Reclamation() {
+        }
+
+    public Reclamation(int id_reclamation, String message_rec, String objet, String statut) {
+        this.id_reclamation = id_reclamation;
+        this.message_rec = message_rec;
+        this.objet = objet;
+        this.statut = statut;
+    }
+
+    public Reclamation(String message_rec, String objet, String statut, LocalDate date_rec) {
+        this.message_rec = message_rec;
+        this.objet = objet;
+        this.statut = statut;
+        this.date_rec = date_rec;
+    }
+
+    public Reclamation(String message_rec, String objet, String statut) {
+        this.message_rec = message_rec;
+        this.objet = objet;
+        this.statut = statut;
+    }
     
-    public Reclamation() {
+        
+        public Reclamation(int id_reclamation, String objet, String message_rec, String statut, LocalDate date_rec) {
+            
+            this.id_reclamation = id_reclamation;
+            this.objet = objet;
+            this.message_rec = message_rec;
+            this.statut = statut;
+            this.date_rec = date_rec;
+        }
+
+    public Reclamation(int id_reclamation, String message_rec, String objet) {
+        this.id_reclamation = id_reclamation;
+        this.message_rec = message_rec;
+        this.objet = objet;
     }
-    
-    public Reclamation(int id, String contenu, String date, String status) {
-        this.id = id;
-        this.contenu = contenu;
-        this.date = date;
-        this.status = status;
+        
+        
+
+    public void setId_reclamation(int id_reclamation) {
+        this.id_reclamation = id_reclamation;
     }
 
-    public Reclamation(String contenu, String date, String status) {
-        this.contenu = contenu;
-        this.date = date;
-        this.status = status;
+    public int getId_reclamation() {
+        return id_reclamation;
     }
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getContenu() {
-        return contenu;
-    }
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
-    }
-    public String getDate() {
-        return date;
-    }
-    public void setDate(String date) {
-        this.date = date;
-    }
-    public int getUser_id() {
-        return user_id;
-    }
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
+    public void setObjet(String objet) {
+        this.objet = objet;
     }
 
-    @Override
+    public String getObjet() {
+        return objet;
+    }
+
+    public void setMessgae_rec(String messgae_rec) {
+        this.message_rec = messgae_rec;
+    }
+
+    public String getMessgae_rec() {
+        return message_rec;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public LocalDate getDate_rec() {
+        return date_rec;
+    }
+
+    public void setDate_rec(LocalDate date_rec) {
+        this.date_rec = date_rec;
+    }
+
+   @Override
     public String toString() {
-        return "Reclamation [id=" + id + ", contenu=" + contenu + ", date=" + date + ", user_id=" + user_id
-                + ", status=" + status + "]";
+        return "Reclamation{" + "id_reclamation=" + id_reclamation + ", objet=" + objet + ", message_rec=" + message_rec + ", statut=" + statut + ", date_rec=" + date_rec +'}';
     }
-    
+    public void ajouter(Reclamation R) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
 }

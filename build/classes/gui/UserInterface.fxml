@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="1309.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.UserInterfaceController">
+   <children>
+      <ImageView fitHeight="59.0" fitWidth="185.0" layoutX="40.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@kslvAsset%203char.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="pts_depart_text" layoutX="41.0" layoutY="150.0" prefHeight="35.0" prefWidth="266.0" />
+      <Label layoutX="42.0" layoutY="124.0" prefHeight="26.0" prefWidth="115.0" text="Point de départ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="pts_depart_arrive" layoutX="41.0" layoutY="217.0" prefHeight="35.0" prefWidth="266.0" />
+      <Label layoutX="42.0" layoutY="190.0" prefHeight="26.0" prefWidth="115.0" text="Point de départ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <WebView fx:id="mapview" layoutX="451.0" layoutY="42.0" prefHeight="438.0" prefWidth="810.0" />
+      <TextField fx:id="search_field" layoutX="1004.0" layoutY="419.0" prefHeight="51.0" prefWidth="244.0" promptText="Rechercher" style="-fx-background-radius: 12;">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <Button fx:id="valider_button" layoutX="34.0" layoutY="354.0" mnemonicParsing="false" onAction="#AjouterItineraire" prefHeight="18.0" prefWidth="115.0" style="-fx-background-radius: 12;" text="valider">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="combo_trajet" layoutX="40.0" layoutY="299.0" prefHeight="35.0" prefWidth="266.0" />
+      <Label layoutX="40.0" layoutY="261.0" prefHeight="26.0" prefWidth="42.0" text="Trajet">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="valider_button1" layoutX="185.0" layoutY="354.0" mnemonicParsing="false" onAction="#SwitchWindow" prefHeight="17.0" prefWidth="124.0" style="-fx-background-radius: 12;" text="Mes itineraires">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="28.0" layoutY="538.0" mnemonicParsing="false" onAction="#BackHome" prefHeight="26.0" prefWidth="163.0" style="-fx-background-radius: 12;" text="Retour">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CHEVRON_CIRCLE_LEFT" />
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

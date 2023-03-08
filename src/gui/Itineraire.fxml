@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ItineraireController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="1005.0" style="-fx-background-color: BFDCE5;">
+         <children>
+            <TextField fx:id="text_pts_depart_it" layoutX="30.0" layoutY="185.0" onKeyTyped="#below8" prefHeight="26.0" prefWidth="265.0" />
+            <TextField fx:id="text_pts_arrive_it" layoutX="30.0" layoutY="264.0" onKeyTyped="#below82" prefWidth="265.0" />
+            <Label layoutX="34.0" layoutY="137.0" prefHeight="43.0" prefWidth="138.0" text="Point de départ">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="229.0" text="Point d'arrivé">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_ajouter_it" layoutX="529.0" layoutY="514.0" mnemonicParsing="false" onAction="#AjouterItineraire" prefHeight="26.0" prefWidth="147.0" style="-fx-background-radius: 12;" text="Ajouter">
+               <graphic>
+                  <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" size="20" />
+               </graphic>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font></Button>
+            <Button fx:id="button_supprimer_it" layoutX="836.0" layoutY="515.0" mnemonicParsing="false" onAction="#SupprimerItineraire" prefHeight="22.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Supprimer">
+               <graphic>
+                  <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" size="20.0" />
+               </graphic>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font></Button>
+            <Button fx:id="button_modifier_it" layoutX="687.0" layoutY="514.0" mnemonicParsing="false" onAction="#ModifierItineraire" prefHeight="26.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Modifier">
+               <graphic>
+                  <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" size="20.0" />
+               </graphic>
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font></Button>
+            <TableView fx:id="table_Itineraire" layoutX="347.0" layoutY="31.0" prefHeight="464.0" prefWidth="634.0" style="-fx-background-radius: 12;">
+               <columns>
+                  <TableColumn fx:id="id_it" prefWidth="146.13333129882812" text="ID_Itineraire" />
+                  <TableColumn fx:id="pts_depart_it" prefWidth="162.6666259765625" text="Points_Depart" />
+                  <TableColumn fx:id="pts_arrive_it" prefWidth="161.86669921875" text="Points_Arrive" />
+                  <TableColumn fx:id="id_it_trajet" prefWidth="161.3333740234375" text="id_trajet" />
+               </columns>
+            </TableView>
+            <ComboBox fx:id="combo_id_trajet" layoutX="30.0" layoutY="341.0" prefWidth="265.0" />
+            <Label layoutX="30.0" layoutY="306.0" text="Id Trajet">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_gestion_t" layoutX="368.0" layoutY="514.0" mnemonicParsing="false" onAction="#SwitchWindowTr" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 12;" text="Gestion Trajet">
+               <font>
+                  <Font name="Berlin Sans FB" size="15.0" />
+               </font></Button>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="30.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@kslvAsset%203char.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

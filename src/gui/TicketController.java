@@ -18,6 +18,7 @@ import com.stripe.model.Token;
 import com.stripe.model.Transfer;
 import entity.Reservation;
 import entity.Ticket;
+import entity.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -96,10 +97,13 @@ public class TicketController implements Initializable {
     
     private Ticket ticket1;
    
+//    public static final String ACCOUNT_SID = System.getenv("AC0566d87dfe2bc5a33101670c333564b0");
+//    public static final String AUTH_TOKEN = System.getenv("bffb84d60bb901344ed03befcbf2ff5f");
     @FXML
     private Button btnSearch;
     @FXML
     private TextField idsearch;
+    private User u;
 
 
     /**
@@ -111,6 +115,10 @@ public class TicketController implements Initializable {
         return obs;
       
       }
+      public void getUser(User u){
+        this.u=u;
+    }
+    @FXML
         public void UpdateTable(){
         List<Ticket> list=new ArrayList<>();
         //search
@@ -181,15 +189,26 @@ public class TicketController implements Initializable {
     UpdateTable();
         
     }
-
+//    
+//    @FXML 
+//    public void SendSMS(){
+//        Twilio.init("AC0566d87dfe2bc5a33101670c333564b0", "bffb84d60bb901344ed03befcbf2ff5f");
+//        Message message = Message.creator(
+//        new com.twilio.type.PhoneNumber("+21654891319"),
+//        new com.twilio.type.PhoneNumber("+15673131185"),
+//        "This is the ship that made the Kessel Run in fourteen parsecs?").create();
+//        System.out.println(message.getSid());
+////     SendSMS sm = new SendSMS();
+////     sm.sendSMS(e);
+//    }
+    
   
     public void mailing() {
         // Recipient's email address
-        String to = "hanin.benjemaa@esprit.tn";
-        // Sender's email address
-        String from = "SwiftTransit.platform@outlook.fr";
+        String to = "abir.machraoui@gmail.com";
+        String from = "swifttransit3.transportation@outlook.com";
         // Sender's email password
-        String password = "espritswift123**";
+        String password = "haninhanin123456";
 
         // Setup mail server properties
         Properties props = new Properties();
@@ -260,12 +279,14 @@ public class TicketController implements Initializable {
 
     @FXML
     private void Switchscreenreservation(ActionEvent event)throws IOException {
-        
-        root = FXMLLoader.load(getClass().getResource("Reservation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Reservation.fxml"));
+        Parent root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ReservationFXMLController controller = loader.getController();
+        controller.getUser(u);
     }
 
     @FXML
@@ -332,7 +353,7 @@ public class TicketController implements Initializable {
                System.out.println(customer.getId());     
                //Use the payment method to make a charge
                Map<String, Object> chargeParams = new HashMap<String, Object>();
-               chargeParams.put("amount", "200");
+               chargeParams.put("amount", "100");
                chargeParams.put("currency", "usd");
                //chargeParams.put("description", "Example charge");
                //chargeParams.put("source", token.getId());
@@ -345,6 +366,18 @@ public class TicketController implements Initializable {
         }
    
     
+    }
+
+    @FXML
+    private void BackHome(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageClient.fxml"));
+        Parent root = loader.load();          
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        HomePageClientController controller = loader.getController();
+        controller.setFields(u);
     }
    
     

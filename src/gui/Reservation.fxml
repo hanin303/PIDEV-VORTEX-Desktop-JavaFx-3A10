@@ -53,7 +53,7 @@
                   <Font name="Berlin Sans FB" size="15.0" />
                </font>
             </Label>
-            <Label prefHeight="18.0" prefWidth="130.0" text="ID Client" underline="true">
+            <Label prefHeight="18.0" prefWidth="130.0" text="Client" underline="true">
                <font>
                   <Font name="Berlin Sans FB" size="15.0" />
                </font></Label>
@@ -62,61 +62,87 @@
       <VBox layoutX="154.0" layoutY="154.0" prefHeight="354.0" prefWidth="207.0" spacing="20.0">
          <children>
             <ComboBox fx:id="txtitineraire" prefHeight="0.0" prefWidth="207.0" />
-            <DatePicker fx:id="txtdate" onKeyTyped="#ControleSaisieDate" prefHeight="26.0" prefWidth="210.0" promptText="Entrer une date" />
-            <TextField fx:id="txtheuredepart" onKeyTyped="#ControleSaisieHeure" promptText="heure depart" />
-            <TextField fx:id="txtheurearrive" promptText="heure arrivé" />
-            <TextField fx:id="txttype" onKeyTyped="#controlesaisieTicket" promptText="Choisissez un type ticket" />
+            <DatePicker fx:id="txtdate" onKeyTyped="#ControleSaisieDate" prefHeight="26.0" prefWidth="210.0" promptText="Entrez date reservation" />
+            <ComboBox fx:id="txtheuredepart" prefHeight="26.0" prefWidth="206.0" />
+            <ComboBox fx:id="txtheurearrive" prefHeight="26.0" prefWidth="206.0" />
+            <TextField fx:id="txttype" onKeyTyped="#controlesaisieTicket" promptText="Entrez le type ticket" />
             <ComboBox fx:id="txttransport" prefHeight="26.0" prefWidth="230.0" />
             <ComboBox fx:id="txtstatus" prefHeight="26.0" prefWidth="207.0" />
             <ComboBox fx:id="txtusr" prefHeight="26.0" prefWidth="215.0" />
          </children>
       </VBox>
-      <TableView fx:id="tvReservation" layoutX="370.0" layoutY="154.0" prefHeight="362.0" prefWidth="876.0">
+      <TableView fx:id="tvReservation" layoutX="370.0" layoutY="154.0" prefHeight="382.0" prefWidth="914.0" style="-fx-background-radius: 12;">
         <columns>
           <TableColumn fx:id="colid" prefWidth="44.00006103515625" text="ID" />
           <TableColumn fx:id="colDate" prefWidth="91.199951171875" text="Date" />
             <TableColumn fx:id="colHdepart" prefWidth="113.60000610351562" text="Heure Depart" />
             <TableColumn fx:id="colHarrive" prefWidth="112.79998779296875" text="Heure Arrive" />
-            <TableColumn fx:id="colit" prefWidth="83.20001220703125" text="Itineraire" />
-            <TableColumn fx:id="colTransport" prefWidth="122.4000244140625" text="Moyen Transport" />
-            <TableColumn fx:id="colType" prefWidth="112.00006103515625" text="Type Ticket" />
-            <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="190.4000244140625" text="Status" />
-            <TableColumn fx:id="colusr" minWidth="0.0" prefWidth="1.5999755859375" text="ID Client" />
+            <TableColumn fx:id="colit" prefWidth="162.39996337890625" text="Itineraire" />
+            <TableColumn fx:id="colTransport" prefWidth="130.40008544921875" text="Moyen Transport" />
+            <TableColumn fx:id="colType" prefWidth="131.9998779296875" text="Type Ticket" />
+            <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="127.2000732421875" text="Status" />
+            <TableColumn fx:id="colusr" minWidth="0.0" prefWidth="0.0" text="ID Client" />
         </columns>
       </TableView>
-      <Button fx:id="btnInsert" layoutX="31.0" layoutY="581.0" mnemonicParsing="false" onAction="#AjouterReservation" prefHeight="26.0" prefWidth="130.0" style="-fx-background-radius: 12;" text="Ajouter">
+      <Button fx:id="btnInsert" layoutX="31.0" layoutY="572.0" mnemonicParsing="false" onAction="#AjouterReservation" prefHeight="35.0" prefWidth="130.0" style="-fx-background-radius: 12;" text="Ajouter">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
-         </graphic></Button>
-      <Button fx:id="btnUpdate" layoutX="178.0" layoutY="581.0" mnemonicParsing="false" onAction="#ModifierReservation" prefHeight="26.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Modifier">
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="btnUpdate" layoutX="178.0" layoutY="572.0" mnemonicParsing="false" onAction="#ModifierReservation" prefHeight="35.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Modifier">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" text="" />
-         </graphic></Button>
-      <Button fx:id="btnDelete" layoutX="320.0" layoutY="581.0" mnemonicParsing="false" onAction="#SupprimerReservation" prefHeight="26.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Supprimer">
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="btnDelete" layoutX="320.0" layoutY="572.0" mnemonicParsing="false" onAction="#SupprimerReservation" prefHeight="35.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Supprimer">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
-         </graphic></Button>
-      <Button fx:id="btnGo" layoutX="700.0" layoutY="573.0" mnemonicParsing="false" onAction="#switchscreenticket" prefHeight="34.0" prefWidth="218.0" style="-fx-background-radius: 12;" text="Go To Gestion Ticket">
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="btnGo" layoutX="1030.0" layoutY="618.0" mnemonicParsing="false" onAction="#switchscreenticket" prefHeight="35.0" prefWidth="218.0" style="-fx-background-radius: 12;" text=" Go To Gestion Ticket">
          <graphic>
             <FontAwesomeIconView glyphName="ARROW_CIRCLE_LEFT" />
          </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
       </Button>
       <ImageView fitHeight="94.0" fitWidth="200.0" layoutX="19.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@logoooooooo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="idsearch" layoutX="881.0" layoutY="105.0" prefHeight="26.0" prefWidth="170.0" />
-      <Button fx:id="btnSearch" layoutX="1052.0" layoutY="105.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="26.0" prefWidth="130.0" text="Recherche">
+      <TextField fx:id="idsearch" layoutX="872.0" layoutY="96.0" prefHeight="35.0" prefWidth="179.0" promptText="rechercher" />
+      <Button fx:id="btnSearch" layoutX="1062.0" layoutY="97.0" mnemonicParsing="false" onAction="#UpdateTable" prefHeight="35.0" prefWidth="207.0" style="-fx-background-radius: 15;" text=" Recherche">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" />
          </graphic>
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font>
       </Button>
-      <Button fx:id="idPrint" layoutX="498.0" layoutY="106.0" mnemonicParsing="false" onAction="#addpdf" prefHeight="26.0" prefWidth="158.0" style="-fx-background-radius: 12;" styleClass="-fx-background-radius" text="  Generate PDF">
+      <Button fx:id="idPrint" layoutX="388.0" layoutY="97.0" mnemonicParsing="false" onAction="#addpdf" prefHeight="35.0" prefWidth="190.0" style="-fx-background-radius: 12;" styleClass="-fx-background-radius" text="  Generate PDF">
          <graphic>
             <FontAwesomeIconView glyphName="FILE" text="" />
          </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
       </Button>
-      <ComboBox fx:id="sortBox" layoutX="673.0" layoutY="106.0" onAction="#sort" prefHeight="26.0" prefWidth="190.0" promptText="Trier" style="-fx-background-radius: 12;" />
+      <ComboBox fx:id="sortBox" layoutX="618.0" layoutY="97.0" onAction="#sort" prefHeight="35.0" prefWidth="218.0" promptText="Trier" style="-fx-background-radius: 12;" />
+      <Button layoutX="19.0" layoutY="636.0" mnemonicParsing="false" onAction="#BackHome" prefHeight="35.0" prefWidth="130.0" style="-fx-background-radius: 12;" text="Retour">
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="CHEVRON_CIRCLE_LEFT" />
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

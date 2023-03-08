@@ -97,7 +97,14 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" + "id_role=" + id_role + ", nom=" + nom + ", users=" + users + '}';
+        
+                return  ""+id_role ;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Role{" + "id_role=" + id_role + ", nom=" + nom + ", users=" + users + '}';
+//    }
+    
         
 }

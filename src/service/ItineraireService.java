@@ -26,7 +26,7 @@ public class ItineraireService implements IService<Iteneraire>{
     }
     @Override
     public void delete(int id) {
-            String requete="delete from iteneraire where id_rec = "+id;
+            String requete="delete from iteneraire where id_it = "+id;
         try {
             Statement st=conn.createStatement();
             st.executeUpdate(requete);
@@ -37,18 +37,18 @@ public class ItineraireService implements IService<Iteneraire>{
     }
     @Override
     public void update( List<Object> list,int id) {
-        String requete="update iteneraire set pts_depart=?,pts_arrive=? where id_it=" + id;
+        String requete="update iteneraire set pts_depart=?,pts_arrive=?,id_trajet=? where id_it=" + id;
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
             pst.setString(1, (String) list.get(0));
             pst.setString(2, (String) list.get(1));
+            pst.setInt(3,(int)list.get(2));
             
             pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ItineraireService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    @Override
     public List<Iteneraire> readAll(){
         List<Iteneraire> list=new ArrayList<>();
         String requete="select * from iteneraire";
@@ -85,5 +85,6 @@ public class ItineraireService implements IService<Iteneraire>{
         }
         return iteneraire;
     }
+ 
 }
 

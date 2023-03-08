@@ -10,9 +10,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import connexionbd.utils.DataSource;
-import entity.Role;
+import static java.time.Clock.system;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  *
@@ -28,19 +30,39 @@ public class UserService implements IService<User> {
 
     @Override
     public void insert(User u){
-        String requete="INSERT INTO user(nom,prenom,username,email,mdp,num_tel,cin,id_role) values (?,?,?,?,?,?,?,?)";
+        String requete="INSERT INTO user(nom,prenom,username,email,mdp,num_tel,cin,image,id_role) values (?,?,?,?,?,?,?,?,?)";
         try {
+            
             PreparedStatement ste=conn.prepareStatement(requete);
             ste.setString(1,u.getNom());
             ste.setString(2,u.getPrenom());
             ste.setString(3,u.getUsername());
-            ste.setString(4,u.getEmail());
+            ste.setString(4,u.getEmail());            
             ste.setString(5, u.getMdp());
             ste.setInt(6, u.getNum_tel());
             ste.setInt(7, u.getCin());
-            ste.setInt(8, u.getRole().getId_role());
+            ste.setString(8,u.getImage());
+            ste.setInt(9, u.getRole().getId_role());
             ste.executeUpdate();
-        } catch (SQLException ex) {
+            
+//        } catch (SQLIntegrityConstraintViolationException e) {
+//            if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("username")) {
+//                Alert alert = new Alert(AlertType.ERROR);
+//                alert.setTitle("Erreur");
+//                alert.setHeaderText("Erreur de base de données");
+//                alert.setContentText("username existe déjà");
+//                alert.showAndWait();
+//                 return;
+//            } else if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("email")) {
+//                Alert alert = new Alert(AlertType.ERROR);
+//                alert.setTitle("Erreur");
+//                alert.setHeaderText("Erreur de base de données");
+//                alert.setContentText("L'adresse e-mail existe déjà");
+//                alert.showAndWait();
+//                return;
+//
+//        }
+        }catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -60,6 +82,53 @@ public class UserService implements IService<User> {
   
     @Override
     public void update(List<Object> list, int id){
+        String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=?, image=? where id_user="+id;
+        
+        try {
+            PreparedStatement ste= conn.prepareStatement(requete);
+            ste.setString(1,(String)list.get(0));
+            ste.setString(2,(String)list.get(1));
+            ste.setString(3, (String)list.get(2));
+            ste.setString(4, (String)list.get(3));
+            ste.setString(5, (String)list.get(4));
+            ste.setInt(6, (int)list.get(5));
+            ste.setInt(7, (int)list.get(6));
+            ste.setString(8, (String) list.get(7));
+//            ste.setInt(8, (int)list.get(7));
+            ste.executeUpdate();         
+//        }catch (SQLIntegrityConstraintViolationException e) {
+//            if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("username")) {
+//                Alert alert = new Alert(AlertType.ERROR);
+//                alert.setTitle("Erreur");
+//                alert.setHeaderText("Erreur de base de données");
+//                alert.setContentText("username existe déjà");
+//                alert.showAndWait();
+//            } else if (e instanceof SQLIntegrityConstraintViolationException && e.getMessage().contains("email")) {
+//                Alert alert = new Alert(AlertType.ERROR);
+//                alert.setTitle("Erreur");
+//                alert.setHeaderText("Erreur de base de données");
+//                alert.setContentText("L'adresse e-mail existe déjà");
+//                alert.showAndWait();   
+//
+//        }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updatePassword(String email,String password){
+        String requete="UPDATE user SET mdp=? where email=\""+email+"\"";
+        System.out.println(email);
+        try {
+            PreparedStatement ste= conn.prepareStatement(requete);
+            ste.setString(1,password);
+            ste.executeUpdate();   
+        }catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void updateWithoutImage(List<Object> list, int id){
         String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=? where id_user="+id;
         
         try {
@@ -71,8 +140,7 @@ public class UserService implements IService<User> {
             ste.setString(5, (String)list.get(4));
             ste.setInt(6, (int)list.get(5));
             ste.setInt(7, (int)list.get(6));
-//            ste.setInt(8, (int)list.get(7));
-            ste.executeUpdate();        
+            ste.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,7 +157,7 @@ public class UserService implements IService<User> {
             while(rs.next()){
                 
                 RoleService role_service= new RoleService();
-                User u= new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),role_service.readByID(rs.getInt(9)));
+                User u= new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
                 list.add(u);
             }
         } catch (SQLException ex) {
@@ -106,7 +174,7 @@ public class UserService implements IService<User> {
             Statement ste= conn.createStatement();
             ResultSet rs= ste.executeQuery(requete);
             while(rs.next()){
-                User u= new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
+                User u= new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
                 set.add(u);
             }
         } catch (SQLException ex) {
@@ -123,13 +191,62 @@ public class UserService implements IService<User> {
             ste.setInt(1, id);
             ResultSet rs= ste.executeQuery();
             RoleService role_service= new RoleService();
-            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),role_service.readByID(rs.getInt(9)));
+            if(rs.next()){
+            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
-      
+    public User readByEmail(String email) {
+        String requete="SELECT * FROM user WHERE email=?";
+        User user= null;
+        try {
+            PreparedStatement ste=conn.prepareStatement(requete);
+            ste.setString(1, email);
+            ResultSet rs= ste.executeQuery();
+            RoleService role_service= new RoleService();
+            if(rs.next()){
+            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+     public User readByUsername(String username) {
+        String requete="SELECT * FROM user WHERE username=?";
+        User user= null;
+        try {
+            PreparedStatement ste=conn.prepareStatement(requete);
+            ste.setString(1, username);
+            ResultSet rs= ste.executeQuery();
+            RoleService role_service = new RoleService();
+            if(rs.next()){
+            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    } 
+     public User readByCin(String cin) {
+        String requete="SELECT * FROM user WHERE cin=?";
+        User user= null;
+        try {
+            PreparedStatement ste=conn.prepareStatement(requete);
+            ste.setString(1, cin);
+            ResultSet rs= ste.executeQuery();
+            RoleService role_service= new RoleService();
+            if(rs.next()){
+            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
    public HashSet<User> readyById_role(int id){
        String requete="SELECT * FROM user Where id_role="+id;
        HashSet<User> set = new HashSet<>();
@@ -138,7 +255,7 @@ public class UserService implements IService<User> {
             Statement ste = conn.prepareStatement(requete);
             ResultSet rs= ste.executeQuery(requete);
             while(rs.next()){
-            User u  = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
+            User u  = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
             set.add(u);
             }
 
