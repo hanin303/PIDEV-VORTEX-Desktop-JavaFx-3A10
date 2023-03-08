@@ -10,13 +10,13 @@ import java.util.List;
 
 /**
  *
- * @author DELL
+ * @author wassim
+ * @param <T>
  */
 public interface IService <T> {
-    
     public void ajouter(T t) throws SQLException;
-    public boolean modifier(T t) throws SQLException;
-    public boolean supprimer(T t) throws SQLException;
     public List<T> recuperer() throws SQLException;
-       
+    public boolean supprimer(T t) throws SQLException;
+    public boolean modifier(T t) throws SQLException;
+    
 }

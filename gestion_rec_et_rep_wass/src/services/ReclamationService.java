@@ -174,5 +174,35 @@ catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }*/
+    
+    
+    
+     public int Stats(String par,String field) {
+     String s  = "select count(*) from reclamation where "+field+""+ "=" +"'"+par+"'";
+   
+  
+      try {
+
+        Statement st = cnx.createStatement();
+        ResultSet rs =  st.executeQuery(s);
+
+            int num = 0;
+            while(rs.next()){
+                num = (rs.getInt(1));
+                return num;
+ 
+            }
+        } catch (SQLException ex) {
+            
+        }
+        return 0 ;
+    }
+    
+    
+    
+    
+    
+    
+    
 }
 
