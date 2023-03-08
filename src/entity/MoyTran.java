@@ -18,6 +18,26 @@ public class MoyTran {
     private String marque;
     private String etat;
     private Ligne ligne;
+    private int id_ligne;
+
+    public MoyTran(int id, int matricule, int capacite, String type_vehicule, String marque, String etat,int id_ligne, Ligne ligne ) {
+        this.id = id;
+        this.matricule = matricule;
+        this.capacite = capacite;
+        this.type_vehicule = type_vehicule;
+        this.marque = marque;
+        this.etat = etat;
+        this.ligne = ligne;
+        this.id_ligne = id_ligne;
+    }
+
+    public int getId_ligne() {
+        return id_ligne;
+    }
+
+    public void setId_ligne(int id_ligne) {
+        this.id_ligne = id_ligne;
+    }
 
     public MoyTran() {
     }
