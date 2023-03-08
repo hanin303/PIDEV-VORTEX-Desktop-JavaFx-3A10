@@ -231,6 +231,22 @@ public class UserService implements IService<User> {
         }
         return user;
     } 
+     public User readByCin(String cin) {
+        String requete="SELECT * FROM user WHERE cin=?";
+        User user= null;
+        try {
+            PreparedStatement ste=conn.prepareStatement(requete);
+            ste.setString(1, cin);
+            ResultSet rs= ste.executeQuery();
+            RoleService role_service= new RoleService();
+            if(rs.next()){
+            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
    public HashSet<User> readyById_role(int id){
        String requete="SELECT * FROM user Where id_role="+id;
        HashSet<User> set = new HashSet<>();

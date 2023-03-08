@@ -188,18 +188,23 @@ public class DisplayUserController implements Initializable {
     @FXML
     public void modifierUser(ActionEvent event){
        Base64.Encoder encoder = Base64.getEncoder();
+       User user= tableUsers.getSelectionModel().getSelectedItem();
+       String email1= user.getEmail();
+       String username1 = user.getUsername();
+       int cin1=user.getCin();
        if(nom_up.getText().isEmpty()||prenom_up.getText().isEmpty()||username_up.getText().isEmpty()||email_up.getText().isEmpty()||mdp_up.getText().isEmpty()||num_tel_up.getText().isEmpty()||cin_up.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
+        
        }else{    
        if(EmailValid(email_up.getText())){
          if(NumberValid(num_tel_up.getText())){
              if(CinValid(cin_up.getText())){
                  if(mdp_up.getText().length()>=8){
-                     if(us.readByEmail(email_up.getText())==null){
-                         if(us.readByUsername(username_up.getText())==null){
-        User user= tableUsers.getSelectionModel().getSelectedItem();
+                      if(us.readByEmail(email_up.getText())==null||email_up.getText().equals(email1)){
+                         if(us.readByUsername(username_up.getText())==null||username_up.getText().equals(username1)){
+                             if(us.readByCin(cin_up.getText())==null||Integer.parseInt(cin_up.getText())==cin1){
         List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),encoder.encodeToString(mdp_up.getText().getBytes()),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText())));
         us.updateWithoutImage(list, user.getId_user());
         display();
@@ -208,7 +213,14 @@ public class DisplayUserController implements Initializable {
 		alert.setHeaderText("");
 		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
-                clearFields();
+                clearFields();}
+                 else{
+                 Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Erreur");
+                 alert.setHeaderText(null);
+                 alert.setContentText("numéro de carte d'identité existe déjà");
+                 alert.showAndWait();
+                             }
                          }else{
                  Alert alert= new Alert(Alert.AlertType.ERROR);
                  alert.setTitle("Erreur");
@@ -263,6 +275,7 @@ public class DisplayUserController implements Initializable {
                  if(mdp_up.getText().length()>=8){
                      if(us.readByEmail(email_up.getText())==null){
                          if(us.readByUsername(username_up.getText())==null){
+                             if(us.readByCin(cin_up.getText())==null){
         Role role=rs.readByID((int) combo_role.getValue());
         User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),encoder.encodeToString(mdp_up.getText().getBytes()),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),null, role);
         us.insert(u);
@@ -272,7 +285,14 @@ public class DisplayUserController implements Initializable {
 	alert.setHeaderText("");
 	alert.setContentText("utilisateur ajouté avec succés");
         alert.showAndWait();
-        clearFields();
+        clearFields();}
+        else{
+        Alert alert= new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("numéro de carte d'identité existe déjà");
+        alert.showAndWait();
+                          }
                      } else{
                  Alert alert= new Alert(Alert.AlertType.ERROR);
                  alert.setTitle("Erreur");
@@ -287,7 +307,7 @@ public class DisplayUserController implements Initializable {
                  alert.setContentText("email existe déjà");
                  alert.showAndWait();
                      }         
-        }else{
+           }else{
            Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
            alert.setHeaderText(null);
@@ -296,7 +316,7 @@ public class DisplayUserController implements Initializable {
                  }
              }else{
                  Alert alert= new Alert(Alert.AlertType.ERROR);
-                 alert.setTitle("numéro de carte identité non valide");
+                 alert.setTitle("numéro de carte d'identité non valide");
                  alert.setHeaderText(null);
                  alert.setContentText("Vous devez entrez un numéro de carte identité valide");
                  alert.showAndWait();
@@ -313,19 +333,20 @@ public class DisplayUserController implements Initializable {
                alert.setTitle("e-mail non valide");
                alert.setHeaderText(null);
                alert.setContentText("Vous devez entrez une adresse e-mail valide");
-               alert.showAndWait(); 
-       
-       
+               alert.showAndWait();
     }
        }
     }
     @FXML
     private void switch_gestion_roles(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("DisplayRole.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DisplayRole.fxml"));
+        Parent root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        DisplayRoleController controller = loader.getController();
+        controller.getUser(u);
     }
 
     @FXML

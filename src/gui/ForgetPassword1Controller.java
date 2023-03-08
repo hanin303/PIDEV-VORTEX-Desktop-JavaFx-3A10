@@ -82,6 +82,16 @@ public class ForgetPassword1Controller implements Initializable{
            alert.showAndWait();
         }
     }
+
+    @FXML
+    private void BackHome(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        Parent root = loader.load();          
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
     
 }

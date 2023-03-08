@@ -109,7 +109,7 @@ public class RoleService implements IService<Role>{
         return role;
     }
     public Role readByNom(String nom) {
-        String requete="SELECT * FROM Role WHERE id_role=?";
+        String requete="SELECT * FROM Role WHERE nom=?";
         Role role = null;
         try {
             PreparedStatement ste = conn.prepareStatement(requete);

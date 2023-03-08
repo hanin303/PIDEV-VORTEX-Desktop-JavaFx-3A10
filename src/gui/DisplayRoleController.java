@@ -98,22 +98,22 @@ public class DisplayRoleController implements Initializable {
              alert.setContentText("Vous devez saisir un role"); 
              alert.showAndWait();
         }else{
-        if(rs.readByNom(nom_up.getText())==null){
+        if(rs.readByNom(nom_up.getText())== null){
         List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText()));
         Role r= tableRole.getSelectionModel().getSelectedItem();
         rs.update(list, r.getId_role());
         displayRole();
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Erreur");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("succés");
 		alert.setHeaderText("");
-		alert.setContentText("role existe déjà");
+		alert.setContentText("Mise à jour avec succés");
                 alert.showAndWait();
                 clearFields();
         }else{
-            Alert alert= new Alert(Alert.AlertType.INFORMATION);
-                 alert.setTitle("ErreurMise à jour");
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Erreur");
                  alert.setHeaderText(null);
-                 alert.setContentText("Mise à jour avec succés");
+                 alert.setContentText("Role existe déjà");
                  alert.showAndWait();
         }
         }
@@ -126,11 +126,11 @@ public class DisplayRoleController implements Initializable {
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
         }else{
-            if(rs.readByNom(nom1.getText())==null){
-        Role r = new Role(Integer.parseInt(id_role1.getText()),nom1.getText());
-        rs.insert(r);
-        displayRole();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           if(rs.readByNom(nom1.getText())==null&&rs.readByID(Integer.parseInt(id_role1.getText()))==null){
+           Role r = new Role(Integer.parseInt(id_role1.getText()),nom1.getText());
+           rs.insert(r);
+           displayRole();
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("ajout");
 		alert.setHeaderText("");
 		alert.setContentText("role ajouté avec succés");
@@ -162,11 +162,15 @@ public class DisplayRoleController implements Initializable {
 
     @FXML
     private void switch_gestion_users(ActionEvent event) throws IOException {
-         root = FXMLLoader.load(getClass().getResource("DisplayUser.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DisplayUser.fxml"));
+        Parent root = loader.load();
+//         root = FXMLLoader.load(getClass().getResource("DisplayUser.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        DisplayUserController controller = loader.getController();
+        controller.getUser(u);
     }
     private void clearFields(){
     id_role1.setText("");

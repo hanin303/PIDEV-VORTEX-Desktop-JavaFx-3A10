@@ -133,6 +133,7 @@ public class AddUserController implements Initializable {
                      if(mdp1.getText().equals(mdp.getText())){
                          if(us.readByEmail(email.getText())==null){
                              if(us.readByUsername(username.getText())==null){
+                                 if(us.readByCin(cin.getText())==null){
                    User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
                    us.insert(u);
                  Alert alert = new Alert(AlertType.INFORMATION);
@@ -152,46 +153,44 @@ public class AddUserController implements Initializable {
                  Alert alert= new Alert(Alert.AlertType.ERROR);
                  alert.setTitle("Erreur");
                  alert.setHeaderText(null);
-                 alert.setContentText("email existe déjà");
-                 alert.showAndWait();
-                             }
-                         }else{
+                 alert.setContentText("numéro de carte d'identité existe déjà");
+                 alert.showAndWait();}
+                             }else{
                  Alert alert= new Alert(Alert.AlertType.ERROR);
                  alert.setTitle("Erreur");
                  alert.setHeaderText(null);
                  alert.setContentText("username existe déjà");
-                 alert.showAndWait();
-                         }
-                
-}else{
+                 alert.showAndWait();}
+                             }else{
+                 Alert alert= new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Erreur");
+                 alert.setHeaderText(null);
+                 alert.setContentText("email existe déjà");
+                 alert.showAndWait();}
+                         }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("mots de passe non identiques");
            alert.setHeaderText(null);
            alert.setContentText("Vous devez saisir des mots de passe identiques");
-           alert.showAndWait();        
-                     }
+           alert.showAndWait();}
                  }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
            alert.setHeaderText(null);
            alert.setContentText("Vous devez entrez une mot de passe valide");
-           alert.showAndWait();
-                     
-                 }
+           alert.showAndWait();}
              }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("numéro de carte identité non valide");
            alert.setHeaderText(null);
            alert.setContentText("Vous devez entrez un numéro de carte identité valide");
-           alert.showAndWait();
-             }
+           alert.showAndWait();}
                   }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("numéro de téléphone non valide");
            alert.setHeaderText(null);
            alert.setContentText("Vous devez entrez un numéro de téléphone valide");
-           alert.showAndWait();
-         }
+           alert.showAndWait();}
             }else{
            Alert alert= new Alert(AlertType.ERROR);
            alert.setTitle("e-mail non valide");
@@ -224,10 +223,11 @@ private void uploadImage(ActionEvent event){
      FileChooser fc= new FileChooser();
     fc.setTitle("choisir une image");
     //choisir les extensions accepté par le programme
-    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.png","*.jpeg","*.gif"),
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.jpg","*.jpg","*.png","*.jpeg","*.gif"),
             new FileChooser.ExtensionFilter("*.png","*.PNG"),
             new FileChooser.ExtensionFilter("*.jpeg","*.JPEG"),
-            new FileChooser.ExtensionFilter("*.gif","*.GIF")
+            new FileChooser.ExtensionFilter("*.gif","*.GIF"),
+            new FileChooser.ExtensionFilter("*.jpg","*.JPG")
             );
           
            File selectedFile = fc.showOpenDialog(null);

@@ -13,10 +13,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="563.0" style="-fx-background-color: BFDCE5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DisplayRoleController">
    <children>
-      <TableView fx:id="tableRole" layoutX="253.0" layoutY="138.0" prefHeight="199.0" prefWidth="233.0">
+      <TableView fx:id="tableRole" layoutX="253.0" layoutY="94.0" prefHeight="243.0" prefWidth="282.0" style="-fx-background-radius: 12;">
          <columns>
-            <TableColumn fx:id="id_role" prefWidth="92.79998779296875" text="ID" />
-            <TableColumn fx:id="nom" prefWidth="161.60003662109375" text="role" />
+            <TableColumn fx:id="id_role" prefWidth="141.60003662109375" text="ID" />
+            <TableColumn fx:id="nom" prefWidth="138.39999389648438" text="role" />
          </columns>
       </TableView>
       <TextField fx:id="id_role1" layoutX="46.0" layoutY="175.0" />
@@ -29,19 +29,28 @@
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
          </font></Label>
-      <Button fx:id="ajouter" layoutX="84.0" layoutY="255.0" mnemonicParsing="false" onAction="#ajouterRole" prefHeight="26.0" prefWidth="85.0" text="Ajouter">
+      <Button fx:id="ajouter" layoutX="7.0" layoutY="282.0" mnemonicParsing="false" onAction="#ajouterRole" prefHeight="27.0" prefWidth="115.0" style="-fx-background-radius: 12;" text="Ajouter">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
-         </graphic></Button>
-      <Button fx:id="modifier" layoutX="319.0" layoutY="399.0" mnemonicParsing="false" onAction="#modifierRole" prefHeight="26.0" prefWidth="85.0" text="Modifier">
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <Button fx:id="modifier" layoutX="253.0" layoutY="416.0" mnemonicParsing="false" onAction="#modifierRole" prefHeight="27.0" prefWidth="130.0" style="-fx-background-radius: 12;" text="Modifier">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="PENCIL" />
-         </graphic></Button>
-      <Button fx:id="supprimer" layoutX="85.0" layoutY="291.0" mnemonicParsing="false" onAction="#supprimerRole" text="Supprimer">
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <Button fx:id="supprimer" layoutX="130.0" layoutY="282.0" mnemonicParsing="false" onAction="#supprimerRole" style="-fx-background-radius: 12;" text="Supprimer">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
-         </graphic></Button>
-      <TextField fx:id="nom_up" layoutX="282.0" layoutY="366.0" />
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <TextField fx:id="nom_up" layoutX="253.0" layoutY="367.0" />
       <Label layoutX="282.0" layoutY="349.0" text="Role :" underline="true">
          <font>
             <Font name="Berlin Sans FB" size="15.0" />
@@ -51,14 +60,20 @@
             <Image url="@kslvAsset%203char.png" />
          </image>
       </ImageView>
-      <Button layoutX="470.0" layoutY="412.0" mnemonicParsing="false" onAction="#switch_gestion_users" text="Gestion Users">
+      <Button layoutX="411.0" layoutY="416.0" mnemonicParsing="false" onAction="#switch_gestion_users" style="-fx-background-radius: 12;" text="Gestion Users">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="USER" />
-         </graphic></Button>
-      <Button layoutX="24.0" layoutY="77.0" mnemonicParsing="false" onAction="#BackHome" text="Retour">
+         </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <Button layoutX="16.0" layoutY="416.0" mnemonicParsing="false" onAction="#BackHome" style="-fx-background-radius: 12;" text="Retour">
          <graphic>
             <FontAwesomeIconView fill="#6096b4" glyphName="CHEVRON_CIRCLE_LEFT" />
          </graphic>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
       </Button>
    </children>
 </AnchorPane>

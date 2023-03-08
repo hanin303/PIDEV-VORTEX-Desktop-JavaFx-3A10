@@ -38,6 +38,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.UserService;
+import java.util.Base64;
+
 
 /**
  * FXML Controller class
@@ -124,13 +126,15 @@ public class HomePageAdminController implements Initializable {
     return cin.matches(regex);
 }   
     public void setFields(User u){
+    Base64.Decoder decoder = Base64.getDecoder();
     this.u=u;
     id.setText(String.valueOf(u.getId_user()));
     nom.setText(u.getNom());
     prenom.setText(u.getPrenom());
     username.setText(u.getUsername());
     email.setText(u.getEmail());
-    mdp.setText(u.getMdp());
+    String password = new String(decoder.decode(u.getMdp()));
+    mdp.setText(password);
     num_tel.setText(String.valueOf(u.getNum_tel()));
     cin.setText(String.valueOf(u.getCin()));
     image_path=u.getImage();
@@ -143,7 +147,9 @@ public class HomePageAdminController implements Initializable {
     @FXML
     private void modifierUser(ActionEvent event) throws NullPointerException{
        Base64.Encoder encoder = Base64.getEncoder();
-       
+       String email1= us.readByEmail(email.getText()).getEmail();
+       String username1 = us.readByUsername(username.getText()).getUsername();
+       int cin1= us.readByCin(cin.getText()).getCin();
        if(nom.getText().isEmpty()||prenom.getText().isEmpty()||username.getText().isEmpty()||email.getText().isEmpty()||mdp.getText().isEmpty()||num_tel.getText().isEmpty()||cin.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
@@ -153,7 +159,9 @@ public class HomePageAdminController implements Initializable {
          if(NumberValid(num_tel.getText())){
              if(CinValid(cin.getText())){
                  if(mdp.getText().length()>=8){
-  
+                     if(us.readByEmail(email.getText())==null||email.getText().equals(email1)){
+                         if(us.readByUsername(username.getText())==null||username.getText().equals(username1)){
+                             if(us.readByCin(cin.getText())==null||Integer.parseInt(cin.getText())==cin1){
         List<Object> list= new ArrayList<>(Arrays.asList(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText()));
         User u2= us.readByID(Integer.parseInt(id.getText()));
         us.update(list,u2.getId_user());
@@ -161,7 +169,27 @@ public class HomePageAdminController implements Initializable {
 		alert.setTitle("mise à jour");
 		alert.setHeaderText("");
 		alert.setContentText("Mise à jour avec succés");
-                alert.showAndWait();
+                alert.showAndWait();}
+                             else{
+           Alert alert= new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Erreur");
+           alert.setHeaderText(null);
+           alert.setContentText("numéro de carte d'identité existe déjà");
+           alert.showAndWait();   
+                             }
+                         }else{
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Erreur");
+           alert.setHeaderText(null);
+           alert.setContentText("username existe déjà");
+           alert.showAndWait();   
+                         }
+                     }else{
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Erreur");
+           alert.setHeaderText(null);
+           alert.setContentText("email existe déjà");
+           alert.showAndWait();  }
                  }else{
            Alert alert= new Alert(Alert.AlertType.ERROR);
            alert.setTitle("mot de passe invalide");
@@ -203,10 +231,12 @@ private void uploadImage(ActionEvent event){
     FileChooser fc= new FileChooser();
     fc.setTitle("choisir une image");
     //choisir les extensions accepté par le programme
-    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.png","*.jpeg","*.gif"),
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image files","*.jpg","*.png","*.jpeg","*.gif"),
             new FileChooser.ExtensionFilter("*.png","*.PNG"),
             new FileChooser.ExtensionFilter("*.jpeg","*.JPEG"),
-            new FileChooser.ExtensionFilter("*.gif","*.GIF")
+            new FileChooser.ExtensionFilter("*.gif","*.GIF"),
+            new FileChooser.ExtensionFilter("*.jpg","*.JPG")
+
             );
           
            File selectedFile = fc.showOpenDialog(null);
@@ -275,6 +305,66 @@ private void uploadImage(ActionEvent event){
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void SwitchMoyensTransport(ActionEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("CRUDMOY.fxml"));
+          Parent root = loader.load();
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+          CRUDMOYController controller = loader.getController();
+          controller.getUser(u);
+    }
+
+    @FXML
+    private void GestionLignesTransport(ActionEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("CRUDLIGNE.fxml"));
+          Parent root = loader.load();
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+          CRUDLIGNEController controller = loader.getController();
+          controller.getUser(u);
+    }
+
+    @FXML
+    private void SwitchGestionTrajet(ActionEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("Trajet.fxml"));
+          Parent root = loader.load();
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+          TrajetController controller = loader.getController();
+          controller.getUser(u);
+    }
+
+    @FXML
+    private void SwitchGestionCommune(ActionEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("CRUDCOM.fxml"));
+          Parent root = loader.load();
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+          CRUDCOMController controller = loader.getController();
+          controller.getUser(u);
+    }
+
+    @FXML
+    private void SwitchAfficherRep(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("afficher_reponse.fxml"));
+        Parent root = loader.load();          
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        Afficher_reponseController controller = loader.getController();
+        controller.getUser(u);
     }
     
     
