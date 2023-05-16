@@ -30,8 +30,8 @@ public class MoyTranService implements IService<MoyTran> {
     @Override
     public void insert(MoyTran t) {
         
-       String requete="insert into moyentransport (matricule,num,capacite,type_vehicule,marque,etat,id_ligne) values"
-                + "('"+t.getMatricule()+"','"+t.getNum()+"','"+t.getCapacite()+"','"+t.getType_vehicule()+"','"+ t.getMarque()+"','"+t.getEtat()+"','"+t.getId_ligne()+"')";
+       String requete="insert into moyen_transport (id_ligne_id ,station_id,matricule,num,capacite,type_vehicule,marque,etat) values"
+                + "('"+t.getId_ligne()+"','" +t.getId_station()+"','"+t.getMatricule()+"','"+t.getNum()+"','"+t.getCapacite()+"','"+t.getType_vehicule()+"','"+ t.getMarque()+"','"+t.getEtat()+"')";
         try {
             Statement ste=conn.createStatement();
             ste.executeUpdate(requete);
@@ -44,7 +44,7 @@ public class MoyTranService implements IService<MoyTran> {
     @Override
     public void delete(int id) {
        
-        String requete="delete from moyentransport  where id_moy= "+id;
+        String requete="delete from moyen_transport  where id= "+id;
             
         try {
              
@@ -74,10 +74,12 @@ public class MoyTranService implements IService<MoyTran> {
 //        }
 //             
 //    }
+             //String requete ="SELECT moyen_transport.*,ligne.id,ligne.nom_ligne,ligne.type_ligne FROM moyen_transport INNER JOIN ligne on moyen_transport.id=ligne.id";
 
+//SELECT moyen_transport.*,ligne.id,ligne.nom_ligne,ligne.type_ligne FROM moyen_transport INNER JOIN ligne on moyen_transport.id=ligne.id 
     @Override
     public List<MoyTran> readAll() {
-         String requete ="SELECT moyentransport.*,ligne.id_ligne,ligne.nom_ligne,ligne.type_ligne FROM moyentransport INNER JOIN ligne on moyentransport.id_ligne=ligne.id_ligne";
+         String requete ="SELECT * from moyen_transport ";
         List<MoyTran> list=new ArrayList<>();
         try {
             Statement st=conn.createStatement();
@@ -97,10 +99,9 @@ public class MoyTranService implements IService<MoyTran> {
 //        //   t.getClass(Ligne.class.g)rs.getString("nom_ligne");
 //           rs.getString("type_ligne");
           
-            
            
             
-            MoyTran m = new MoyTran(rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"));
+            MoyTran m = new MoyTran(rs.getInt("id"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne_id"),rs.getInt("station_id"));
                 
                list.add(m);
                        
@@ -117,16 +118,17 @@ public class MoyTranService implements IService<MoyTran> {
     @Override
     public void update(List<Object> list, int id) {
         
-        String requete="update moyentransport set matricule = ?, num = ? , capacite = ? , type_vehicule = ?,marque = ?,etat = ?, id_ligne= ? where id_moy=" + id;
+        String requete="update moyen_transport set  id_ligne_id=?,station_id=?,matricule =?, num =? , capacite =? , type_vehicule =?,marque =?,etat =? where id="+id;
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
             pst.setInt(1, (int) list.get(0));
             pst.setInt(2, (int) list.get(1));
             pst.setInt(3, (int) list.get(2));
-            pst.setString(4, (String) list.get(3));
-            pst.setString(5, (String) list.get(4));
+            pst.setInt(4, (int) list.get(3));
+            pst.setInt(5, (int) list.get(4));
             pst.setString(6, (String) list.get(5));
-            pst.setInt(7, (int) list.get(6));
+            pst.setString(7, (String) list.get(6));
+            pst.setString(8, (String) list.get(7));
             
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -144,7 +146,7 @@ public class MoyTranService implements IService<MoyTran> {
         //List<MoyTran> list=new ArrayList<>();
         //String requete ="select* from moyentransport where id_moy= '"+id+"' " ;
       
-       String requete ="select * from moyentransport where id_moy = "+ id;
+       String requete ="select * from moyen_transport where id= "+ id;
         MoyTran m = null;
         try {
             
@@ -161,7 +163,7 @@ public class MoyTranService implements IService<MoyTran> {
 //            l.setNom_ligne(rs.getNString("nom_ligne"));
 //            l.setType_ligne(rs.getString("type_ligne"));
            
-           m=new MoyTran( rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"));
+           m=new MoyTran( rs.getInt("id"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne_id"));
            
                              
            }
@@ -178,7 +180,7 @@ public class MoyTranService implements IService<MoyTran> {
         //List<MoyTran> list=new ArrayList<>();
         //String requete ="select* from moyentransport where id_moy= '"+id+"' " ;
       
-       String requete ="select * from moyentransport where matricule = "+ matricule;
+       String requete ="select * from moyen_transport where matricule = "+ matricule;
         MoyTran m = null;
         try {
             
@@ -195,7 +197,7 @@ public class MoyTranService implements IService<MoyTran> {
 //            l.setNom_ligne(rs.getNString("nom_ligne"));
 //            l.setType_ligne(rs.getString("type_ligne"));
            
-           m=new MoyTran( rs.getInt("id_moy"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne"));
+           m=new MoyTran( rs.getInt("id"),rs.getInt("matricule"),rs.getInt("num"),rs.getInt("capacite"),rs.getString("type_vehicule"),rs.getString("marque"),rs.getString("etat"),rs.getInt("id_ligne_id"));
            
                              
            }

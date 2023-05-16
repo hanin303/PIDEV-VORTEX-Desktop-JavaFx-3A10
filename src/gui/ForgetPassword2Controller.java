@@ -57,10 +57,11 @@ public class ForgetPassword2Controller implements Initializable {
    
     @FXML
     public void ChangePassword(ActionEvent event) throws IOException{
-        Base64.Encoder encoder = Base64.getEncoder();
+       // Base64.Encoder encoder = Base64.getEncoder();
+       //encoder.encodeToString(mdp1.getText().getBytes())
         if(mdp1.getText().length()>=8){
         if(mdp1.getText().equals(mdp2.getText())){
-            us.updatePassword(email,encoder.encodeToString(mdp1.getText().getBytes()));
+            us.updatePassword(email,mdp1.getText());
              Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("succés");
 		alert.setHeaderText("");

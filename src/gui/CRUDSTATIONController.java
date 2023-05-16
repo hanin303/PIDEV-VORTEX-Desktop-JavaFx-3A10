@@ -71,7 +71,6 @@ private Map map;
 private JMapViewer mapViewer;
     @FXML
     private TextField txtlonalt;
-    @FXML
     private ComboBox<Integer> txtmoy;
     @FXML
     private TableView<Station> tab_station;
@@ -79,14 +78,11 @@ private JMapViewer mapViewer;
     private TableColumn<Station, Integer> idstation;
     @FXML
     private TableColumn<Station, String> lon_alt;
-    @FXML
     private TableColumn<Station, Integer> idmoy;
     @FXML
     private TextField txtch;
     @FXML
     private Button btnMap;
-    @FXML
-    private Button btnmark;
     private WebView webView;
     
     private WebEngine webEngine;
@@ -118,7 +114,6 @@ private JMapViewer mapViewer;
         ObservableList<Station> obs=FXCollections.observableArrayList(list);
         idstation.setCellValueFactory(new PropertyValueFactory<Station ,Integer>("id_station"));
         lon_alt.setCellValueFactory(new PropertyValueFactory<Station ,String>("lang_alt"));
-        idmoy.setCellValueFactory(new PropertyValueFactory<Station ,Integer>("id_moyen_transport"));
 
        
         tab_station.setItems(obs);
@@ -127,11 +122,7 @@ private JMapViewer mapViewer;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          
-        MoyTranService m = new MoyTranService();
-        ObservableList<MoyTran> MoyTrans = FXCollections.observableArrayList(m.readAll());
-        List<Integer> id_moy = MoyTrans.stream().map(MoyTran::getId_moy).collect(Collectors.toList());
-        ObservableList<Integer> observableIds = FXCollections.observableList(id_moy);
-        txtmoy.setItems(observableIds); //cle etragere
+      
         UpdateTable();
     }    
 
@@ -144,7 +135,7 @@ private JMapViewer mapViewer;
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
     }else{
-   Station t = new Station(String.valueOf(txtlonalt.getText()),txtmoy.getValue());
+   Station t = new Station(String.valueOf(txtlonalt.getText()));
         StationService s =new StationService();
         s.ajouter(t);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -158,7 +149,7 @@ private JMapViewer mapViewer;
 
     @FXML
 private void modifierstation(ActionEvent event) {
-    if (txtlonalt.getText().isEmpty() || txtmoy.getValue() == null) {
+    if (txtlonalt.getText().isEmpty() ) {
         Alert a = new Alert(Alert.AlertType.ERROR, "Aucun champ vide n'est accepté!", ButtonType.OK);
         a.showAndWait();
     } else {
@@ -171,7 +162,7 @@ private void modifierstation(ActionEvent event) {
         // Get the id_station value from the selected row
         int id_station = selectedStation.getId_station();
 
-        r = new Station(id_station, txtlonalt.getText(), txtmoy.getValue());
+        r = new Station(id_station, txtlonalt.getText());
         sr.modifier(r);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "station modifiée", ButtonType.OK);
         alert.show();
@@ -237,7 +228,6 @@ BitMatrix bitMatrix = qrCodeWriter.encode(stationInfo, BarcodeFormat.QR_CODE, 20
     stage.show();
     }
  
-@FXML
 private void ajoutmark(ActionEvent event) {
    Station station = tab_station.getSelectionModel().getSelectedItem();
 if (station != null && mapViewer != null) {

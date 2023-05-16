@@ -38,7 +38,7 @@ public class TrajetService implements IService<Trajet> {
     }
     @Override
     public void delete(int id) {
-            String requete="delete from trajet where id_trajet = "+id;
+            String requete="delete from trajet where id= "+id;
         try {
             Statement st=conn.createStatement();
             st.executeUpdate(requete);
@@ -49,7 +49,7 @@ public class TrajetService implements IService<Trajet> {
     }
     @Override
     public void update(List<Object> list,int id) {
-        String requete="update trajet set temps_parcours=?,pts_depart=?,pts_arrive=? where id_trajet="+ id;
+        String requete="update trajet set temps_parcours=?,pts_depart=?,pts_arrive=? where id="+ id;
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
             pst.setString(1, (String) list.get(0));
@@ -69,7 +69,7 @@ public class TrajetService implements IService<Trajet> {
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(requete);
             while(rs.next()){
-                list.add(new Trajet(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+                list.add(new Trajet(rs.getInt(1),rs.getString(3),rs.getString(4),rs.getString(5)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TrajetService.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,7 +78,7 @@ public class TrajetService implements IService<Trajet> {
     }
     @Override
     public Trajet readByID(int id) {
-        String requete = "select * from trajet where id_trajet = ?";
+        String requete = "select * from trajet where id = ?";
         Trajet trajet =  null;
         try{
             PreparedStatement pst = conn.prepareStatement(requete);

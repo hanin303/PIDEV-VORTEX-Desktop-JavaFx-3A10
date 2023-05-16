@@ -13,10 +13,10 @@ public class StationService implements IService<Station> {
 
     public void ajouter(Station s) {
         try {
-            String req = "INSERT INTO `station` (`lang_alt`, `id_moyen_transport`) VALUES (?, ?)";
+            String req = "INSERT INTO `station` (`long_alt`) VALUES (?)";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, s.getLang_alt());
-            ps.setInt(2, s.getId_moyen_transport());
+            
             ps.executeUpdate();
             System.out.println("Station created !");
         } catch (SQLException ex) {
@@ -27,7 +27,7 @@ public class StationService implements IService<Station> {
     @Override
     public void delete(int id_station) {
         try {
-            String req = "DELETE FROM `station` WHERE id_station = " + id_station;
+            String req = "DELETE FROM `station` WHERE id = " + id_station;
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("Station deleted !");
@@ -38,11 +38,10 @@ public class StationService implements IService<Station> {
 
     public void modifier(Station s) {
         try {
-            String req = "UPDATE `station` SET `lang_alt`=?,`id_moyen_transport`=? WHERE id_station=?";
+            String req = "UPDATE `station` SET `long_alt`=? WHERE id=?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, s.getLang_alt());
-            ps.setInt(2, s.getId_moyen_transport());
-            ps.setInt(3, s.getId_station());
+            ps.setInt(2, s.getId_station());
             ps.executeUpdate();
             System.out.println("Station updated !");
         } catch (SQLException ex) {
@@ -57,7 +56,7 @@ public class StationService implements IService<Station> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                Station s = new Station(rs.getInt("id_station"), rs.getString("lang_alt"), rs.getInt("id_moyen_transport"));
+                Station s = new Station(rs.getInt("id"), rs.getString("long_alt"));
                 list.add(s);
             }
         } catch (SQLException ex) {
@@ -69,11 +68,11 @@ public class StationService implements IService<Station> {
     public Station getOneById(int id_station) {
         Station s = null;
         try {
-            String req = "SELECT * FROM `station` WHERE id_station = " + id_station;
+            String req = "SELECT * FROM `station` WHERE id = " + id_station;
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             if (rs.next()) {
-                s = new Station(rs.getInt("id_station"), rs.getString("lang_alt"), rs.getInt("id_moyen_transport"));
+                s = new Station(rs.getInt("id"), rs.getString("long_alt"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -83,7 +82,7 @@ public class StationService implements IService<Station> {
 
     @Override
     public void update(List<Object> list, int id) {
-        String requete = "UPDATE `station` SET `id_station`,`lang_alt`=?,`id_moyen_transport`=?=? WHERE id_station=?";
+        String requete = "UPDATE `station` SET `id`,`long_alt`=? WHERE id=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
             ps.setString(1, (String) list.get(0));

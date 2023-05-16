@@ -6,6 +6,7 @@
 package entity;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 
 /**
@@ -19,13 +20,13 @@ public class Reservation {
     private int id_reservation ;
     private String status;
     private LocalDate date_reservation ;
-    private String heure_depart ;
-    private String heure_arrive ;
+    private Time heure_depart ;
+    private Time heure_arrive ;
     private int id_it;
     private String destination;
     
 
-    public Reservation(String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
+    public Reservation(String status, LocalDate date_reservation, Time heure_depart, Time heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
         this.status = status;
         this.date_reservation = date_reservation;
         this.heure_depart = heure_depart;
@@ -49,7 +50,7 @@ public class Reservation {
         this.destination = destination;
     }
 
-    public Reservation(int id_reservation, String status, LocalDate date_reservation, String heure_depart, String heure_arrive, String destination, int id_moy, int id_user, String type_ticket) {
+    public Reservation(int id_reservation, String status, LocalDate date_reservation, Time heure_depart, Time heure_arrive, String destination, int id_moy, int id_user, String type_ticket) {
         this.id_reservation = id_reservation;
         this.status = status;
         this.date_reservation = date_reservation;
@@ -66,7 +67,7 @@ public class Reservation {
         
     }
 
-    public Reservation(int id_reservation, String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
+    public Reservation(int id_reservation, String status, LocalDate date_reservation, Time heure_depart, Time heure_arrive, int id_moy, int id_user, int id_it, String type_ticket) {
         this.id_reservation = id_reservation;
         this.status = status;
         this.date_reservation = date_reservation;
@@ -78,7 +79,7 @@ public class Reservation {
         this.type_ticket = type_ticket;
     }
 
-    public Reservation(int id_reservation, String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_user , int id_moy , Iteneraire iteneraire, String type_ticket) {
+    public Reservation(int id_reservation, String status, LocalDate date_reservation, Time heure_depart, Time heure_arrive, int id_user , int id_moy , Iteneraire iteneraire, String type_ticket) {
         this.id_reservation = id_reservation;
         this.status = status;
         this.date_reservation = date_reservation;
@@ -90,7 +91,7 @@ public class Reservation {
         this.type_ticket = type_ticket;
     }
 
-    public Reservation(String status, LocalDate date_reservation, String heure_depart, String heure_arrive, int id_user, int id_moy, Iteneraire iteneraire, String type_ticket) {
+    public Reservation(String status, LocalDate date_reservation, Time heure_depart, Time heure_arrive, int id_user, int id_moy, Iteneraire iteneraire, String type_ticket) {
         this.status = status;
         this.date_reservation = date_reservation;
         this.heure_depart = heure_depart;
@@ -114,11 +115,11 @@ public class Reservation {
     }
 
 
-    public String getHeure_depart() {
+    public Time getHeure_depart() {
         return heure_depart;
     }
 
-    public String getHeure_arrive() {
+    public Time getHeure_arrive() {
         return heure_arrive;
     }
 
@@ -154,11 +155,11 @@ public class Reservation {
         this.date_reservation = date_reservation;
     }
 
-    public void setHeure_depart(String heure_depart) {
+    public void setHeure_depart(Time heure_depart) {
         this.heure_depart = heure_depart;
     }
 
-    public void setHeure_arrive(String heure_arrive) {
+    public void setHeure_arrive(Time heure_arrive) {
         this.heure_arrive = heure_arrive;
     }
 

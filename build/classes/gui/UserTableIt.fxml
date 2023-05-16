@@ -27,15 +27,21 @@
             <TableColumn fx:id="id_it_trajet" prefWidth="108.00006103515625" text="id_trajet" />
          </columns>
       </TableView>
-      <Button fx:id="supprimer_button" layoutX="583.0" layoutY="557.0" mnemonicParsing="false" onAction="#SupprimerItineraire" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 12;" text="Supprimer">
+      <Button fx:id="supprimer_button" layoutX="535.0" layoutY="557.0" mnemonicParsing="false" onAction="#SupprimerItineraire" prefHeight="31.0" prefWidth="222.0" style="-fx-background-radius: 12;" text="Supprimer">
          <font>
             <Font size="15.0" />
          </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="TRASH" />
+         </graphic>
       </Button>
-      <Button fx:id="modifier_button" layoutX="813.0" layoutY="557.0" mnemonicParsing="false" onAction="#ModifierItineraire" prefHeight="31.0" prefWidth="167.0" style="-fx-background-radius: 12;" text="Modifier">
+      <Button fx:id="modifier_button" layoutX="813.0" layoutY="557.0" mnemonicParsing="false" onAction="#ModifierItineraire" prefHeight="31.0" prefWidth="246.0" style="-fx-background-radius: 12;" text="Modifier">
          <font>
             <Font size="15.0" />
          </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="EDIT" />
+         </graphic>
       </Button>
       <TextField fx:id="pts_depart_text" layoutX="43.0" layoutY="203.0" onKeyTyped="#below8" prefHeight="37.0" prefWidth="278.0" />
       <Label layoutX="44.0" layoutY="173.0" prefHeight="30.0" prefWidth="108.0" text="Point de départ">

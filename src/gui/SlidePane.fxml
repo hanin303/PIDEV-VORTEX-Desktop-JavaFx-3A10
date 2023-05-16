@@ -5,8 +5,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="443.0" prefWidth="209.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SlidePaneController">
+<VBox prefHeight="443.0" prefWidth="209.0" spacing="20.0" style="-fx-background-color: #e9f5f9;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SlidePaneController">
    <children>
       <ImageView fitHeight="130.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -16,14 +17,29 @@
             <Insets top="10.0" />
          </VBox.margin>
       </ImageView>
-      <Button fx:id="btn111" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Button">
+      <Button fx:id="btn111" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Gestion users">
          <VBox.margin>
             <Insets top="20.0" />
          </VBox.margin>
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
       </Button>
-      <Button fx:id="btn211" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Button" />
-      <Button fx:id="btn311" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Button" />
-      <Button fx:id="btn411" mnemonicParsing="false" prefHeight="26.0" prefWidth="212.0" text="Button" />
-      <Button fx:id="btn511" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Button" />
+      <Button fx:id="btn211" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Gestion Moy et ligne">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <Button fx:id="btn311" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Gestion iténéraires ">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <Button fx:id="btn411" mnemonicParsing="false" prefHeight="26.0" prefWidth="212.0" text="Gestion réservation">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
+      <Button fx:id="btn511" mnemonicParsing="false" prefHeight="26.0" prefWidth="210.0" text="Gestion réclamation">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font></Button>
    </children>
 </VBox>

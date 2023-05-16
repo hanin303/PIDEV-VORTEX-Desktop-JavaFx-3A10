@@ -23,7 +23,7 @@ public class SendSMS {
     public static void sendSMS(Ticket t) {
         Twilio.init("AC0566d87dfe2bc5a33101670c333564b0", "10fed356d3e8897a61393bc95e67a60f");
         Message message = Message.creator(new PhoneNumber("+21654891319"),
-                new PhoneNumber("+15673131185"), "Ticket ajouté : votre paiement est effectuer avec succés ").create();
+                new PhoneNumber("+15673131185"), "Ticket ajouté : Bonjour Hanin votre paiement est effectuer avec succés ").create();
 
         System.out.println(message.getSid());
     }

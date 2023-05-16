@@ -62,9 +62,12 @@ import entity.MoyTran;
 import entity.Role;
 import entity.Ticket;
 import entity.User;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Cell;
 import javafx.scene.layout.Border;
 import javax.mail.*;
@@ -85,9 +88,9 @@ public class ReservationFXMLController implements Initializable {
     @FXML
     private DatePicker txtdate;
     @FXML
-    private ComboBox<String> txtheuredepart;
+    private TextField txtheuredepart;
     @FXML
-    private ComboBox<String> txtheurearrive;
+    private TextField txtheurearrive;
     @FXML
     private TextField txttype;
     @FXML
@@ -103,9 +106,9 @@ public class ReservationFXMLController implements Initializable {
     @FXML
     private TableColumn<Reservation, LocalDate> colDate;
     @FXML
-    private TableColumn<Reservation, String> colHdepart;
+    private TableColumn<Reservation, Time> colHdepart;
     @FXML
-    private TableColumn<Reservation, String> colHarrive;
+    private TableColumn<Reservation, Time> colHarrive;
     @FXML
     private TableColumn<Reservation, String> colit;
     @FXML
@@ -195,8 +198,8 @@ public class ReservationFXMLController implements Initializable {
          ObservableList<Reservation> obs=FXCollections.observableArrayList(list3);
         colid.setCellValueFactory(new PropertyValueFactory<Reservation ,Integer>("id_reservation"));
         colDate.setCellValueFactory(new PropertyValueFactory<Reservation ,LocalDate>("date_reservation"));
-        colHdepart.setCellValueFactory(new PropertyValueFactory<Reservation ,String>("heure_depart"));
-        colHarrive.setCellValueFactory(new PropertyValueFactory<Reservation ,String>("heure_arrive"));
+        colHdepart.setCellValueFactory(new PropertyValueFactory<Reservation ,Time>("heure_depart"));
+        colHarrive.setCellValueFactory(new PropertyValueFactory<Reservation ,Time>("heure_arrive"));
         colStatus.setCellValueFactory(new PropertyValueFactory<Reservation,String>("status"));
         colusr.setCellValueFactory(new PropertyValueFactory<Reservation,Integer>("id_moy"));
         colTransport.setCellValueFactory(new PropertyValueFactory<Reservation,Integer>("id_user"));
@@ -242,17 +245,17 @@ public class ReservationFXMLController implements Initializable {
          txtusr.setItems(observableIds_user);
 
         
-         ObservableList<String> heuredepart = FXCollections.observableArrayList("00h", "01h","02h","03h",
-                 "04h","05h","06h","07h","08h","09h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h","21h","22h","23h");
-         txtheuredepart.setItems(heuredepart);
-          ObservableList<String> heurearrive = FXCollections.observableArrayList("10min", "15min","20min","25min",
-                 "30min","35min","40min","45min","50min","55min");
-         txtheurearrive.setItems(heurearrive);
-       
+//         ObservableList<String> heuredepart = FXCollections.observableArrayList("00h", "01h","02h","03h",
+//                 "04h","05h","06h","07h","08h","09h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h","21h","22h","23h");
+//         txtheuredepart.setItems(heuredepart);
+//          ObservableList<String> heurearrive = FXCollections.observableArrayList("10min", "15min","20min","25min",
+//                 "30min","35min","40min","45min","50min","55min");
+//         txtheurearrive.setItems(heurearrive);
+//       
         
-        ObservableList<String> status = FXCollections.observableArrayList("confirme", "en_attente","annule");
+        ObservableList<String> status = FXCollections.observableArrayList("Confirmed", "En attente");
         txtstatus.setItems(status);
-        txtstatus.setValue("en_attente");
+        txtstatus.setValue("En attente");
         UpdateTable();
         
     }
@@ -289,9 +292,9 @@ private void sort() {
         // Recipient's email address
         String to = "abir.machraoui@gmail.com";
         // Sender's email address
-        String from = "swifttransit3.transportation@outlook.com";
+        String from = "swiftTransitOriginal2@hotmail.com";
         // Sender's email password
-        String password = "haninhanin123456";
+        String password = "AbirMachraoui";
 
         // Setup mail server properties
         Properties props = new Properties();
@@ -336,16 +339,20 @@ private void sort() {
    @FXML
 private void AjouterReservation(ActionEvent event) {
     LocalDate date =txtdate.getValue();
-    String heureDep=txtheuredepart.getValue();
-    String heureArriver=txtheurearrive.getValue();
+    String heureDep=txtheuredepart.getText();
+    String heureArriver=txtheurearrive.getText();
     String type=txttype.getText();
+    String timeFormat = "\\d{2}:\\d{2}:\\d{2}";
     if(date == null ||heureDep.isEmpty()||heureArriver.isEmpty()||type.isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
-    }else{
+    } else if (!heureDep.matches(timeFormat) || !heureArriver.matches(timeFormat)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "heure doit être au format hh:mm:ss", ButtonType.OK);
+            alert.show();
+    } else {
     ItineraireService ts=new ItineraireService();
-    Reservation res = new Reservation(txtstatus.getValue(),txtdate.getValue(), txtheuredepart.getValue(), txtheurearrive.getValue(), txtusr.getValue(),txttransport.getValue(),ts.readByID(txtitineraire.getValue()),txttype.getText()); 
+    Reservation res = new Reservation(txtstatus.getValue(),txtdate.getValue(),Time.valueOf(txtheuredepart.getText()) , Time.valueOf(txtheurearrive.getText()), txtusr.getValue(),txttransport.getValue(),ts.readByID(txtitineraire.getValue()),txttype.getText()); 
     reserv = res;
     System.out.println(res);
     ReservationService rs = new ReservationService();
@@ -353,8 +360,8 @@ private void AjouterReservation(ActionEvent event) {
     
       txtitineraire.setValue(null);
       txtdate.setValue(null);
-      txtheuredepart.setValue(null);
-      txtheurearrive.setValue(null);
+      txtheuredepart.clear();
+      txtheurearrive.clear();
       txttype.clear();
       txttransport.setValue(null);
       txtstatus.setValue(null);
@@ -362,16 +369,14 @@ private void AjouterReservation(ActionEvent event) {
       mailing();
       UpdateTable();
     
-      
-
-        
+          
 }
 }
 
     @FXML
     private void ModifierReservation(ActionEvent event) {
     //List<Object> list = new ArrayList<>(Arrays.asList(txtstatus.getValue(),txtheuredepart.getText(),txtheurearrive.getText(),txtusr.getValue(),txttransport.getValue(),txtitineraire.getValue(),txttype.getText()));
-    Reservation r = new Reservation((String)txtstatus.getValue(),txtdate.getValue(),txtheuredepart.getValue(),txtheurearrive.getValue(),txttransport.getValue(),txtusr.getValue(),txtitineraire.getValue(),txttype.getText());
+    Reservation r = new Reservation((String)txtstatus.getValue(),txtdate.getValue(),Time.valueOf(txtheuredepart.getText()) , Time.valueOf(txtheurearrive.getText()),txttransport.getValue(),txtusr.getValue(),txtitineraire.getValue(),txttype.getText());
         //System.out.println(r);
     ReservationService rs=new ReservationService();
     Reservation selected_it = tvReservation.getSelectionModel().getSelectedItem();
@@ -385,8 +390,8 @@ private void AjouterReservation(ActionEvent event) {
                 
       txtitineraire.setValue(null);
       txtdate.setValue(null);
-      txtheuredepart.setValue(null);
-      txtheurearrive.setValue(null);
+      txtheuredepart.clear();
+      txtheurearrive.clear();
       txttype.clear();
       txttransport.setValue(null);
       txtstatus.setValue(null);
@@ -482,8 +487,9 @@ private void AjouterReservation(ActionEvent event) {
    
     @FXML
     private void addpdf(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException{
-        String sql = "SELECT status,date_reservation,heure_depart,heure_arrive,id_moy,id_it,type_ticket from reservation";
-    
+//        String sql = "SELECT status,date_reservation,heure_depart,heure_arrive,id_moy,id_it,type_ticket from reservation";
+     String sql = "SELECT status,date_reservation,heure_depart,heure_arrive,id_moy_id,id_it_id,type_ticket from reservation";
+
      Statement st=conn.createStatement();
      ResultSet rs = st.executeQuery(sql);
 
@@ -553,10 +559,13 @@ private void AjouterReservation(ActionEvent event) {
         Reservation r = new Reservation();
       
         r.setDate_reservation(rs.getDate("date_reservation").toLocalDate());
-        r.setHeure_depart(rs.getString("heure_depart"));
-        r.setHeure_arrive(rs.getString("heure_arrive"));
-        r.setId_moy(rs.getInt("id_moy"));
-        r.setId_it(rs.getInt("id_it"));
+        r.setHeure_depart(rs.getTime("heure_depart"));
+        r.setHeure_arrive(rs.getTime("heure_arrive"));
+//        r.setId_moy(rs.getInt("id_moy"));
+          r.setId_moy(rs.getInt("id_moy_id"));
+//        r.setId_it(rs.getInt("id_it"));
+          r.setId_it(rs.getInt("id_it_id"));
+
         r.setType_ticket(rs.getString("type_ticket"));
         r.setStatus(rs.getString("status"));
 //        r.setId_user(rs.getInt("id_client"));
@@ -567,11 +576,11 @@ private void AjouterReservation(ActionEvent event) {
         table.addCell(cell);
 
       
-        cell = new PdfPCell(new Phrase(r.getHeure_depart(), FontFactory.getFont("Comic Sans MS", 12)));
+        cell = new PdfPCell(new Phrase(String.valueOf(r.getHeure_depart()), FontFactory.getFont("Comic Sans MS", 12)));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
         
-        cell = new PdfPCell(new Phrase(r.getHeure_arrive(), FontFactory.getFont("Comic Sans MS", 12)));
+        cell = new PdfPCell(new Phrase(String.valueOf(r.getHeure_arrive()), FontFactory.getFont("Comic Sans MS", 12)));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
         

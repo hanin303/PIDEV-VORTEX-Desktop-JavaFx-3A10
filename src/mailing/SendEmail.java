@@ -21,9 +21,9 @@ public class SendEmail {
         
     }
     public String VerificationMail(String sendTo){
-        String host="swift.transit2023@hotmail.com";  
-        final String user="swift.transit2023@hotmail.com";
-        final String password="swiftTransit1";
+        String host="swiftTransitOriginal2@hotmail.com";  
+        final String user="swiftTransitOriginal2@hotmail.com";
+        final String password="AbirMachraoui";
     Properties props = new Properties();
           props.put("mail.smtp.user", user);
           props.put("mail.smtp.host", "smtp-mail.outlook.com");
@@ -44,7 +44,7 @@ public class SendEmail {
           Session session = Session.getInstance(props, auth);
           MimeMessage msg = new MimeMessage(session);
           msg.setText("Le code de récupération de votre mot de passe est :"+code);
-          msg.setSubject("pssst");
+          msg.setSubject("récupération");
           msg.setFrom(new InternetAddress(user));
           msg.addRecipient(Message.RecipientType.TO, new InternetAddress(sendTo));
           Transport.send(msg);

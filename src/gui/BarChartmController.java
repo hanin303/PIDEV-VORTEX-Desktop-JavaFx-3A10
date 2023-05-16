@@ -45,7 +45,7 @@ public class BarChartmController implements Initializable {
     
      public void loadData() {
 
-        String query = "select COUNT(*) as count ,type_vehicule from moyentransport GROUP BY type_vehicule "; //ORDER BY P asc
+        String query = "select COUNT(*) as count ,type_vehicule from moyen_transport GROUP BY type_vehicule "; //ORDER BY P asc
 
         piechartdata = FXCollections.observableArrayList();
 

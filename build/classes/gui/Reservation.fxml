@@ -63,8 +63,8 @@
          <children>
             <ComboBox fx:id="txtitineraire" prefHeight="0.0" prefWidth="207.0" />
             <DatePicker fx:id="txtdate" onKeyTyped="#ControleSaisieDate" prefHeight="26.0" prefWidth="210.0" promptText="Entrez date reservation" />
-            <ComboBox fx:id="txtheuredepart" prefHeight="26.0" prefWidth="206.0" />
-            <ComboBox fx:id="txtheurearrive" prefHeight="26.0" prefWidth="206.0" />
+            <TextField fx:id="txtheuredepart" />
+            <TextField fx:id="txtheurearrive" />
             <TextField fx:id="txttype" onKeyTyped="#controlesaisieTicket" promptText="Entrez le type ticket" />
             <ComboBox fx:id="txttransport" prefHeight="26.0" prefWidth="230.0" />
             <ComboBox fx:id="txtstatus" prefHeight="26.0" prefWidth="207.0" />

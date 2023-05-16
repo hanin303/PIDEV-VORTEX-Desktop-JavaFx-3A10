@@ -120,7 +120,8 @@ public class AddUserController implements Initializable {
     
     @FXML
     public void ajouterUser(ActionEvent event) throws IOException{
-       Base64.Encoder encoder = Base64.getEncoder();
+       //Base64.Encoder encoder = Base64.getEncoder();
+       //encoder.encodeToString(mdp.getText().getBytes())
        if(nom.getText().isEmpty()||prenom.getText().isEmpty()||username.getText().isEmpty()||email.getText().isEmpty()||mdp.getText().isEmpty()||num_tel.getText().isEmpty()||cin.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
@@ -134,7 +135,7 @@ public class AddUserController implements Initializable {
                          if(us.readByEmail(email.getText())==null){
                              if(us.readByUsername(username.getText())==null){
                                  if(us.readByCin(cin.getText())==null){
-                   User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
+                   User u = new User(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText(),rs.readByID(4));
                    us.insert(u);
                  Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("création");
