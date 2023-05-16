@@ -62,8 +62,8 @@ public class DisplayUserController implements Initializable {
     private TableColumn<User,String> username;
     @FXML 
     private TableColumn<User,String> email;
-    @FXML 
-    private TableColumn<User,String> mdp;
+//    @FXML 
+//    private TableColumn<User,String> mdp;
     @FXML
     private TableColumn<User,Integer> num_tel;
     @FXML
@@ -144,7 +144,7 @@ public class DisplayUserController implements Initializable {
         prenom.setCellValueFactory(new PropertyValueFactory<User,String>("prenom"));
         username.setCellValueFactory(new PropertyValueFactory<User,String>("username"));
         email.setCellValueFactory(new PropertyValueFactory<User,String>("email"));
-        mdp.setCellValueFactory(new PropertyValueFactory<User,String>("mdp"));
+        //mdp.setCellValueFactory(new PropertyValueFactory<User,String>("mdp"));
         num_tel.setCellValueFactory(new PropertyValueFactory<User,Integer>("num_tel"));
         cin.setCellValueFactory(new PropertyValueFactory<User,Integer>("cin"));
         image.setCellValueFactory(new PropertyValueFactory<User,String>("Image"));
@@ -187,7 +187,8 @@ public class DisplayUserController implements Initializable {
  
     @FXML
     public void modifierUser(ActionEvent event){
-       Base64.Encoder encoder = Base64.getEncoder();
+       //Base64.Encoder encoder = Base64.getEncoder();
+       //encoder.encodeToString(mdp_up.getText().getBytes())
        User user= tableUsers.getSelectionModel().getSelectedItem();
        String email1= user.getEmail();
        String username1 = user.getUsername();
@@ -205,7 +206,7 @@ public class DisplayUserController implements Initializable {
                       if(us.readByEmail(email_up.getText())==null||email_up.getText().equals(email1)){
                          if(us.readByUsername(username_up.getText())==null||username_up.getText().equals(username1)){
                              if(us.readByCin(cin_up.getText())==null||Integer.parseInt(cin_up.getText())==cin1){
-        List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),encoder.encodeToString(mdp_up.getText().getBytes()),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText())));
+        List<Object> list= new ArrayList<>(Arrays.asList(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText())));
         us.updateWithoutImage(list, user.getId_user());
         display();
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -263,7 +264,8 @@ public class DisplayUserController implements Initializable {
     
     @FXML
     public void ajouterUser(ActionEvent event)throws SQLIntegrityConstraintViolationException{
-       Base64.Encoder encoder = Base64.getEncoder();
+       //Base64.Encoder encoder = Base64.getEncoder();
+       //encoder.encodeToString(mdp_up.getText().getBytes())
        if(nom_up.getText().isEmpty()||prenom_up.getText().isEmpty()||username_up.getText().isEmpty()||email_up.getText().isEmpty()||mdp_up.getText().isEmpty()||num_tel_up.getText().isEmpty()||cin_up.getText().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
              alert.setContentText("Vous devez remplir tous les champs"); 
@@ -277,7 +279,7 @@ public class DisplayUserController implements Initializable {
                          if(us.readByUsername(username_up.getText())==null){
                              if(us.readByCin(cin_up.getText())==null){
         Role role=rs.readByID((int) combo_role.getValue());
-        User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),encoder.encodeToString(mdp_up.getText().getBytes()),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),null, role);
+        User u = new User(nom_up.getText(),prenom_up.getText(),username_up.getText(),email_up.getText(),mdp_up.getText(),Integer.parseInt(num_tel_up.getText()),Integer.parseInt(cin_up.getText()),null, role);;
         us.insert(u);
         display();
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -369,7 +371,7 @@ public class DisplayUserController implements Initializable {
             nom.setText(u.getNom());
             prenom.setText(u.getUsername());
             email.setText(u.getEmail());
-            mdp.setText(u.getMdp());
+            //mdp.setText(u.getMdp());
             num_tel.setText(String.valueOf(u.getNum_tel()));
             cin.setText(String.valueOf(u.getCin()));
             image.setText(String.valueOf(u.getImage()));

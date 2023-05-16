@@ -14,8 +14,8 @@ public class ItineraireService implements IService<Iteneraire>{
     }
     @Override
     public void insert(Iteneraire t){
-        String requete= "insert into iteneraire (pts_depart,pts_arrive,id_trajet) values"
-                + "('"+t.getPts_depart()+"','"+t.getPts_arrivee()+"','"+t.getTrajet().getId()+"')";
+        String requete= "insert into iteneraire (pts_depart,pts_arrive) values"
+                + "('"+t.getPts_depart()+"','"+t.getPts_arrivee()+"')";
         try {
             Statement ste=conn.createStatement();
             ste.executeUpdate(requete);
@@ -26,7 +26,7 @@ public class ItineraireService implements IService<Iteneraire>{
     }
     @Override
     public void delete(int id) {
-            String requete="delete from iteneraire where id_it = "+id;
+            String requete="delete from iteneraire where id= "+id;
         try {
             Statement st=conn.createStatement();
             st.executeUpdate(requete);
@@ -37,12 +37,11 @@ public class ItineraireService implements IService<Iteneraire>{
     }
     @Override
     public void update( List<Object> list,int id) {
-        String requete="update iteneraire set pts_depart=?,pts_arrive=?,id_trajet=? where id_it=" + id;
+        String requete="update iteneraire set pts_depart=?,pts_arrive=? where id=" + id;
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
             pst.setString(1, (String) list.get(0));
             pst.setString(2, (String) list.get(1));
-            pst.setInt(3,(int)list.get(2));
             
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -57,7 +56,7 @@ public class ItineraireService implements IService<Iteneraire>{
             ResultSet rs=st.executeQuery(requete);
             TrajetService ts = new TrajetService();
             while(rs.next()){
-                list.add(new Iteneraire(rs.getInt(1),rs.getString(2),rs.getString(3),ts.readByID(rs.getInt(4))));
+                list.add(new Iteneraire(rs.getInt(1),rs.getString(2),rs.getString(3)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ItineraireService.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,7 +66,7 @@ public class ItineraireService implements IService<Iteneraire>{
     @Override
     
     public Iteneraire readByID(int id) {
-        String requete = "select * from iteneraire where id_it = ?";
+        String requete = "select * from iteneraire where id = ?";
         Iteneraire iteneraire =  null;
         try{
             PreparedStatement pst = conn.prepareStatement(requete);
@@ -76,7 +75,7 @@ public class ItineraireService implements IService<Iteneraire>{
             TrajetService ts = new TrajetService();
             if(rs.next()){
                 
-                iteneraire = new Iteneraire(rs.getInt(1),rs.getString(2),rs.getString(3),ts.readByID(rs.getInt(4)));
+                iteneraire = new Iteneraire(rs.getInt(1),rs.getString(2),rs.getString(3));
 
             }
 

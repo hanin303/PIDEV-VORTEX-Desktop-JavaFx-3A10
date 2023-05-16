@@ -14,6 +14,13 @@ public class Station {
     private String lang_alt;
     private int id_moyen_transport;
 
+    public Station(int id_station, String lang_alt) {
+        this.id_station = id_station;
+        this.lang_alt = lang_alt;
+    }
+
+    
+    
     public Station(int id_station, String lang_alt, int id_moyen_transport) {
         this.id_station = id_station;
         this.lang_alt = lang_alt;
@@ -24,6 +31,12 @@ public class Station {
         this.lang_alt = lang_alt;
         this.id_moyen_transport = id_moyen_transport;
     }
+
+    public Station(String lang_alt) {
+        this.lang_alt = lang_alt;
+    }
+    
+    
 
     public int getId_station() {
         return id_station;

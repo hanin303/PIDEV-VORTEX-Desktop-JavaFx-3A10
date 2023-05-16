@@ -18,13 +18,13 @@
             <Image url="@kslvAsset%203char.png" />
          </image>
       </ImageView>
-      <TextField fx:id="pts_depart_text" layoutX="41.0" layoutY="150.0" prefHeight="35.0" prefWidth="266.0" />
+      <TextField fx:id="pts_depart_text" layoutX="41.0" layoutY="150.0" prefHeight="35.0" prefWidth="290.0" />
       <Label layoutX="42.0" layoutY="124.0" prefHeight="26.0" prefWidth="115.0" text="Point de départ">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="pts_depart_arrive" layoutX="41.0" layoutY="217.0" prefHeight="35.0" prefWidth="266.0" />
+      <TextField fx:id="pts_depart_arrive" layoutX="41.0" layoutY="217.0" prefHeight="35.0" prefWidth="290.0" />
       <Label layoutX="42.0" layoutY="190.0" prefHeight="26.0" prefWidth="115.0" text="Point de départ">
          <font>
             <Font size="15.0" />
@@ -36,21 +36,27 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="valider_button" layoutX="34.0" layoutY="354.0" mnemonicParsing="false" onAction="#AjouterItineraire" prefHeight="18.0" prefWidth="115.0" style="-fx-background-radius: 12;" text="valider">
+      <Button fx:id="valider_button" layoutX="34.0" layoutY="354.0" mnemonicParsing="false" onAction="#AjouterItineraire" prefHeight="31.0" prefWidth="129.0" style="-fx-background-radius: 12;" text="valider">
          <font>
             <Font size="15.0" />
          </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="PLUS" />
+         </graphic>
       </Button>
-      <ComboBox fx:id="combo_trajet" layoutX="40.0" layoutY="299.0" prefHeight="35.0" prefWidth="266.0" />
+      <ComboBox fx:id="combo_trajet" layoutX="40.0" layoutY="299.0" prefHeight="35.0" prefWidth="290.0" />
       <Label layoutX="40.0" layoutY="261.0" prefHeight="26.0" prefWidth="42.0" text="Trajet">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="valider_button1" layoutX="185.0" layoutY="354.0" mnemonicParsing="false" onAction="#SwitchWindow" prefHeight="17.0" prefWidth="124.0" style="-fx-background-radius: 12;" text="Mes itineraires">
+      <Button fx:id="valider_button1" layoutX="185.0" layoutY="354.0" mnemonicParsing="false" onAction="#SwitchWindow" prefHeight="31.0" prefWidth="145.0" style="-fx-background-radius: 12;" text="Mes itineraires">
          <font>
             <Font size="15.0" />
          </font>
+         <graphic>
+            <FontAwesomeIconView fill="#6096b4" glyphName="ROAD" />
+         </graphic>
       </Button>
       <Button layoutX="28.0" layoutY="538.0" mnemonicParsing="false" onAction="#BackHome" prefHeight="26.0" prefWidth="163.0" style="-fx-background-radius: 12;" text="Retour">
          <graphic>

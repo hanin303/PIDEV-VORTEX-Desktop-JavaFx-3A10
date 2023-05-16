@@ -24,6 +24,8 @@ public class Ticket {
      public Ticket() { 
         
     }
+     
+     
 
     public Ticket(int id_t, String status, String prix, Reservation reservation) {
         this.id_t = id_t;

@@ -55,8 +55,10 @@ import javafx.stage.Stage;
 import service.LigneService;
 import service.MoyTranService;
 import connexionbd.utils.DataSource;
+import entity.Station;
 import entity.User;
 import javafx.scene.control.Label;
+import service.StationService;
 
 /**
  * FXML Controller class
@@ -114,6 +116,8 @@ public class CRUDMOYController implements Initializable {
     private TableColumn<MoyTran, Integer> mat1;
     MoyTranService ms=new MoyTranService();
     private User u;
+    @FXML
+    private ComboBox<Integer> txts;
     /**
      * Initializes the controller class.
      * @param url
@@ -131,13 +135,14 @@ public class CRUDMOYController implements Initializable {
         }
         ObservableList<MoyTran> obs=FXCollections.observableArrayList(list);
         idmoy.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_moy"));
+        li.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_ligne"));
         mat.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("matricule"));
         mat1.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("num"));
         cap.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("capacite"));
         tv.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("type_vehicule"));
         marque.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("marque"));
         etat.setCellValueFactory(new PropertyValueFactory<MoyTran ,String>("etat"));
-        li.setCellValueFactory(new PropertyValueFactory<MoyTran ,Integer>("id_ligne"));
+        
         tabmoy.setItems(obs);
         
     }
@@ -158,11 +163,17 @@ public class CRUDMOYController implements Initializable {
          ObservableList<String> list1 = FXCollections.observableArrayList("en_service","hors_service","maintenance");
         txte.setItems(list1);
         LigneService s = new LigneService();
+        StationService ss= new StationService();
         ObservableList<Ligne> lignes = FXCollections.observableArrayList(s.readAll());
         List<Integer> id_ligne = lignes.stream().map(Ligne::getId_ligne).collect(Collectors.toList());
+         ObservableList<Station> stations = FXCollections.observableArrayList(ss.getAll());
+        List<Integer> id_station = stations.stream().map(Station::getId_station).collect(Collectors.toList());
         ObservableList<Integer> observableIds = FXCollections.observableList(id_ligne);
         txtl.setItems(observableIds); //cle etragere
+        ObservableList<Integer> observable = FXCollections.observableList(id_station);
+        txts.setItems(observable);
         UpdateTable();
+       
       
            
     }    
@@ -183,7 +194,7 @@ public class CRUDMOYController implements Initializable {
         if(ms.readMatricule(Integer.parseInt(txtm.getText()))==null){
             
         
-        MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
+        MoyTran t = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()),typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue(),txts.getValue());
         MoyTranService s =new MoyTranService();
         s.insert(t);
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -218,7 +229,7 @@ public class CRUDMOYController implements Initializable {
 
     private void update(ActionEvent event) {
         List<Object> list = new ArrayList<>(Arrays.asList(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), 
-                typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue()));
+                typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue(),txts.getValue()));
         MoyTranService ts=new MoyTranService();
         MoyTran selected_trajet =  tabmoy.getSelectionModel().getSelectedItem();
         ts.update(list,selected_trajet.getId_moy());
@@ -298,7 +309,7 @@ public class CRUDMOYController implements Initializable {
         
       
         
-    String sql = "SELECT* from moyentransport";
+    String sql = "SELECT* from moyen_transport";
     
       PreparedStatement ste=conn.prepareStatement(sql);
    //  Statement ste=conn.createStatement();
@@ -371,14 +382,14 @@ public class CRUDMOYController implements Initializable {
     while (rs.next()) {
 
        MoyTran m = new MoyTran();
-        m.setId_moy(rs.getInt("id_moy"));
+        m.setId_moy(rs.getInt("id"));
         m.setMatricule(rs.getInt("matricule"));
         m.setNum(rs.getInt("num"));
         m.setCapacite(rs.getInt("capacite"));
         m.setType_vehicule(rs.getString("type_vehicule"));
         m.setMarque(rs.getString("marque"));
         m.setEtat(rs.getString("etat"));
-        m.setId_ligne(rs.getInt("id_ligne"));
+        m.setId_ligne(rs.getInt("id_ligne_id"));
        
         
         cell = new PdfPCell(new Phrase(String.valueOf(m.getId_moy()), FontFactory.getFont("Comic Sans MS", 12)));
@@ -486,7 +497,7 @@ public class CRUDMOYController implements Initializable {
         controller.getUser(u);
     }
 
-    @FXML
+     @FXML
     private void modif(ActionEvent event) {
          String Dep=txtcap.getText();
     String ver=typev.getValue();
@@ -499,8 +510,9 @@ public class CRUDMOYController implements Initializable {
              alert.setContentText("Vous devez remplir tous les champs"); 
              alert.showAndWait();
     }else {
+       // Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue(),txts.getValue())
         if(ms.readMatricule(Integer.parseInt(txtm.getText()))==null){ 
-        List<Object> list = new ArrayList<>(Arrays.asList(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue()));
+        List<Object> list = new ArrayList<>(Arrays.asList(txtl.getValue(),txts.getValue(),Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), typev.getValue(),txtmar.getText(),txte.getValue()));
 //       MoyTran m = new MoyTran(Integer.parseInt(txtm.getText()),Integer.parseInt(num.getText()),Integer.parseInt(txtcap.getText()), typev.getValue(),txtmar.getText(),txte.getValue(),txtl.getValue());
         MoyTranService rs = new MoyTranService();
     MoyTran selected_it = tabmoy.getSelectionModel().getSelectedItem();

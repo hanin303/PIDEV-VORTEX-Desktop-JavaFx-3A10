@@ -21,11 +21,10 @@
             <TableColumn fx:id="prenom" prefWidth="75.0" text="Prénom" />
             <TableColumn fx:id="username" prefWidth="75.0" text="Username" />
             <TableColumn fx:id="email" prefWidth="183.20001220703125" text="Adresse e-mail" />
-            <TableColumn fx:id="mdp" minWidth="7.99993896484375" prefWidth="88.800048828125" text="Mot de passe" />
             <TableColumn fx:id="num_tel" minWidth="1.5999755859375" prefWidth="72.79998779296875" text="Téléphone" />
             <TableColumn fx:id="cin" minWidth="0.0" prefWidth="65.59991455078125" text="CIN" />
-            <TableColumn fx:id="image" minWidth="0.0" prefWidth="111.20001220703125" text="Image" />
-            <TableColumn fx:id="role" prefWidth="78.39996337890625" text="Role" />
+            <TableColumn fx:id="image" minWidth="0.0" prefWidth="192.79998779296875" text="Image" />
+            <TableColumn fx:id="role" prefWidth="85.60003662109375" text="Role" />
         </columns>
       </TableView>
       <Button fx:id="modifier" layoutX="316.0" layoutY="535.0" mnemonicParsing="false" onAction="#modifierUser" prefHeight="26.0" prefWidth="122.0" style="-fx-background-radius: 12;" text="Modifier">

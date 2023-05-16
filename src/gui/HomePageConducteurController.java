@@ -125,14 +125,15 @@ public class HomePageConducteurController implements Initializable {
      */
     
     public void setFields(User u){
-    Base64.Decoder decoder = Base64.getDecoder();
+    //Base64.Decoder decoder = Base64.getDecoder();
+    //decoder.decode(u.getMdp())
     this.u=u;
     id.setText(String.valueOf(u.getId_user()));
     nom.setText(u.getNom());
     prenom.setText(u.getPrenom());
     username.setText(u.getUsername());
     email.setText(u.getEmail());
-    String password = new String(decoder.decode(u.getMdp()));
+    String password = new String(u.getMdp());
     mdp.setText(password);    num_tel.setText(String.valueOf(u.getNum_tel()));
     cin.setText(String.valueOf(u.getCin()));
     image_path=u.getImage();
@@ -145,7 +146,8 @@ public class HomePageConducteurController implements Initializable {
     }
    @FXML
     private void modifierUser(ActionEvent event) throws NullPointerException{
-       Base64.Encoder encoder = Base64.getEncoder();
+       //Base64.Encoder encoder = Base64.getEncoder();
+       //encoder.encodeToString(mdp.getText().getBytes())
        String email1= us.readByEmail(email.getText()).getEmail();
        String username1 = us.readByUsername(username.getText()).getUsername();
        int cin1= us.readByCin(cin.getText()).getCin();
@@ -161,7 +163,7 @@ public class HomePageConducteurController implements Initializable {
                      if(us.readByEmail(email.getText())==null||email.getText().equals(email1)){
                          if(us.readByUsername(username.getText())==null||username.getText().equals(username1)){
                              if(us.readByCin(cin.getText())==null||Integer.parseInt(cin.getText())==cin1){
-        List<Object> list= new ArrayList<>(Arrays.asList(nom.getText(),prenom.getText(),username.getText(),email.getText(),encoder.encodeToString(mdp.getText().getBytes()),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText()));
+        List<Object> list= new ArrayList<>(Arrays.asList(nom.getText(),prenom.getText(),username.getText(),email.getText(),mdp.getText(),Integer.parseInt(num_tel.getText()),Integer.parseInt(cin.getText()),path_image.getText()));
         User u2= us.readByID(Integer.parseInt(id.getText()));
         us.update(list,u2.getId_user());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

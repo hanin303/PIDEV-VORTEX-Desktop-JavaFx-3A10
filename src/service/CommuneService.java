@@ -27,7 +27,7 @@ public class CommuneService implements IService<Commune> {
     @Override
     public void delete(int id_commune) {
         try {
-            String req = "DELETE FROM `commune` WHERE id_commune = " + id_commune;
+            String req = "DELETE FROM `commune` WHERE id = " + id_commune;
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("Commune deleted !");
@@ -38,7 +38,7 @@ public class CommuneService implements IService<Commune> {
 
     public void modifier(Commune c) {
         try {
-            String req = "UPDATE `commune` SET `nom_commune`=?,`long_alt`=? WHERE id_commune=?";
+            String req = "UPDATE `commune` SET `nom_commune`=?,`long_alt`=? WHERE id=?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, c.getNom_commune());
             ps.setString(2, c.getLong_alt());
@@ -57,7 +57,7 @@ public class CommuneService implements IService<Commune> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                Commune c = new Commune(rs.getInt("id_commune"), rs.getString("nom_commune"), rs.getString("long_alt"));
+                Commune c = new Commune(rs.getInt("id"), rs.getString("nom_commune"), rs.getString("long_alt"));
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -69,7 +69,7 @@ public class CommuneService implements IService<Commune> {
     public Commune getOneById(int id_commune) {
         Commune c = null;
         try {
-            String req = "SELECT * FROM `commune` WHERE id_commune = " + id_commune;
+            String req = "SELECT * FROM `commune` WHERE id = " + id_commune;
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             if (rs.next()) {
@@ -83,7 +83,7 @@ public class CommuneService implements IService<Commune> {
 
     @Override
     public void update(List<Object> list, int id) {
-        String requete = "UPDATE `commune` SET `id_commune`,`nom_commune`=?,`long_alt`=?=? WHERE id_commune=?";
+        String requete = "UPDATE `commune` SET `id`,`nom_commune`=?,`long_alt`=?=? WHERE id=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
             ps.setString(1, (String) list.get(0));

@@ -24,6 +24,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 /**
  * FXML Controller class
@@ -42,6 +46,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button auth;
     private User user;
+
     
 
 
@@ -63,10 +68,16 @@ public class LoginController implements Initializable {
    
    @FXML 
    public void connect(ActionEvent event)throws IOException{
-      Encoder encoder = Base64.getEncoder();
-      if (authentification(username_column.getText(),encoder.encodeToString(mdp_column.getText().getBytes()))) {
-            
+      
+//        hash= encoder.encode(mdp_column.getText());
+      //Encoder encoder = Base64.getEncoder();
+//      if (authentification(username_column.getText(),encoder.encodeToString(mdp_column.getText().getBytes()))) {
       User u= us.readByUsername(username_column.getText());
+      if (authentification(username_column.getText(),mdp_column.getText())) {
+//      String salt = expectedMdp.substring(0, 29);
+//      String password=BCrypt.hashpw(mdp_column.getText(), salt);
+      //String hash = password.replaceFirst("\\$2a\\$", "\\$2y\\$");
+//       System.out.println(u);  
           System.out.println(u);
           if(u.getRole().getId_role()==1){
           FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePageAdmin.fxml"));
@@ -123,6 +134,7 @@ public class LoginController implements Initializable {
            alert_erreur2.setHeaderText(null);
            alert_erreur2.setContentText("vous devez vérifier vos informations");
            alert_erreur2.showAndWait();
+           System.out.println(u);
 }
 
    }

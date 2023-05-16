@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * 
  */
 public class DataSource {
-   private String url="jdbc:mysql://localhost:3306/swifttransit";
+   private String url="jdbc:mysql://localhost:3306/swifttransitweb";
     private String login="root";
     private String pwd="";
     private Connection cnx;

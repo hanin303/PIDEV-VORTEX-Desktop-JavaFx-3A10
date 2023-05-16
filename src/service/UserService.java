@@ -30,19 +30,19 @@ public class UserService implements IService<User> {
 
     @Override
     public void insert(User u){
-        String requete="INSERT INTO user(nom,prenom,username,email,mdp,num_tel,cin,image,id_role) values (?,?,?,?,?,?,?,?,?)";
+        String requete="INSERT INTO user(id_role_id,nom,prenom,username,email,mdp,num_tel,cin,image) values (?,?,?,?,?,?,?,?,?)";
         try {
             
             PreparedStatement ste=conn.prepareStatement(requete);
-            ste.setString(1,u.getNom());
-            ste.setString(2,u.getPrenom());
-            ste.setString(3,u.getUsername());
-            ste.setString(4,u.getEmail());            
-            ste.setString(5, u.getMdp());
-            ste.setInt(6, u.getNum_tel());
-            ste.setInt(7, u.getCin());
-            ste.setString(8,u.getImage());
-            ste.setInt(9, u.getRole().getId_role());
+            ste.setInt(1, u.getRole().getId_role());
+            ste.setString(2,u.getNom());
+            ste.setString(3,u.getPrenom());
+            ste.setString(4,u.getUsername());
+            ste.setString(5,u.getEmail());            
+            ste.setString(6, u.getMdp());
+            ste.setInt(7, u.getNum_tel());
+            ste.setInt(8, u.getCin());
+            ste.setString(9,u.getImage());
             ste.executeUpdate();
             
 //        } catch (SQLIntegrityConstraintViolationException e) {
@@ -70,7 +70,7 @@ public class UserService implements IService<User> {
 
     @Override
     public void delete(int id) {
-        String requete = "DELETE FROM User where id_user ="+id;
+        String requete = "DELETE FROM User where id ="+id;
         try {
             PreparedStatement ste = conn.prepareStatement(requete);
             ste.executeUpdate(requete);
@@ -82,7 +82,7 @@ public class UserService implements IService<User> {
   
     @Override
     public void update(List<Object> list, int id){
-        String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=?, image=? where id_user="+id;
+        String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=?, image=? where id="+id;
         
         try {
             PreparedStatement ste= conn.prepareStatement(requete);
@@ -129,7 +129,7 @@ public class UserService implements IService<User> {
     }
     
     public void updateWithoutImage(List<Object> list, int id){
-        String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=? where id_user="+id;
+        String requete="UPDATE user SET nom=?, prenom=?, username=?, email=?, mdp=?, num_tel=?, cin=? where id="+id;
         
         try {
             PreparedStatement ste= conn.prepareStatement(requete);
@@ -157,7 +157,7 @@ public class UserService implements IService<User> {
             while(rs.next()){
                 
                 RoleService role_service= new RoleService();
-                User u= new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+                User u= new User(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11),role_service.readByID(rs.getInt(2)));
                 list.add(u);
             }
         } catch (SQLException ex) {
@@ -174,7 +174,7 @@ public class UserService implements IService<User> {
             Statement ste= conn.createStatement();
             ResultSet rs= ste.executeQuery(requete);
             while(rs.next()){
-                User u= new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
+                User u= new User(rs.getInt(1),rs.getString(4),rs.getString(4),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11));
                 set.add(u);
             }
         } catch (SQLException ex) {
@@ -184,7 +184,7 @@ public class UserService implements IService<User> {
     }
     @Override
     public User readByID(int id) {
-        String requete="SELECT * FROM user WHERE id_user=?";
+        String requete="SELECT * FROM user WHERE id=?";
         User user= null;
         try {
             PreparedStatement ste=conn.prepareStatement(requete);
@@ -192,7 +192,7 @@ public class UserService implements IService<User> {
             ResultSet rs= ste.executeQuery();
             RoleService role_service= new RoleService();
             if(rs.next()){
-            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            user = new User(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11),role_service.readByID(rs.getInt(2)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,7 +208,7 @@ public class UserService implements IService<User> {
             ResultSet rs= ste.executeQuery();
             RoleService role_service= new RoleService();
             if(rs.next()){
-            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            user = new User(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11),role_service.readByID(rs.getInt(2)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,7 +224,7 @@ public class UserService implements IService<User> {
             ResultSet rs= ste.executeQuery();
             RoleService role_service = new RoleService();
             if(rs.next()){
-            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            user = new User(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11),role_service.readByID(rs.getInt(2)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -240,7 +240,7 @@ public class UserService implements IService<User> {
             ResultSet rs= ste.executeQuery();
             RoleService role_service= new RoleService();
             if(rs.next()){
-            user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9),role_service.readByID(rs.getInt(10)));
+            user = new User(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11),role_service.readByID(rs.getInt(2)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -248,14 +248,14 @@ public class UserService implements IService<User> {
         return user;
     }
    public HashSet<User> readyById_role(int id){
-       String requete="SELECT * FROM user Where id_role="+id;
+       String requete="SELECT * FROM user Where id_role_id="+id;
        HashSet<User> set = new HashSet<>();
        
         try {
             Statement ste = conn.prepareStatement(requete);
             ResultSet rs= ste.executeQuery(requete);
             while(rs.next()){
-            User u  = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getString(9));
+            User u  = new User(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getInt(9),rs.getInt(10),rs.getString(11));
             set.add(u);
             }
 

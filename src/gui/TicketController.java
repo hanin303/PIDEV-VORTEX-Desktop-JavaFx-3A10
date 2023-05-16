@@ -150,9 +150,9 @@ public class TicketController implements Initializable {
         ObservableList<Integer> observableIds = FXCollections.observableList(id_reservation);
         txtinfo.setItems(observableIds);
         
-        ObservableList<String> status = FXCollections.observableArrayList("payer", "non_payer");
+        ObservableList<String> status = FXCollections.observableArrayList("payer", "non payer");
         txtstatus.setItems(status);
-        txtstatus.setValue("non_payer");    
+        txtstatus.setValue("non payer");    
         UpdateTable();
       
    } 
@@ -172,7 +172,7 @@ public class TicketController implements Initializable {
 
     @FXML
     private void ModifierTicket(ActionEvent event) {
-    List<Object> list = new ArrayList<>(Arrays.asList(txtstatus.getValue(), txtprix.getText(), txtinfo.getValue()));
+    List<Object> list = new ArrayList<>(Arrays.asList(txtinfo.getValue(),txtstatus.getValue(), txtprix.getText()));
     TicketService rs=new TicketService();
     Ticket selected_it = tvTicket.getSelectionModel().getSelectedItem();
     rs.update(list,selected_it.getId_t());
@@ -206,9 +206,9 @@ public class TicketController implements Initializable {
     public void mailing() {
         // Recipient's email address
         String to = "abir.machraoui@gmail.com";
-        String from = "swifttransit3.transportation@outlook.com";
+        String from = "swiftTransitOriginal2@hotmail.com";
         // Sender's email password
-        String password = "haninhanin123456";
+        String password = "AbirMachraoui";
 
         // Setup mail server properties
         Properties props = new Properties();
@@ -257,6 +257,7 @@ public class TicketController implements Initializable {
     }else{
         
     ReservationService rs=new ReservationService();
+//    Ticket res = new Ticket(txtstatus.getValue(), txtprix.getText(),rs.readByID(txtinfo.getValue())); 
     Ticket res = new Ticket(txtstatus.getValue(), txtprix.getText(),rs.readByID(txtinfo.getValue())); 
     System.out.println(res);
     Ticket t = new Ticket();
@@ -270,8 +271,8 @@ public class TicketController implements Initializable {
     UpdateTable();
     PayerTicket ();
     mailing(); 
-    SendSMS sm = new SendSMS();
-    sm.sendSMS(t);
+    //SendSMS sm = new SendSMS();
+    //sm.sendSMS(t);
  
     }
     }

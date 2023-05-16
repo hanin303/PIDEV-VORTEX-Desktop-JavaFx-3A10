@@ -76,8 +76,7 @@ public class UserTableItController implements Initializable {
         List<Iteneraire> list3=new ArrayList<>();
         ItineraireService is = new ItineraireService();
         list=is.readAll();
-        list3 = list.stream().map(i->{String fromto = i.getTrajet().getPts_depart()+ "->"
-                +i.getTrajet().getPts_arrivee();
+        list3 = list.stream().map(i->{String fromto = "no";
  
                 return new Iteneraire(i.getId(),i.getPts_depart(),i.getPts_arrivee(),fromto);}).
                 collect(Collectors.toList());
@@ -86,7 +85,7 @@ public class UserTableItController implements Initializable {
        
         
         list2 = list.stream().map(it->new Iteneraire(it.getId(),it.getPts_depart(),
-        it.getPts_arrivee(),it.getTrajet().getId())).collect(Collectors.toList());
+        it.getPts_arrivee())).collect(Collectors.toList());
         System.out.println(list3);
         
         

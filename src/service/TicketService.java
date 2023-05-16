@@ -33,8 +33,11 @@ public class TicketService implements IService<Ticket>{
 
     @Override
     public void insert(Ticket t) {
-         String requete= "insert into ticket (status,prix,id_reservation) values"+ 
-                "('"+t.getStatus()+"','"+t.getPrix()+"','"+t.getReservation().getId_reservation()+"')";
+        
+//         String requete= "insert into ticket (status,prix,id_reservation) values"+ 
+//                "('"+t.getStatus()+"','"+t.getPrix()+"','"+t.getReservation().getId_reservation()+"')";
+ String requete= "insert into ticket (id_reservation_id,status,prix) values"+ 
+                "('"+t.getReservation().getId_reservation()+"','"+t.getStatus()+"','"+t.getPrix()+"')";
         try {
             Statement ste=conn.createStatement();
             ste.executeUpdate(requete);
@@ -47,7 +50,7 @@ public class TicketService implements IService<Ticket>{
     @Override
     public void delete(int id) {
         try {
-            String requete ="delete from ticket where id_t ="+id;
+            String requete ="delete from ticket where id="+id;
             Statement st=conn.createStatement();
             st.executeUpdate(requete);
             System.out.println(" Ticket supprimé !");
@@ -65,7 +68,9 @@ public class TicketService implements IService<Ticket>{
             ResultSet rs = st.executeQuery(requete);
             ReservationService rss = new ReservationService();
             while(rs.next()){
-            Ticket t = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),(rs.getInt(4)));
+//          Ticket t = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),(rs.getInt(4)));
+            Ticket t = new Ticket(rs.getInt(1),rs.getString(3),rs.getString(4),(rs.getInt(2)));
+
             list.add(t);
             }
         } catch (SQLException ex) {
@@ -76,7 +81,9 @@ public class TicketService implements IService<Ticket>{
 
     @Override
     public Ticket readByID(int id) {
-    String requete = "select * from ticket where id_t = ?";
+//    String requete = "select * from ticket where id_t = ?";
+      String requete = "select * from ticket where id = ?";
+
     Ticket ticket = null;
     try {
         PreparedStatement pst = conn.prepareStatement(requete);
@@ -84,7 +91,7 @@ public class TicketService implements IService<Ticket>{
         ResultSet rs = pst.executeQuery();
         ReservationService rss = new ReservationService();
         if (rs.next()) {
-           ticket = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
+           ticket = new Ticket(rs.getInt(1),rs.getString(3),rs.getString(4),rs.getInt(2));
         }
     } catch (SQLException ex) {
         Logger.getLogger(TicketService.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,12 +101,15 @@ public class TicketService implements IService<Ticket>{
    
     @Override
     public void update(List<Object> list,int id) {
-         String requete="update ticket set status=?,prix=?, id_reservation=? where id_t="+id;
+//         String requete="update ticket set status=?,prix=?, id_reservation=? where id_t="+id;
+         String requete="update ticket set id_reservation_id=?,status=?,prix=?  where id="+id;
+
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
-            pst.setString(1, (String)list.get(0));
-            pst.setString(2, (String) list.get(1));
-            pst.setInt(3, (int) list.get(2));
+            pst.setInt(1, (int) list.get(0));
+            pst.setString(2, (String)list.get(1));
+            pst.setString(3, (String) list.get(2));
+           
             pst.executeUpdate();
             System.out.println(" Ticket modifié !");
         } catch (SQLException ex) {

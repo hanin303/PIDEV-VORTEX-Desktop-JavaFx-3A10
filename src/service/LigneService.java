@@ -46,7 +46,7 @@ public class LigneService implements IService<Ligne> {
 
     @Override
     public void delete(int id) {
-         String requete="delete from ligne  where id_ligne= "+id;
+         String requete="delete from ligne  where id= "+id;
             
         try {
              
@@ -69,7 +69,7 @@ public class LigneService implements IService<Ligne> {
            ResultSet rs= st.executeQuery(requete);
            while(rs.next()){
                Ligne t=new Ligne
-           (rs.getInt("id_ligne"),rs.getString("nom_ligne"),rs.getString("type_ligne"));
+           (rs.getInt("id"),rs.getString("nom_ligne"),rs.getString("type_ligne"));
            
                list.add(t);
                        
@@ -85,7 +85,7 @@ public class LigneService implements IService<Ligne> {
     @Override
     public void update(List<Object> list, int id) {
        
-        String requete="update ligne set nom_ligne=?,type_ligne=? where id_ligne=" + id;
+        String requete="update ligne set nom_ligne=?,type_ligne=? where id=" + id;
         try {
             PreparedStatement pst=conn.prepareStatement(requete);
             pst.setString(1, (String) list.get(0));
@@ -101,7 +101,7 @@ public class LigneService implements IService<Ligne> {
     @Override
     public Ligne readByID(int id) {
         
-       String requete ="select * from ligne where id_ligne = "+ id;
+       String requete ="select * from ligne where id= "+ id;
         Ligne m = null;
         try {
             
@@ -111,7 +111,7 @@ public class LigneService implements IService<Ligne> {
            if(rs.next()){
         
            
-           m=new Ligne( rs.getInt("id_ligne"),rs.getString("nom_ligne"),rs.getString("type_ligne"));
+           m=new Ligne( rs.getInt("id"),rs.getString("nom_ligne"),rs.getString("type_ligne"));
            
                              
            }

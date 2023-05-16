@@ -26,7 +26,7 @@ public class RoleService implements IService<Role>{
     
     @Override
     public void insert(Role r) {
-        String requete="INSERT INTO Role(id_role,nom) values (?,?)";
+        String requete="INSERT INTO Role(id,nom) values (?,?)";
         PreparedStatement ste;
         try {
             ste = conn.prepareStatement(requete);
@@ -47,7 +47,7 @@ public class RoleService implements IService<Role>{
     
     @Override
     public void delete(int id) {
-       String requete="DELETE FROM Role WHERE id_role="+id;
+       String requete="DELETE FROM Role WHERE id="+id;
        PreparedStatement ste;
         try {
             ste = conn.prepareStatement(requete);
@@ -58,7 +58,7 @@ public class RoleService implements IService<Role>{
     }
     @Override
     public void update(List<Object> list, int id) {
-        String requete="UPDATE role SET nom=? WHERE id_role="+id;
+        String requete="UPDATE role SET nom=? WHERE id="+id;
         try {
             PreparedStatement ste = conn.prepareStatement(requete);
             ste.setString(1,(String)list.get(0));
@@ -92,7 +92,7 @@ public class RoleService implements IService<Role>{
     
     @Override
     public Role readByID(int id) {
-        String requete="SELECT * FROM Role WHERE id_role=?";
+        String requete="SELECT * FROM Role WHERE id=?";
         Role role = null;
         try {
             PreparedStatement ste = conn.prepareStatement(requete);

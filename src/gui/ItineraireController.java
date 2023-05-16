@@ -96,10 +96,9 @@ public class ItineraireController implements Initializable {
 //        List<Integer> trajet_id_list = trajet_list.stream().map(Trajet::getId).collect(Collectors.toList());
 //        ObservableList<Integer> observables_ids_trajet =FXCollections.observableList(trajet_id_list);
         id_it.setCellValueFactory(new PropertyValueFactory<Iteneraire ,Integer>("id"));
-       
         pts_depart_it.setCellValueFactory(new PropertyValueFactory<Iteneraire ,String>("pts_depart00"));
         pts_arrive_it.setCellValueFactory(new PropertyValueFactory<Iteneraire ,String>("pts_arrivee"));
-        id_it_trajet.setCellValueFactory(new PropertyValueFactory<Iteneraire ,Integer>("trajet_id"));
+   
         table_Itineraire.setItems(obs);
     }
     public void getUser(User u){
@@ -108,11 +107,7 @@ public class ItineraireController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ItineraireService is = new ItineraireService();
-        TrajetService ts = new TrajetService();
-        ObservableList<Trajet> trajets = FXCollections.observableArrayList(ts.readAll());
-        List<Integer> id_trajet = trajets.stream().map(Trajet::getId).collect(Collectors.toList());
-        ObservableList<Integer> observableIds = FXCollections.observableList(id_trajet);
-        combo_id_trajet.setItems(observableIds);
+       
         UpdateTable();
     }
     @FXML
@@ -120,7 +115,7 @@ public class ItineraireController implements Initializable {
         TrajetService ts = new TrajetService();
         ItineraireService is = new ItineraireService();
         Iteneraire i=new Iteneraire(text_pts_depart_it.getText(), 
-                text_pts_arrive_it.getText(),ts.readByID(combo_id_trajet.getValue()));
+                text_pts_arrive_it.getText());
         is.insert(i);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("");
@@ -146,7 +141,7 @@ public class ItineraireController implements Initializable {
     @FXML
     private void ModifierItineraire(ActionEvent event) {
         List<Object> list = new ArrayList<>(Arrays.asList(text_pts_depart_it.getText(), 
-                text_pts_arrive_it.getText(),combo_id_trajet.getValue()));
+                text_pts_arrive_it.getText()));
         ItineraireService is=new ItineraireService();
         Iteneraire selected_it =  table_Itineraire.getSelectionModel().getSelectedItem();
         is.update(list,selected_it.getId());

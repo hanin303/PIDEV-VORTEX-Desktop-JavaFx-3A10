@@ -21,6 +21,8 @@ public class MoyTran {
     
     private int id_ligne;
     private Ligne ligne;
+    private float note; 
+    private int id_station;
     
 
     public MoyTran() {
@@ -74,6 +76,18 @@ public class MoyTran {
        
         this.id_ligne = id_ligne;
     }
+//plz
+    public MoyTran(int id_moy, int matricule, int num, int capacite, String type_vehicule, String marque, String etat, int id_ligne, int id_station) {
+        this.id_moy = id_moy;
+        this.matricule = matricule;
+        this.num = num;
+        this.capacite = capacite;
+        this.type_vehicule = type_vehicule;
+        this.marque = marque;
+        this.etat = etat;
+        this.id_ligne = id_ligne;
+        this.id_station = id_station;
+    }
     
     
 
@@ -107,6 +121,25 @@ public class MoyTran {
         this.marque = marque;
         this.etat = etat;
     }
+
+    public int getId_station() {
+        return id_station;
+    }
+
+    public void setId_station(int id_station) {
+        this.id_station = id_station;
+    }
+
+    public MoyTran(int matricule, int num, int capacite, String type_vehicule, String marque, String etat, int id_ligne, int id_station) {
+        this.matricule = matricule;
+        this.num = num;
+        this.capacite = capacite;
+        this.type_vehicule = type_vehicule;
+        this.marque = marque;
+        this.etat = etat;
+        this.id_ligne = id_ligne;
+        this.id_station = id_station;
+    }
     
     
     
@@ -137,11 +170,15 @@ public class MoyTran {
         this.id_ligne = id_ligne;
     }
 
+    public float getNote() {
+        return note;
+    }
+
+    public void setNote(float note) {
+        this.note = note;
+    }
+
     
-
-  
-
-   
 
     
 
